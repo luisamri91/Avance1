@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>P4 Productos e inventario</title><link rel="stylesheet" href="estilo.css"></head>
+<body>
+<div class="ventana" style="width:900px">
+  <div class="titulo"><span>Fidecompro · Productos e inventario</span><span class="botones"><span></span><span></span></span></div>
+  <div class="contenido">
+    <div class="tabs"><span class="activa">Productos</span><span>Categorías</span><span>Movimientos de inventario</span></div>
+    <fieldset><legend>Datos del producto</legend>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 24px">
+        <div class="fila"><label>Código:</label><span class="campo">ABR-0012</span></div>
+        <div class="fila"><label>Categoría:</label><span class="campo combo">Abarrotes (IVA 1%)</span></div>
+        <div class="fila"><label>Nombre:</label><span class="campo">Arroz 99% grano entero 2 kg</span></div>
+        <div class="fila"><label>Precio unitario (₡):</label><span class="campo">1 950,00</span></div>
+        <div class="fila"><label>Stock actual:</label><span class="campo chico">18</span><span class="nota">unidades</span></div>
+        <div class="fila"><label>Stock mínimo:</label><span class="campo chico">25</span></div>
+      </div>
+      <div class="acciones"><span class="boton">Nuevo</span><span class="boton primario">Guardar</span><span class="boton">Ajustar stock…</span><span class="boton peligro">Desactivar</span></div>
+    </fieldset>
+    <div class="fila"><label>Filtrar por categoría:</label><span class="campo combo">Todas</span><span class="campo">buscar por código o nombre</span><span class="boton">Buscar</span></div>
+    <table>
+      <tr><th>Código</th><th>Nombre</th><th>Categoría</th><th class="num">Precio</th><th class="num">Stock</th><th>Estado</th></tr>
+      <tr class="sel"><td>ABR-0012</td><td>Arroz 99% grano entero 2 kg</td><td>Abarrotes</td><td class="num">₡1 950</td><td class="num">18</td><td class="alerta">Bajo mínimo</td></tr>
+      <tr><td>LIM-0230</td><td>Detergente en polvo 3 kg</td><td>Limpieza</td><td class="num">₡5 400</td><td class="num">9</td><td class="alerta">Bajo mínimo</td></tr>
+      <tr><td>BEB-0101</td><td>Refresco cola 3 L (caja 6)</td><td>Bebidas</td><td class="num">₡9 300</td><td class="num">64</td><td>Disponible</td></tr>
+      <tr><td>HIG-0045</td><td>Papel higiénico 24 rollos</td><td>Higiene</td><td class="num">₡8 750</td><td class="num">120</td><td>Disponible</td></tr>
+    </table>
+  </div>
+  <div class="barra-estado"><span>Inventario actualizado automáticamente cada 30 s</span><span>Usuario: María Rodríguez</span></div>
+</div>
+</body></html>

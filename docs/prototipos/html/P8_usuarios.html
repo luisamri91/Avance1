@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>P8 Gestión de usuarios</title><link rel="stylesheet" href="estilo.css"></head>
+<body>
+<div class="ventana" style="width:760px">
+  <div class="titulo"><span>Fidecompro · Gestión de usuarios (Administrador)</span><span class="botones"><span></span><span></span></span></div>
+  <div class="contenido">
+    <fieldset><legend>Datos del usuario</legend>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 24px">
+        <div class="fila"><label>Nombre completo:</label><span class="campo">Carlos Jiménez Mora</span></div>
+        <div class="fila"><label>Usuario:</label><span class="campo">cjimenez</span></div>
+        <div class="fila"><label>Contraseña:</label><span class="campo">••••••••</span></div>
+        <div class="fila"><label>Confirmar:</label><span class="campo">••••••••</span></div>
+        <div class="fila"><label>Rol:</label><span class="campo combo">VENDEDOR</span></div>
+        <div class="fila"><label>Activo:</label><span>☑</span></div>
+      </div>
+      <div class="acciones"><span class="boton">Nuevo</span><span class="boton primario">Guardar</span><span class="boton">Restablecer contraseña</span><span class="boton peligro">Desactivar</span></div>
+    </fieldset>
+    <table>
+      <tr><th>Usuario</th><th>Nombre</th><th>Rol</th><th>Estado</th><th>Último ingreso</th></tr>
+      <tr><td>mrodriguez</td><td>María Rodríguez Solís</td><td>ADMINISTRADOR</td><td>Activo</td><td>06/10/2026 08:01</td></tr>
+      <tr class="sel"><td>cjimenez</td><td>Carlos Jiménez Mora</td><td>VENDEDOR</td><td>Activo</td><td>06/10/2026 08:20</td></tr>
+      <tr><td>lvargas</td><td>Laura Vargas Pérez</td><td>VENDEDOR</td><td>Inactivo</td><td>14/09/2026 17:45</td></tr>
+    </table>
+  </div>
+  <div class="barra-estado"><span>Las contraseñas se guardan cifradas (SHA-256)</span><span>Usuario: María Rodríguez</span></div>
+</div>
+</body></html>

@@ -1,0 +1,35 @@
+sequenceDiagram
+    autonumber
+    actor V as Vendedor
+    participant P as PanelFacturacion
+    participant CS as ClienteSocket
+    participant MC as ManejadorCliente (hilo)
+    participant SF as ServicioFacturacion
+    participant SI as ServicioInventario
+    participant DB as FacturaDAO / ProductoDAO
+    participant GA as GeneradorArchivoFactura
+
+    V->>P: Selecciona cliente y agrega productos
+    P->>P: factura.agregarDetalle() y calcularTotales()
+    V->>P: Clic en "Emitir factura"
+    P->>CS: enviar(Solicitud CREAR_FACTURA)
+    CS->>MC: objeto Solicitud por el socket
+    MC->>SF: crearFactura(factura)
+    SF->>SI: reservarStock(detalles)
+    Note over SI: Bloque synchronized:<br/>solo un hilo a la vez valida<br/>y descuenta existencias
+    alt Stock suficiente
+        SI->>DB: actualizarStock() por cada producto
+        SF->>DB: insertar(factura)
+        SF->>GA: generarTXT(factura)
+        GA-->>SF: archivo generado
+        SF-->>MC: factura con número consecutivo
+        MC-->>CS: Respuesta.ok(factura)
+        CS-->>P: Respuesta
+        P-->>V: Muestra vista previa y opción "Guardar archivo"
+    else Stock insuficiente
+        SI-->>SF: excepción StockInsuficienteException
+        SF-->>MC: error
+        MC-->>CS: Respuesta.error("Stock insuficiente de ...")
+        CS-->>P: Respuesta
+        P-->>V: Mensaje de error, la factura no se emite
+    end

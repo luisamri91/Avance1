@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>P3 Gestión de clientes</title><link rel="stylesheet" href="estilo.css"></head>
+<body>
+<div class="ventana" style="width:860px">
+  <div class="titulo"><span>Fidecompro · Gestión de clientes</span><span class="botones"><span></span><span></span></span></div>
+  <div class="contenido">
+    <fieldset><legend>Datos del cliente</legend>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 24px">
+        <div class="fila"><label>Tipo de identificación:</label><span class="campo combo">Jurídica</span></div>
+        <div class="fila"><label>Identificación:</label><span class="campo">3-101-456789</span></div>
+        <div class="fila"><label>Nombre / Razón social:</label><span class="campo">Abastecedor La Esquina S.A.</span></div>
+        <div class="fila"><label>Teléfono:</label><span class="campo">2222-3344</span></div>
+        <div class="fila"><label>Correo:</label><span class="campo">compras@laesquina.cr</span></div>
+        <div class="fila"><label>Dirección:</label><span class="campo">Heredia, San Pablo, 200 m norte</span></div>
+      </div>
+      <div class="acciones"><span class="boton">Nuevo</span><span class="boton primario">Guardar</span><span class="boton">Limpiar</span><span class="boton peligro">Desactivar</span></div>
+    </fieldset>
+    <div class="fila"><label>Buscar:</label><span class="campo grande">esquina</span><span class="boton">Buscar</span></div>
+    <table>
+      <tr><th>Identificación</th><th>Nombre</th><th>Teléfono</th><th>Correo</th><th>Registro</th></tr>
+      <tr class="sel"><td>3-101-456789</td><td>Abastecedor La Esquina S.A.</td><td>2222-3344</td><td>compras@laesquina.cr</td><td>12/09/2026</td></tr>
+      <tr><td>1-1234-0567</td><td>Pulpería Doña Ana</td><td>8888-1020</td><td>ana.pulperia@gmail.com</td><td>20/09/2026</td></tr>
+      <tr><td>3-102-778899</td><td>Minisúper El Ahorro Ltda.</td><td>2560-7788</td><td>admin@elahorro.cr</td><td>01/10/2026</td></tr>
+    </table>
+  </div>
+  <div class="barra-estado"><span>3 clientes encontrados</span><span>Usuario: María Rodríguez</span></div>
+</div>
+</body></html>

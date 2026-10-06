@@ -1,0 +1,33 @@
+flowchart LR
+    subgraph C1["Equipo de caja 1 (cliente Swing)"]
+        A1[VentanaLogin / VentanaPrincipal] --> S1[ClienteSocket]
+    end
+    subgraph C2["Equipo de caja 2 (cliente Swing)"]
+        A2[VentanaLogin / VentanaPrincipal] --> S2[ClienteSocket]
+    end
+    subgraph C3["Equipo de administración (cliente Swing)"]
+        A3[VentanaLogin / VentanaPrincipal] --> S3[ClienteSocket]
+    end
+
+    subgraph SRV["Servidor Fidecompro (puerto 5000)"]
+        SS[ServidorFacturacion<br/>ServerSocket + pool de hilos]
+        H1[ManejadorCliente hilo 1]
+        H2[ManejadorCliente hilo 2]
+        H3[ManejadorCliente hilo 3]
+        SV[Servicios<br/>Autenticación, Clientes,<br/>Inventario, Facturación]
+        GA[GeneradorArchivoFactura]
+        DAO[DAO + ConexionBD JDBC]
+        SS --> H1 & H2 & H3
+        H1 & H2 & H3 --> SV
+        SV --> GA
+        SV --> DAO
+    end
+
+    DB[(MySQL<br/>fidecompro)]
+    FS[/Archivos de factura<br/>.txt / .html/]
+
+    S1 -- "Solicitud / Respuesta<br/>(objetos serializados)" --> SS
+    S2 --> SS
+    S3 --> SS
+    DAO --> DB
+    GA --> FS

@@ -1,0 +1,151 @@
+classDiagram
+    direction TB
+
+    class Usuario {
+        -int idUsuario
+        -String nombreUsuario
+        -String contrasenaHash
+        -String nombreCompleto
+        -Rol rol
+        -boolean activo
+        +Usuario(String nombreUsuario, String contrasena, String nombreCompleto, Rol rol)
+        +verificarContrasena(String contrasena) boolean
+        +cambiarContrasena(String actual, String nueva) void
+        +esAdministrador() boolean
+        +activar() void
+        +desactivar() void
+    }
+
+    class Rol {
+        <<enumeration>>
+        ADMINISTRADOR
+        VENDEDOR
+    }
+
+    class Cliente {
+        -int idCliente
+        -TipoIdentificacion tipoIdentificacion
+        -String identificacion
+        -String nombre
+        -String telefono
+        -String correo
+        -String direccion
+        -LocalDate fechaRegistro
+        -boolean activo
+        +Cliente(TipoIdentificacion tipo, String identificacion, String nombre)
+        +validar() boolean
+        +actualizarContacto(String telefono, String correo, String direccion) void
+        +desactivar() void
+    }
+
+    class TipoIdentificacion {
+        <<enumeration>>
+        FISICA
+        JURIDICA
+        DIMEX
+        PASAPORTE
+    }
+
+    class CategoriaProducto {
+        -int idCategoria
+        -String nombre
+        -String descripcion
+        -double porcentajeImpuesto
+        +CategoriaProducto(String nombre, double porcentajeImpuesto)
+        +calcularImpuesto(double monto) double
+    }
+
+    class Producto {
+        -int idProducto
+        -String codigo
+        -String nombre
+        -String descripcion
+        -CategoriaProducto categoria
+        -double precioUnitario
+        -int cantidadStock
+        -int stockMinimo
+        -boolean activo
+        +Producto(String codigo, String nombre, CategoriaProducto categoria, double precio, int stock)
+        +hayStockSuficiente(int cantidad) boolean
+        +descontarStock(int cantidad) void
+        +aumentarStock(int cantidad) void
+        +necesitaReabastecer() boolean
+    }
+
+    class MovimientoInventario {
+        -int idMovimiento
+        -Producto producto
+        -TipoMovimiento tipo
+        -int cantidad
+        -LocalDateTime fecha
+        -Usuario usuario
+        -String referencia
+        +MovimientoInventario(Producto p, TipoMovimiento tipo, int cantidad, Usuario u, String ref)
+    }
+
+    class TipoMovimiento {
+        <<enumeration>>
+        ENTRADA
+        SALIDA
+        AJUSTE
+    }
+
+    class Factura {
+        -int idFactura
+        -String numeroFactura
+        -LocalDateTime fecha
+        -Cliente cliente
+        -Usuario vendedor
+        -List~DetalleFactura~ detalles
+        -double subtotal
+        -double impuesto
+        -double descuento
+        -double total
+        -MetodoPago metodoPago
+        -EstadoFactura estado
+        +Factura(Cliente cliente, Usuario vendedor)
+        +agregarDetalle(Producto p, int cantidad) void
+        +eliminarDetalle(int indice) void
+        +aplicarDescuento(double porcentaje) void
+        +calcularTotales() void
+        +anular() void
+        +estaVacia() boolean
+    }
+
+    class DetalleFactura {
+        -int idDetalle
+        -Producto producto
+        -int cantidad
+        -double precioUnitario
+        -double porcentajeImpuesto
+        +DetalleFactura(Producto producto, int cantidad)
+        +calcularSubtotal() double
+        +calcularImpuesto() double
+        +calcularTotal() double
+    }
+
+    class MetodoPago {
+        <<enumeration>>
+        EFECTIVO
+        TARJETA
+        TRANSFERENCIA
+    }
+
+    class EstadoFactura {
+        <<enumeration>>
+        EMITIDA
+        ANULADA
+    }
+
+    Usuario --> Rol
+    Cliente --> TipoIdentificacion
+    Producto "*" --> "1" CategoriaProducto : pertenece a
+    Factura "*" --> "1" Cliente : se emite a
+    Factura "*" --> "1" Usuario : emitida por
+    Factura "1" *-- "1..*" DetalleFactura : contiene
+    DetalleFactura "*" --> "1" Producto : referencia
+    Factura --> MetodoPago
+    Factura --> EstadoFactura
+    MovimientoInventario "*" --> "1" Producto : afecta
+    MovimientoInventario "*" --> "1" Usuario : registrado por
+    MovimientoInventario --> TipoMovimiento

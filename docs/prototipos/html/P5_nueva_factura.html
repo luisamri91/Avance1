@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>P5 Nueva factura</title><link rel="stylesheet" href="estilo.css"></head>
+<body>
+<div class="ventana" style="width:940px">
+  <div class="titulo"><span>Fidecompro · Nueva factura</span><span class="botones"><span></span><span></span></span></div>
+  <div class="contenido">
+    <fieldset><legend>Cliente</legend>
+      <div class="fila"><label>Identificación:</label><span class="campo">3-101-456789</span><span class="boton">Buscar cliente…</span>
+        <span style="margin-left:16px"><b>Abastecedor La Esquina S.A.</b> · 2222-3344</span></div>
+    </fieldset>
+    <fieldset><legend>Agregar producto</legend>
+      <div class="fila"><label>Código:</label><span class="campo">BEB-0101</span><span class="boton">Buscar…</span>
+        <label style="min-width:auto;margin-left:12px">Cantidad:</label><span class="campo chico">5</span>
+        <span class="nota">Disponible: 64</span><span class="boton primario">Agregar ➜</span></div>
+    </fieldset>
+    <table>
+      <tr><th>#</th><th>Código</th><th>Descripción</th><th class="num">Cant.</th><th class="num">Precio unit.</th><th class="num">IVA</th><th class="num">Total línea</th></tr>
+      <tr><td>1</td><td>ABR-0012</td><td>Arroz 99% grano entero 2 kg</td><td class="num">10</td><td class="num">₡1 950,00</td><td class="num">1%</td><td class="num">₡19 695,00</td></tr>
+      <tr><td>2</td><td>HIG-0045</td><td>Papel higiénico 24 rollos</td><td class="num">4</td><td class="num">₡8 750,00</td><td class="num">13%</td><td class="num">₡39 550,00</td></tr>
+      <tr class="sel"><td>3</td><td>BEB-0101</td><td>Refresco cola 3 L (caja 6)</td><td class="num">5</td><td class="num">₡9 300,00</td><td class="num">13%</td><td class="num">₡52 545,00</td></tr>
+    </table>
+    <div style="display:flex;justify-content:space-between;margin-top:12px">
+      <div>
+        <div class="fila"><label>Método de pago:</label><span class="campo combo">Transferencia</span></div>
+        <div class="fila"><label>Descuento (%):</label><span class="campo chico">2</span></div>
+        <div class="acciones"><span class="boton">Quitar línea</span><span class="boton">Cancelar</span></div>
+      </div>
+      <table style="width:300px">
+        <tr><td>Subtotal</td><td class="num">₡101 000,00</td></tr>
+        <tr><td>Descuento (2%)</td><td class="num">−₡2 020,00</td></tr>
+        <tr><td>Impuesto (IVA)</td><td class="num">₡10 574,20</td></tr>
+        <tr><td><b>TOTAL</b></td><td class="num"><b>₡109 554,20</b></td></tr>
+      </table>
+    </div>
+    <div class="acciones" style="justify-content:flex-end"><span class="boton primario" style="font-size:15px;padding:8px 24px">Emitir factura</span></div>
+  </div>
+  <div class="barra-estado"><span>Vendedor: Carlos Jiménez</span><span>06/10/2026 10:42</span></div>
+</div>
+</body></html>

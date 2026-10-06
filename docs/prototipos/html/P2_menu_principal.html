@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>P2 Menú principal</title><link rel="stylesheet" href="estilo.css">
+<style>
+.tarjetas { display: grid; grid-template-columns: repeat(3, 190px); gap: 14px; }
+.tarjeta { background: #fff; border: 1px solid #a9b5c3; border-radius: 6px; padding: 16px; text-align: center; }
+.tarjeta .ico { font-size: 30px; }
+.tarjeta b { display: block; margin-top: 6px; color: #2f4a6b; }
+.resumen td { border: none; padding: 3px 6px; }
+</style></head>
+<body>
+<div class="ventana" style="width:760px">
+  <div class="titulo"><span>Fidecompro · Menú principal</span><span class="botones"><span></span><span></span></span></div>
+  <div class="menu"><span><u>A</u>rchivo</span><span><u>C</u>lientes</span><span><u>P</u>roductos</span><span><u>F</u>acturación</span><span><u>U</u>suarios</span><span>A<u>y</u>uda</span></div>
+  <div class="contenido" style="display:flex;gap:18px">
+    <div class="tarjetas">
+      <div class="tarjeta"><div class="ico">👥</div><b>Clientes</b><span class="nota">Registrar y editar</span></div>
+      <div class="tarjeta"><div class="ico">📦</div><b>Productos</b><span class="nota">Catálogo e inventario</span></div>
+      <div class="tarjeta"><div class="ico">🧾</div><b>Nueva factura</b><span class="nota">Emitir a un cliente</span></div>
+      <div class="tarjeta"><div class="ico">📚</div><b>Historial</b><span class="nota">Consultar facturas</span></div>
+      <div class="tarjeta"><div class="ico">🔐</div><b>Usuarios</b><span class="nota">Solo administrador</span></div>
+      <div class="tarjeta"><div class="ico">🚪</div><b>Cerrar sesión</b><span class="nota">Volver al inicio</span></div>
+    </div>
+    <fieldset style="flex:1"><legend>Resumen del día</legend>
+      <table class="resumen">
+        <tr><td>Facturas emitidas:</td><td class="num"><b>27</b></td></tr>
+        <tr><td>Total vendido:</td><td class="num"><b>₡1 845 300</b></td></tr>
+        <tr><td>Clientes nuevos:</td><td class="num"><b>3</b></td></tr>
+      </table>
+      <p class="alerta" style="margin:12px 0 4px">⚠ 4 productos bajo el stock mínimo</p>
+      <span class="nota">Arroz 2 kg, Aceite 1 L, Detergente 3 kg, Café 500 g</span>
+    </fieldset>
+  </div>
+  <div class="barra-estado"><span>Usuario: María Rodríguez (ADMINISTRADOR)</span><span>Servidor 192.168.1.10:5000 · conectado</span></div>
+</div>
+</body></html>

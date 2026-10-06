@@ -1,0 +1,215 @@
+classDiagram
+    direction TB
+
+    class ServidorFacturacion {
+        -int puerto
+        -ServerSocket serverSocket
+        -ExecutorService poolHilos
+        -volatile boolean activo
+        +ServidorFacturacion(int puerto, int maxClientes)
+        +iniciar() void
+        +detener() void
+        -aceptarConexiones() void
+        +main(String[] args)$ void
+    }
+
+    class ManejadorCliente {
+        <<Runnable>>
+        -Socket socket
+        -ObjectInputStream entrada
+        -ObjectOutputStream salida
+        -Usuario usuarioSesion
+        +ManejadorCliente(Socket socket)
+        +run() void
+        -procesar(Solicitud s) Respuesta
+        -cerrarConexion() void
+    }
+
+    class Solicitud {
+        <<Serializable>>
+        -TipoOperacion operacion
+        -Object datos
+        +getOperacion() TipoOperacion
+        +getDatos() Object
+    }
+
+    class Respuesta {
+        <<Serializable>>
+        -boolean exito
+        -String mensaje
+        -Object datos
+        +ok(Object datos)$ Respuesta
+        +error(String mensaje)$ Respuesta
+    }
+
+    class TipoOperacion {
+        <<enumeration>>
+        LOGIN
+        LOGOUT
+        CREAR_CLIENTE
+        ACTUALIZAR_CLIENTE
+        LISTAR_CLIENTES
+        CREAR_PRODUCTO
+        ACTUALIZAR_PRODUCTO
+        LISTAR_PRODUCTOS
+        LISTAR_CATEGORIAS
+        AJUSTAR_STOCK
+        CREAR_FACTURA
+        LISTAR_FACTURAS
+        ANULAR_FACTURA
+        CREAR_USUARIO
+    }
+
+    class ServicioAutenticacion {
+        -UsuarioDAO usuarioDAO
+        +iniciarSesion(String usuario, String contrasena) Usuario
+        +registrarUsuario(Usuario u) void
+        +cifrarContrasena(String texto)$ String
+    }
+
+    class ServicioClientes {
+        -ClienteDAO clienteDAO
+        +registrar(Cliente c) void
+        +actualizar(Cliente c) void
+        +buscar(String texto) List~Cliente~
+        +listar() List~Cliente~
+    }
+
+    class ServicioInventario {
+        -ProductoDAO productoDAO
+        -Object candado
+        +registrarProducto(Producto p) void
+        +actualizarProducto(Producto p) void
+        +ajustarStock(int idProducto, int cantidad, Usuario u) void
+        +reservarStock(List~DetalleFactura~ detalles) void
+        +productosBajoMinimo() List~Producto~
+    }
+
+    class ServicioFacturacion {
+        -FacturaDAO facturaDAO
+        -ServicioInventario inventario
+        -AtomicInteger consecutivo
+        +crearFactura(Factura f) Factura
+        +anularFactura(int idFactura, Usuario u) void
+        +listarFacturas(LocalDate desde, LocalDate hasta) List~Factura~
+        -generarNumero() String
+    }
+
+    class GeneradorArchivoFactura {
+        -String carpetaDestino
+        +generarTXT(Factura f) File
+        +generarHTML(Factura f) File
+        -formatearMoneda(double monto) String
+    }
+
+    class ConexionBD {
+        <<Singleton>>
+        -ConexionBD instancia$
+        -String url
+        -String usuario
+        -String clave
+        +getInstancia()$ ConexionBD
+        +obtenerConexion() Connection
+    }
+
+    class UsuarioDAO {
+        +buscarPorNombreUsuario(String n) Usuario
+        +insertar(Usuario u) void
+        +actualizar(Usuario u) void
+    }
+    class ClienteDAO {
+        +insertar(Cliente c) void
+        +actualizar(Cliente c) void
+        +buscarPorId(int id) Cliente
+        +listar() List~Cliente~
+    }
+    class ProductoDAO {
+        +insertar(Producto p) void
+        +actualizar(Producto p) void
+        +actualizarStock(int id, int nuevoStock) void
+        +listar() List~Producto~
+    }
+    class FacturaDAO {
+        +insertar(Factura f) int
+        +buscarPorId(int id) Factura
+        +listarPorFechas(LocalDate d, LocalDate h) List~Factura~
+        +cambiarEstado(int id, EstadoFactura e) void
+    }
+
+    class ClienteSocket {
+        -String host
+        -int puerto
+        -Socket socket
+        -ObjectOutputStream salida
+        -ObjectInputStream entrada
+        +conectar() void
+        +enviar(Solicitud s) Respuesta
+        +desconectar() void
+    }
+
+    class VentanaLogin {
+        <<JFrame>>
+        -JTextField txtUsuario
+        -JPasswordField txtContrasena
+        -JButton btnIngresar
+        -btnIngresarActionPerformed() void
+    }
+    class VentanaPrincipal {
+        <<JFrame>>
+        -Usuario usuarioActual
+        -JTabbedPane pestanas
+        +mostrarModulo(String nombre) void
+    }
+    class PanelClientes {
+        <<JPanel>>
+        +cargarTabla() void
+        +guardarCliente() void
+    }
+    class PanelProductos {
+        <<JPanel>>
+        +cargarTabla() void
+        +guardarProducto() void
+        +ajustarStock() void
+    }
+    class PanelFacturacion {
+        <<JPanel>>
+        -Factura facturaActual
+        +agregarLinea() void
+        +emitirFactura() void
+        +guardarArchivo() void
+    }
+    class HiloActualizacionStock {
+        <<SwingWorker>>
+        #doInBackground() List~Producto~
+        #done() void
+    }
+
+    ServidorFacturacion "1" --> "*" ManejadorCliente : crea un hilo por cliente
+    ManejadorCliente ..> Solicitud : recibe
+    ManejadorCliente ..> Respuesta : envía
+    Solicitud --> TipoOperacion
+    ManejadorCliente --> ServicioAutenticacion
+    ManejadorCliente --> ServicioClientes
+    ManejadorCliente --> ServicioInventario
+    ManejadorCliente --> ServicioFacturacion
+    ServicioFacturacion --> ServicioInventario
+    ServicioFacturacion --> GeneradorArchivoFactura
+    ServicioAutenticacion --> UsuarioDAO
+    ServicioClientes --> ClienteDAO
+    ServicioInventario --> ProductoDAO
+    ServicioFacturacion --> FacturaDAO
+    UsuarioDAO ..> ConexionBD
+    ClienteDAO ..> ConexionBD
+    ProductoDAO ..> ConexionBD
+    FacturaDAO ..> ConexionBD
+
+    VentanaLogin --> ClienteSocket
+    VentanaLogin ..> VentanaPrincipal : abre
+    VentanaPrincipal *-- PanelClientes
+    VentanaPrincipal *-- PanelProductos
+    VentanaPrincipal *-- PanelFacturacion
+    PanelProductos ..> HiloActualizacionStock
+    PanelClientes --> ClienteSocket
+    PanelProductos --> ClienteSocket
+    PanelFacturacion --> ClienteSocket
+    ClienteSocket ..> ServidorFacturacion : TCP / sockets

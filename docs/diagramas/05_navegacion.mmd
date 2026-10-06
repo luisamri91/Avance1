@@ -1,0 +1,16 @@
+flowchart TD
+    L[P1. Inicio de sesión] -->|credenciales válidas| M[P2. Menú principal]
+    L -->|credenciales inválidas| L
+    M --> CL[P3. Gestión de clientes]
+    M --> PR[P4. Gestión de productos e inventario]
+    M --> FA[P5. Nueva factura]
+    M --> HI[P7. Historial de facturas]
+    M -->|solo administrador| US[P8. Gestión de usuarios]
+    PR --> CA[Diálogo: categorías de producto]
+    PR --> AJ[Diálogo: ajuste de stock]
+    FA --> BC[Diálogo: buscar cliente]
+    FA --> BP[Diálogo: buscar producto]
+    FA -->|Emitir| VP[P6. Vista previa de factura]
+    VP -->|Guardar archivo| AR[/Factura_FC-000123.txt/]
+    HI --> VP
+    M -->|Cerrar sesión| L
