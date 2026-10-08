@@ -51,6 +51,12 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 ### Documento v1 · 2026-10-06 · commit `9be1af4`
 * Primera versión del documento de diseño del Avance 1 (Proyecto 1, Fidecompro): clases con atributos, métodos y relaciones; 15 historias de usuario; 8 prototipos de pantalla; diagramas de arquitectura, secuencia y navegación.
 
+## Diagrama de clases (Word aparte)
+
+### Diagrama de clases v1 · 2026-10-08 · commit `7900a76`
+* Word aparte con solo la parte de clases del Avance 1: entidades o clases identificadas, sus atributos, métodos y relaciones (diagramas y descripción de cada clase, del dominio y cliente-servidor).
+* Se genera con `docs/construir_diagrama_clases.py` a partir de la sección "Entidades y clases" del documento de diseño v7, así que siempre coincide con él.
+
 ## Código
 
 ### Código v2 · 2026-10-08 · commit `99f55d4`
