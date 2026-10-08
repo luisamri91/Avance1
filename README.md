@@ -3,6 +3,10 @@
 Proyecto final del curso **Programación Cliente-Servidor Concurrente** (Proyecto 1 del enunciado).
 Aplicación de escritorio en Java Swing con arquitectura cliente-servidor por sockets y servidor multihilo.
 
+## Versiones
+
+Versión actual: **documento v1.2** y **código v0.1.0**. El detalle de cada cambio está en [`CHANGELOG.md`](CHANGELOG.md), y cada versión tiene su etiqueta en git (`doc-v1.2`, `codigo-v0.1.0`…).
+
 ## Avance 1 – Documento de diseño
 
 | Entregable | Archivo |
