@@ -1,15 +1,18 @@
 ---
 title: "Proyecto Final – Avance 1: Documento de Diseño"
-subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 10"
-author: "Estudiante: [Nombre completo] · Carné: [número]"
-date: "Programación Cliente-Servidor Concurrente · Profesor: Mario Alberto Vargas Montes · Octubre 2026"
+subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 11"
+author:
+  - "[Nombre completo] · Carné: [número]"
+  - "Universidad Fidélitas"
+  - "Programación Cliente-Servidor Concurrente"
+  - "Profesor: Mario Alberto Vargas Montes"
+date: "8 de octubre de 2026"
 lang: es
 ---
 
-**Control de versiones**
 
 | Versión | Fecha | Cambios |
-|---|---|---|
+|----------|----------|------------------------------------------------------------|
 | v1 | 06/10/2026 | Primera versión: clases, 15 historias de usuario, 8 prototipos y diagramas de arquitectura, secuencia y navegación |
 | v2 | 08/10/2026 | Modelo de clases ajustado al material de las semanas 1 a 5 (estilo MultiSports); tabla de temas del curso; hilos, sockets, Swing y BD como arquitectura prevista; historias y prototipo de productos por tipo |
 | v3 | 08/10/2026 | Se agrega esta tabla de control de versiones y la versión en el nombre del archivo |
@@ -20,6 +23,9 @@ lang: es
 | v8 | 08/10/2026 | Cada colección según su uso, como en los ejemplos del profesor: `List` donde importa el orden, `Set` para advertencias sin repetir, `HashMap` para usuarios y clientes por id, `TreeMap` para facturas ordenadas por número y `CopyOnWriteArrayList` para los clientes conectados al servidor; nueva tabla «Colecciones: cuál se usa y por qué» en la sección 4.2 |
 | v9 | 08/10/2026 | La tabla «Colecciones: cuál se usa y por qué» cita el ejemplo del profesor que respalda cada elección (`EjemploList`, `EjemploSet`, `EjemploMap`, `EjemploTreeMap`, `EjemploCollection`) y explica, con `EjemploColeccionGenerica` y `EjemploColeccionNoGenerica`, por qué todas las colecciones son genéricas |
 | v10 | 08/10/2026 | La sección 4.1 abre con la vista general del diagrama de clases en una página completa, con su simbología (la misma imagen del diagrama simplificado v4 de draw.io, ya con las colecciones), y menciona los archivos editables de draw.io; la tabla del inicio indica dónde está |
+| v11 | 08/10/2026 | Formato APA 7: márgenes de 2,54 cm (también en las páginas horizontales de las historias), Times New Roman 12, interlineado doble con sangría en el texto, número de página arriba a la derecha, portada de estudiante, títulos de nivel 1 a 3 al estilo APA y tablas y figuras numeradas con su título en cursiva arriba |
+
+: Control de versiones del documento
 
 # 1. Introducción
 
@@ -33,6 +39,8 @@ La cadena de venta al por mayor **Fidecompro** necesita una aplicación de escri
 | **Diagrama de clases** | Secciones 4.1 y 4.3 | Vista general en una página con su simbología (4.1), diagramas detallados con atributos, métodos y relaciones (4.1 y 4.3); la sección 4.2 describe cada clase |
 | **Bocetos (mockups) de las pantallas** | Sección 6 | Inicio de sesión, menú principal y pantallas CRUD de cada clase (clientes, productos, categorías, usuarios y facturas), más la ventana del servidor |
 
+: Partes del Avance 1 y dónde se encuentran
+
 ## 1.1 Requerimientos del enunciado
 
 | # | Requerimiento del enunciado | Historias de usuario que lo cubren |
@@ -42,6 +50,8 @@ La cadena de venta al por mayor **Fidecompro** necesita una aplicación de escri
 | R3 | Crear facturas a los clientes | HU 11, HU 12, HU 14, HU 15 |
 | R4 | Entregar la factura física (archivo con el desglose de pago) | HU 13 |
 | R5 | Ingreso con usuario y contraseña | HU 1, HU 2, HU 3 |
+
+: Requerimientos del enunciado y las historias de usuario que los cubren
 
 ## 1.2 Requisitos del proyecto final
 
@@ -56,6 +66,8 @@ El profesor indicó que el proyecto final debe cumplir cuatro requisitos técnic
 | **CRUD** completo desde pantallas | Crear, consultar, modificar y eliminar usuarios, clientes, categorías y productos; crear, consultar y anular facturas | Secciones 2 y 8 |
 | Varios clientes a la vez | Se pueden abrir varias ventanas cliente al mismo tiempo y el servidor las atiende en paralelo | HU 12, HU 16 |
 | Video final | Guion de demostración de todas las funcionalidades | Sección 8 |
+
+: Requisitos del proyecto final y cómo los cumple el diseño
 
 ## 1.3 Alcance y decisiones técnicas
 
@@ -100,6 +112,8 @@ El modelo de clases sigue la forma de trabajo vista en las semanas 1 a 5 del cur
 | `Comparable` y `Comparator` (semana 4) | `Producto implements Comparable<Producto>` (orden por nombre) y `ComparadorPorExistencias` |
 | Excepciones propias y `try/catch/finally` (semana 4) | `StockInsuficienteException`, `CredencialesInvalidasException`, `RegistroNoEncontradoException`; `IOException` al escribir la factura |
 
+: Conceptos del curso aplicados en el diseño
+
 Las clases se organizan en paquetes de un proyecto Maven de NetBeans:
 
 | Paquete | Contenido |
@@ -109,6 +123,8 @@ Las clases se organizan en paquetes de un proyecto Maven de NetBeans:
 | `com.fidecompro.servidor` | Servidor de sockets, hilos de atención y servicios (arquitectura prevista, sección 4.3) |
 | `com.fidecompro.datos` | Conexión a la base de datos y clases DAO (arquitectura prevista) |
 | `com.fidecompro.cliente` | Conexión del cliente y ventanas Swing (arquitectura prevista) |
+
+: Paquetes del proyecto
 
 ## 4.1 Diagramas de clases del modelo de dominio
 
@@ -137,6 +153,8 @@ Contrato que obliga a cada objeto a describirse a sí mismo como texto. Se usa p
 |---|---|
 | mostrarInformacion(): String | Devuelve la información del objeto lista para mostrar o imprimir |
 
+: Métodos de la interface Mostrable
+
 ### Persona (abstracta)
 Datos comunes de quien usa el sistema y de a quien se le vende. No se instancia directamente. Implementa `Mostrable`.
 
@@ -145,6 +163,8 @@ Datos comunes de quien usa el sistema y de a quien se le vende. No se instancia 
 | nombre | String | Nombre completo o razón social |
 | telefono | String | Teléfono de contacto |
 | correo | String | Correo electrónico |
+
+: Atributos de la clase Persona
 
 **Relaciones:** superclase de `Usuario` y `Cliente` (herencia jerárquica).
 
@@ -160,11 +180,15 @@ Persona que ingresa al sistema: vendedor o administrador.
 | rol | Rol | `ADMINISTRADOR` o `VENDEDOR` |
 | activo | boolean | Un usuario inactivo no puede ingresar |
 
+: Atributos de la clase Usuario
+
 | Método | Descripción |
 |---|---|
 | validarCredenciales(String, String): boolean | Compara usuario y contraseña con los suyos y revisa que esté activo |
 | esAdministrador(): boolean | Indica si puede entrar a los módulos restringidos |
 | mostrarInformacion(): String | Sobrescribe el de `Persona` agregando usuario y rol |
+
+: Métodos de la clase Usuario
 
 **Relaciones:** emite muchas `Factura` (1 a \*); lo administra `RegistroUsuarios`.
 
@@ -181,9 +205,13 @@ Comercio o persona a quien Fidecompro le vende.
 | fechaRegistro | LocalDate | Fecha en que se creó el registro |
 | activo | boolean | Los clientes inactivos no aparecen al facturar |
 
+: Atributos de la clase Cliente
+
 | Método | Descripción |
 |---|---|
 | mostrarInformacion(): String | Sobrescribe el de `Persona` agregando identificación y dirección |
+
+: Métodos de la clase Cliente
 
 **Relaciones:** tiene muchas `Factura` (1 a \*); lo administra `RegistroClientes`.
 
@@ -203,6 +231,8 @@ Representa cualquier artículo que vende la cadena. Como el enunciado indica que
 | stockMinimo | int | Nivel a partir del cual se alerta reabastecer |
 | categoria | Categoria | Categoría a la que pertenece |
 
+: Atributos de la clase Producto
+
 | Método | Descripción |
 |---|---|
 | obtenerPorcentajeImpuesto(): double | **Abstracto.** Cada tipo de producto define su impuesto (polimorfismo) |
@@ -211,6 +241,8 @@ Representa cualquier artículo que vende la cadena. Como el enunciado indica que
 | necesitaReabastecer(): boolean | `existencias <= stockMinimo` |
 | compareTo(Producto): int | Orden natural por nombre, para listar el catálogo con `Collections.sort` |
 | mostrarInformacion(): String | Código, nombre, precio y existencias |
+
+: Métodos de la clase Producto
 
 **Relaciones:** superclase de `Abarrote`, `Bebida` y `ArticuloHogar`; agregado en `Categoria` (\* a 1); referenciado por `DetalleFactura`.
 
@@ -221,6 +253,8 @@ Representa cualquier artículo que vende la cadena. Como el enunciado indica que
 | **Abarrote** (arroz, frijoles, aceite, café…) | `fechaVencimiento: LocalDate`, `pesoKg: double`, `canastaBasica: boolean`; constante `IVA_CANASTA_BASICA = 0.01` | 1 % si es canasta básica, si no `IVA_GENERAL` | `estaVencido(): boolean` |
 | **Bebida** (refrescos, jugos, agua) | `volumenMl: int`, `unidadesPorPaquete: int`, `retornable: boolean` | `IVA_GENERAL` | — |
 | **ArticuloHogar** (limpieza e higiene) | `marca: String`, `presentacion: String`, `advertencias: Set<String>` (sin repetidas) | `IVA_GENERAL` | `agregarAdvertencia(String)`, `eliminarAdvertencia(String)` |
+
+: Subclases de Producto
 
 Las tres sobrescriben `mostrarInformacion()` llamando a `super.mostrarInformacion()` y agregando sus datos propios.
 
@@ -234,6 +268,8 @@ Agrupa productos para ordenar el catálogo (Abarrotes, Bebidas, Limpieza, Higien
 | nombre, descripcion | String | Datos de la categoría |
 | productos | List&lt;Producto&gt; | Productos de la categoría, en orden |
 
+: Atributos de la clase Categoria
+
 | Método | Descripción |
 |---|---|
 | agregarProducto(Producto): void | Agrega un producto y le asigna esta categoría |
@@ -241,6 +277,8 @@ Agrupa productos para ordenar el catálogo (Abarrotes, Bebidas, Limpieza, Higien
 | eliminarProducto(int idProducto): void | Quita el producto; lanza `RegistroNoEncontradoException` si no existe |
 | buscarProducto(int idProducto): Producto | Busca por id |
 | mostrarProductos(): String | Une el `mostrarInformacion()` de cada producto |
+
+: Métodos de la clase Categoria
 
 **Relaciones:** agregación con `Producto` (1 a \*); agregada en `Inventario`.
 
@@ -253,6 +291,8 @@ Punto central del catálogo de una sede.
 | sede | String | Sucursal de Fidecompro |
 | categorias | List&lt;Categoria&gt; | Categorías registradas |
 
+: Atributos de la clase Inventario
+
 | Método | Descripción |
 |---|---|
 | agregarCategoria / editarCategoria / eliminarCategoria | CRUD de categorías por id |
@@ -261,6 +301,8 @@ Punto central del catálogo de una sede.
 | mostrarProductosCategoria(int idCategoria): String | Lista los productos de una categoría |
 | buscarProducto(String codigo): Producto | Busca en todas las categorías; se usa al facturar |
 | productosBajoMinimo(): List&lt;Producto&gt; | Productos con `necesitaReabastecer()`, ordenados con `ComparadorPorExistencias` |
+
+: Métodos de la clase Inventario
 
 ### ComparadorPorExistencias (implements Comparator&lt;Producto&gt;)
 Orden alterno al natural: de menos a más existencias, para mostrar primero lo que urge reabastecer.
@@ -280,6 +322,8 @@ Documento de venta emitido a un cliente. Implementa `Mostrable`.
 | metodoPago | MetodoPago | Efectivo, tarjeta o transferencia |
 | estado | EstadoFactura | `EMITIDA` o `ANULADA` |
 
+: Atributos de la clase Factura
+
 | Método | Descripción |
 |---|---|
 | agregarDetalle(Producto, int): void | Crea la línea; si el producto ya está, suma la cantidad. Lanza `StockInsuficienteException` |
@@ -288,6 +332,8 @@ Documento de venta emitido a un cliente. Implementa `Mostrable`.
 | anular(): void | Cambia el estado a `ANULADA` |
 | mostrarInformacion(): String | Arma el desglose completo de la factura como texto |
 | generarArchivo(String carpeta): void | Escribe `mostrarInformacion()` en `FC-000123.txt` con `FileWriter`, manejando `IOException` con `try/catch/finally` |
+
+: Métodos de la clase Factura
 
 **Relaciones:** **composición** con `DetalleFactura` (1 a 1..\*): las líneas no existen sin su factura. Asociación con `Cliente` y `Usuario` (\* a 1). La administra `RegistroFacturas`.
 
@@ -300,12 +346,16 @@ Línea de una factura. Implementa `Mostrable`.
 | cantidad | int | Unidades |
 | precioUnitario | double | Copia del `valorVenta` al momento de la venta, para conservar el histórico |
 
+: Atributos de la clase DetalleFactura
+
 | Método | Descripción |
 |---|---|
 | calcularSubtotal(): double | `cantidad × precioUnitario` |
 | calcularImpuesto(): double | `subtotal × producto.obtenerPorcentajeImpuesto()` |
 | calcularTotal(): double | Subtotal más impuesto |
 | mostrarInformacion(): String | Una línea del desglose: cantidad, descripción, precio y total |
+
+: Métodos de la clase DetalleFactura
 
 ### RegistroUsuarios, RegistroClientes y RegistroFacturas
 Clases que administran las colecciones, con el mismo patrón de `Inventario`. Usuarios y clientes se guardan en un `Map` cuya clave es su id, y las facturas en un `TreeMap` cuya clave es el número, así buscar, editar o eliminar no necesita recorrer toda la colección.
@@ -316,6 +366,8 @@ Clases que administran las colecciones, con el mismo patrón de `Inventario`. Us
 | **RegistroClientes** | `clientes: Map<Integer, Cliente>` (clave: id) | `agregarCliente` (rechaza identificaciones repetidas), `editarCliente`, `eliminarCliente`, `desactivarCliente`, `buscarCliente(identificacion)`, `mostrarClientes` |
 | **RegistroFacturas** | `facturas: TreeMap<Integer, Factura>` (clave: número, ordenadas) | `agregarFactura`, `buscarFactura(numero)`, `anularFactura(numero)` (devuelve las existencias al inventario), `facturasPorFecha(desde, hasta)`, `tieneFacturasCliente(idCliente)` y `tieneFacturasUsuario(idUsuario)` (se consultan antes de eliminar) |
 
+: Clases de registro
+
 ### Excepciones propias (extends Exception)
 
 | Excepción | Cuándo se lanza |
@@ -323,6 +375,8 @@ Clases que administran las colecciones, con el mismo patrón de `Inventario`. Us
 | StockInsuficienteException | Se intenta facturar o descontar más unidades de las que hay |
 | CredencialesInvalidasException | Usuario o contraseña incorrectos, o usuario inactivo |
 | RegistroNoEncontradoException | Se busca, edita o elimina un id o identificación que no existe |
+
+: Excepciones propias
 
 ### Enumeraciones
 * `Rol`: ADMINISTRADOR, VENDEDOR.
@@ -341,6 +395,8 @@ Como en los ejemplos de colecciones del profesor (semana 4), no todo se guarda e
 | `Map` (`HashMap`) | `RegistroUsuarios.usuarios`, `RegistroClientes.clientes` | El CRUD es por id: `get(id)`, `put(id, …)` y `remove(id)` llegan directo al registro sin recorrer la colección, y no puede haber dos con el mismo id (igual que la llave primaria en la base de datos) | `EjemploMap`: pares clave-valor con `put`, `get`, `containsKey` y `remove` |
 | `TreeMap` | `RegistroFacturas.facturas` | Se busca la factura por su número y, además, el `TreeMap` las mantiene ordenadas por número: el historial sale en orden y `firstKey()`/`lastKey()` dan la primera y la última | `EjemploTreeMap`: claves ordenadas, primera y última entrada y rangos con `subMap` |
 | `CopyOnWriteArrayList` | `ServidorFacturacion.clientesConectados` | Varios hilos agregan y quitan clientes conectados mientras la ventana del servidor recorre la lista; esta lista es segura para hilos | No está en los ejemplos: corresponde a hilos, que el curso verá más adelante |
+
+: Colecciones utilizadas y por qué
 
 En el servidor, cuando varios hilos `ManejadorCliente` usen los mismos registros a la vez, los `HashMap` se crean como `ConcurrentHashMap` o se protegen con métodos `synchronized`, como ya se hace en `agregarFactura` y `anularFactura`.
 
@@ -371,6 +427,8 @@ Este diagrama es la **arquitectura prevista** para los siguientes avances, cuand
 | **PanelClientes, PanelProductos, PanelFacturacion** (`JPanel`) | Pantallas de cada módulo | `cargarTabla()`, `guardar…()`, `eliminar…()`, `emitirFactura()` | Usan `ClienteSocket` |
 | **HiloActualizacionStock** (`SwingWorker`) | Refresca la tabla de inventario en segundo plano sin congelar la interfaz | `doInBackground()`, `done()` | Usado por `PanelProductos` |
 
+: Clases cliente-servidor
+
 ## 4.5 Flujo concurrente de emisión de una factura
 
 El siguiente diagrama de secuencia muestra cómo se emite una factura y dónde se controla la concurrencia.
@@ -391,6 +449,8 @@ La base de datos `fidecompro` guarda todo lo que se hace desde las pantallas. Se
 | productos | Productos de los tres tipos, con existencias | id | Pertenece a una categoría; aparece en muchas líneas de factura |
 | facturas | Encabezado de cada factura | numero | Pertenece a un cliente y a un usuario |
 | detalle_factura | Líneas de cada factura con el precio e IVA del momento | numero_factura + linea | Pertenece a una factura y a un producto |
+
+: Tablas de la base de datos
 
 # 5. Historias de usuario
 
@@ -419,6 +479,8 @@ TABLA_HISTORIAS_USUARIO
 | HU 15 | Anular factura | Administrador | Media | 3 | P7 |
 | HU 16 | Ventana del servidor | Administrador | Alta | 5 | P9 |
 
+: Resumen de las historias de usuario
+
 # 6. Prototipos de interfaz gráfica
 
 Los prototipos (bocetos o mockups) representan las ventanas `JFrame` de la aplicación final (look and feel Nimbus): nueve del cliente y una del servidor. Se elaboraron como maquetas HTML/CSS, incluidas en `docs/prototipos/html/`, y se exportaron a imagen. Los datos mostrados son de ejemplo.
@@ -435,6 +497,8 @@ Cada clase que el usuario administra tiene su pantalla para crear, consultar, mo
 | P8 · Gestión de usuarios | `Usuario` | Crear, consultar, modificar y eliminar |
 | P5, P6 y P7 · Facturación | `Factura` y `DetalleFactura` | Crear, ver la factura física, consultar el historial y anular |
 | P9 · Ventana del servidor | `ServidorFacturacion` | Iniciar, detener y ver clientes conectados |
+
+: Pantallas y operaciones CRUD por clase
 
 ## 6.1 Mapa de navegación
 
@@ -514,6 +578,8 @@ Se abre desde la pantalla de productos. CRUD de categorías con su nombre y desc
 | HU 14, HU 15 | Factura, EstadoFactura, RegistroFacturas | P7 |
 | HU 16 | VentanaServidor, ServidorFacturacion, ManejadorCliente | P9 |
 
+: Trazabilidad entre historias, clases y pantallas
+
 # 8. Plan de demostración del proyecto final
 
 El video final debe mostrar todas las funcionalidades, el CRUD completo desde las pantallas, que todo queda guardado en la base de datos y que el servidor soporta varios clientes a la vez. Esta matriz muestra qué operación del CRUD tiene cada entidad y en qué pantalla se hace:
@@ -525,6 +591,8 @@ El video final debe mostrar todas las funcionalidades, el CRUD completo desde la
 | Categorías | Sí | Sí | Sí | Sí (si no tiene productos) | P10 |
 | Productos | Sí | Sí | Sí | Sí (si está en facturas, se desactiva) | P4 |
 | Facturas | Sí | Sí (historial) | No: una factura emitida no se modifica | Se anula, no se borra | P5, P6, P7 |
+
+: Operaciones CRUD que se mostrarán en el video
 
 Guion previsto para el video:
 

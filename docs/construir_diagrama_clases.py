@@ -14,16 +14,21 @@ from pathlib import Path
 from docx import Document
 
 from construir_documento import FUENTE, dar_formato_general
+from formato_apa import aplicar_apa
 
-VERSION = 5
+VERSION = 6
 SALIDA = Path(f"Avance1_Diagrama_de_Clases_v{VERSION}.docx")
 TEMPORAL = Path("_diagrama_clases.md")
 
 PORTADA = f"""---
 title: "Proyecto Final – Avance 1: Diagrama de clases"
 subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión {VERSION}"
-author: "Estudiante: [Nombre completo] · Carné: [número]"
-date: "Programación Cliente-Servidor Concurrente · Profesor: Mario Alberto Vargas Montes · Octubre 2026"
+author:
+  - "[Nombre completo] · Carné: [número]"
+  - "Universidad Fidélitas"
+  - "Programación Cliente-Servidor Concurrente"
+  - "Profesor: Mario Alberto Vargas Montes"
+date: "8 de octubre de 2026"
 lang: es
 ---
 
@@ -54,6 +59,7 @@ def main():
         TEMPORAL.unlink()
     doc = Document(SALIDA.name)
     dar_formato_general(doc)
+    aplicar_apa(doc)
     doc.save(SALIDA.name)
     print("Generado", SALIDA.name)
 

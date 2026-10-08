@@ -3,7 +3,8 @@
 Uso (desde la carpeta docs):  python3 construir_documento.py
 
 1. Convierte el Markdown a .docx con pandoc.
-2. Da formato: tamaño carta, imágenes al ancho de la página y tablas con bordes.
+2. Da formato APA 7 (formato_apa.py): tamaño carta, márgenes de 2,54 cm, letra, interlineado,
+   número de página, portada y tablas y figuras numeradas.
 3. Reemplaza los marcadores TABLA_REQUERIMIENTOS_… por las tablas de
    requerimientos (requerimientos.json) y TABLA_HISTORIAS_USUARIO por la tabla de
    historias de usuario (historias_usuario.json), esta en una sección horizontal.
@@ -27,6 +28,8 @@ from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.shared import Cm, Pt, RGBColor
 
+from formato_apa import aplicar_apa, bordes_apa, poner_numero_pagina
+
 CARPETA = Path(__file__).resolve().parent
 FUENTE = CARPETA / "Avance1_Documento_Diseno.md"
 HISTORIAS = CARPETA / "historias_usuario.json"
@@ -38,21 +41,22 @@ MARCADORES_REQUERIMIENTOS = {
 }
 
 ANCHO_CARTA, ALTO_CARTA = Cm(21.59), Cm(27.94)
+MARGEN = Cm(2.54)  # APA 7: una pulgada en los cuatro lados
 AZUL_ENCABEZADO = "1F3864"
 GRIS_SEPARADOR = "D9D9D9"
 AZUL_REQUERIMIENTOS = "1F4E79"
 CELESTE_FILA = "BDD7EE"
-COLUMNAS_REQUERIMIENTOS = [("#", 0.9), ("Requerimiento", 5.0), ("Descripción", 9.4), ("Prioridad", 2.2)]
+COLUMNAS_REQUERIMIENTOS = [("#", 0.9), ("Requerimiento", 4.6), ("Descripción", 8.8), ("Prioridad", 2.2)]
 COLUMNAS_HU = [
-    ("Identificador (ID) de la historia", 1.7),
-    ("Rol", 2.1),
-    ("Característica / Funcionalidad", 2.9),
-    ("Razón / Resultado", 2.9),
-    ("Número (#) de escenario", 1.3),
-    ("Criterio de aceptación (Título)", 2.6),
-    ("Contexto", 4.0),
-    ("Evento", 3.0),
-    ("Resultado / Comportamiento esperado", 4.4),
+    ("Identificador (ID) de la historia", 2.2),
+    ("Rol", 2.4),
+    ("Característica / Funcionalidad", 2.4),
+    ("Razón / Resultado", 2.3),
+    ("Número (#) de escenario", 1.6),
+    ("Criterio de aceptación (Título)", 2.3),
+    ("Contexto", 3.2),
+    ("Evento", 2.7),
+    ("Resultado / Comportamiento esperado", 3.7),
 ]
 
 
@@ -85,8 +89,10 @@ def poner_bordes(tabla, color="8E9BAB"):
 def dar_formato_general(doc):
     seccion = doc.sections[0]
     seccion.page_width, seccion.page_height = ANCHO_CARTA, ALTO_CARTA
-    seccion.left_margin = seccion.right_margin = Cm(2)
-    ancho_max, alto_max = Cm(17.5), Cm(20.5)  # deja lugar al título y al pie de figura
+    seccion.left_margin = seccion.right_margin = MARGEN
+    seccion.top_margin = seccion.bottom_margin = MARGEN
+    poner_numero_pagina(seccion)
+    ancho_max, alto_max = Cm(16.5), Cm(18.5)  # deja lugar al número y al título de la figura
     for imagen in doc.inline_shapes:
         proporcion = imagen.height / imagen.width
         ancho, alto = ancho_max, int(ancho_max * proporcion)
@@ -94,9 +100,8 @@ def dar_formato_general(doc):
             alto, ancho = alto_max, int(alto_max / proporcion)
         imagen.width, imagen.height = int(ancho), int(alto)
     for tabla in doc.tables:
-        poner_bordes(tabla)
+        bordes_apa(tabla)
         for celda in tabla.rows[0].cells:
-            sombrear(celda, "DCE4EE")
             for parrafo in celda.paragraphs:
                 for trozo in parrafo.runs:
                     trozo.bold = True
@@ -105,6 +110,16 @@ def dar_formato_general(doc):
                 for parrafo in celda.paragraphs:
                     for trozo in parrafo.runs:
                         trozo.font.size = Pt(9.5)
+
+
+def margenes_celda(tabla, ancho):
+    margenes = OxmlElement("w:tblCellMar")
+    for lado in ("left", "right"):
+        margen = OxmlElement(f"w:{lado}")
+        margen.set(qn("w:w"), str(ancho.twips))
+        margen.set(qn("w:type"), "dxa")
+        margenes.append(margen)
+    tabla._tbl.tblPr.append(margenes)
 
 
 def escribir(celda, texto, negrita=False, color=None, centrado=False, tamano=8.5):
@@ -125,6 +140,7 @@ def construir_tabla_historias(doc, historias):
     tabla.alignment = WD_TABLE_ALIGNMENT.CENTER
     tabla.autofit = False
     poner_bordes(tabla, "000000")
+    margenes_celda(tabla, Cm(0.1))  # con márgenes de 2,54 cm hay menos ancho: celdas más justas
 
     encabezado = tabla.rows[0]
     encabezado_pr = encabezado._tr.get_or_add_trPr()
@@ -134,25 +150,25 @@ def construir_tabla_historias(doc, historias):
         celda = encabezado.cells[i]
         sombrear(celda, AZUL_ENCABEZADO)
         celda.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.CENTER
-        escribir(celda, titulo, color="FFFFFF", centrado=True)
+        escribir(celda, titulo, color="FFFFFF", centrado=True, tamano=7.5)
 
     fila = 1
     for historia in historias:
         inicio = fila
         for numero, (titulo, contexto, evento, resultado) in enumerate(historia["escenarios"], start=1):
             celdas = tabla.rows[fila].cells
-            escribir(celdas[4], str(numero), centrado=True)
-            escribir(celdas[5], titulo)
-            escribir(celdas[6], contexto)
-            escribir(celdas[7], evento)
-            escribir(celdas[8], resultado)
+            escribir(celdas[4], str(numero), centrado=True, tamano=8)
+            escribir(celdas[5], titulo, tamano=8)
+            escribir(celdas[6], contexto, tamano=8)
+            escribir(celdas[7], evento, tamano=8)
+            escribir(celdas[8], resultado, tamano=8)
             fila += 1
         # Las cuatro primeras columnas se combinan en todos los escenarios de la historia
         for columna, clave in enumerate(("id", "rol", "caracteristica", "razon")):
             combinada = tabla.cell(inicio, columna).merge(tabla.cell(fila - 1, columna))
             for sobrante in combinada.paragraphs[1:]:  # merge deja un párrafo vacío por celda
                 sobrante._p.getparent().remove(sobrante._p)
-            escribir(combinada, historia[clave])
+            escribir(combinada, historia[clave], tamano=8)
         for celda in tabla.rows[fila].cells:  # fila gris que separa una historia de otra
             sombrear(celda, GRIS_SEPARADOR)
         fila += 1
@@ -182,6 +198,18 @@ def construir_tabla_requerimientos(doc, requerimientos):
     return tabla
 
 
+TITULOS_REQUERIMIENTOS = {"funcionales": "Requerimientos funcionales",
+                          "no_funcionales": "Requerimientos no funcionales"}
+
+
+def poner_titulo_tabla(doc, marcador, titulo):
+    """El párrafo del marcador pasa a ser el título de la tabla (APA lo numera después)."""
+    for trozo in marcador.runs:
+        trozo._r.getparent().remove(trozo._r)
+    marcador.style = doc.styles["Table Caption"]
+    marcador.add_run(titulo)
+
+
 def insertar_tablas_requerimientos(doc):
     with open(REQUERIMIENTOS, encoding="utf-8") as archivo:
         requerimientos = json.load(archivo)
@@ -189,7 +217,7 @@ def insertar_tablas_requerimientos(doc):
         marcador = next(p for p in doc.paragraphs if p.text.strip() == marcador_texto)
         tabla = construir_tabla_requerimientos(doc, requerimientos[clave])
         marcador._p.addnext(tabla._tbl)
-        marcador._p.getparent().remove(marcador._p)
+        poner_titulo_tabla(doc, marcador, TITULOS_REQUERIMIENTOS[clave])
 
 
 def fijar_anchos(tabla, columnas):
@@ -219,10 +247,8 @@ def propiedades_de_seccion(base, horizontal):
         tamano.set(qn("w:w"), str(ALTO_CARTA.twips))
         tamano.set(qn("w:h"), str(ANCHO_CARTA.twips))
         tamano.set(qn("w:orient"), "landscape")
-        for lado in ("w:left", "w:right"):
-            margenes.set(qn(lado), str(Cm(1.5).twips))
-        for lado in ("w:top", "w:bottom"):
-            margenes.set(qn(lado), str(Cm(1.8).twips))
+        for lado in ("w:left", "w:right", "w:top", "w:bottom"):
+            margenes.set(qn(lado), str(MARGEN.twips))
     return seccion
 
 
@@ -243,7 +269,7 @@ def insertar_tabla_historias(doc):
 
     tabla = construir_tabla_historias(doc, historias)
     marcador._p.addnext(tabla._tbl)
-    marcador._p.getparent().remove(marcador._p)
+    poner_titulo_tabla(doc, marcador, "Historias de usuario con sus escenarios de aceptación")
 
     # Un párrafo vacío después de la tabla cierra la sección horizontal
     cierre = OxmlElement("w:p")
@@ -262,6 +288,7 @@ def main():
     dar_formato_general(doc)
     insertar_tablas_requerimientos(doc)
     insertar_tabla_historias(doc)
+    aplicar_apa(doc)
     doc.save(salida)
     subprocess.run(["soffice", "--headless", "--convert-to", "pdf", salida.name],
                    cwd=CARPETA, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
