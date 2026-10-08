@@ -5,13 +5,13 @@ Aplicación de escritorio en Java Swing con arquitectura cliente-servidor por so
 
 ## Versiones
 
-Versión actual: **documento v3** y **código v1**. El detalle de cada cambio está en [`CHANGELOG.md`](CHANGELOG.md), con el commit de cada versión.
+Versión actual: **documento v4** y **código v1**. El detalle de cada cambio está en [`CHANGELOG.md`](CHANGELOG.md), con el commit de cada versión.
 
 ## Avance 1 – Documento de diseño
 
 | Entregable | Archivo |
 |---|---|
-| Documento de diseño (para entregar) | [`docs/Avance1_Documento_Diseno_v3.pdf`](docs/Avance1_Documento_Diseno_v3.pdf) · [`.docx`](docs/Avance1_Documento_Diseno_v3.docx) |
+| Documento de diseño (para entregar) | [`docs/Avance1_Documento_Diseno_v4.pdf`](docs/Avance1_Documento_Diseno_v4.pdf) · [`.docx`](docs/Avance1_Documento_Diseno_v4.docx) |
 | Fuente editable del documento | [`docs/Avance1_Documento_Diseno.md`](docs/Avance1_Documento_Diseno.md) |
 | Diagramas (clases, arquitectura, secuencia, navegación) | [`docs/diagramas/`](docs/diagramas) (Mermaid) → [`docs/img/`](docs/img) |
 | Prototipos de interfaz | [`docs/prototipos/html/`](docs/prototipos/html) → [`docs/img/P*.png`](docs/img) |
@@ -19,7 +19,7 @@ Versión actual: **documento v3** y **código v1**. El detalle de cada cambio es
 Contenido del documento:
 
 1. **Entidades o clases**: modelo de dominio (Usuario, Cliente, CategoriaProducto, Producto, MovimientoInventario, Factura, DetalleFactura y enumeraciones) y clases cliente-servidor (servidor, hilos, servicios, DAO, ventanas Swing), con atributos, métodos y relaciones.
-2. **Historias de usuario**: 15 historias (HU-01 a HU-15) con criterios de aceptación, prioridad y estimación.
+2. **Historias de usuario**: 15 historias (HU 1 a HU 15) en tabla con 57 escenarios de aceptación (Dado que / Cuando / Resultado esperado); se editan en `docs/historias_usuario.json`.
 3. **Prototipos**: 8 pantallas (inicio de sesión, menú, clientes, productos e inventario, nueva factura, factura física, historial y usuarios) más el mapa de navegación.
 
 ## Código de prueba del modelo (`Fidecompro/`)
@@ -40,5 +40,5 @@ Los diagramas se escriben en Mermaid (`docs/diagramas/*.mmd`) y los prototipos e
 
 ```bash
 cd docs
-pandoc Avance1_Documento_Diseno.md -o Avance1_Documento_Diseno_vN.docx --resource-path=.
+python3 construir_documento.py   # genera Avance1_Documento_Diseno_vN.docx y .pdf
 ```

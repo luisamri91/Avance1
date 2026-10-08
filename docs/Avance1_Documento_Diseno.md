@@ -1,6 +1,6 @@
 ---
 title: "Proyecto Final – Avance 1: Documento de Diseño"
-subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 3"
+subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 4"
 author: "Estudiante: [Nombre completo] · Carné: [número]"
 date: "Programación Cliente-Servidor Concurrente · Profesor(a): [nombre] · Octubre 2026"
 lang: es
@@ -13,6 +13,7 @@ lang: es
 | v1 | 06/10/2026 | Primera versión: clases, 15 historias de usuario, 8 prototipos y diagramas de arquitectura, secuencia y navegación |
 | v2 | 08/10/2026 | Modelo de clases ajustado al material de las semanas 1 a 5 (estilo MultiSports); tabla de temas del curso; hilos, sockets, Swing y BD como arquitectura prevista; historias y prototipo de productos por tipo |
 | v3 | 08/10/2026 | Se agrega esta tabla de control de versiones y la versión en el nombre del archivo |
+| v4 | 08/10/2026 | Historias de usuario en formato de tabla con escenarios de aceptación (Dado que / Cuando / Resultado esperado) |
 
 # 1. Introducción
 
@@ -22,11 +23,11 @@ La cadena de venta al por mayor **Fidecompro** necesita una aplicación de escri
 
 | # | Requerimiento del enunciado | Historias de usuario que lo cubren |
 |---|---|---|
-| R1 | Creación de los registros de los clientes | HU-04, HU-05, HU-06 |
-| R2 | Registro de los productos (varios tipos de productos) | HU-07, HU-08, HU-09, HU-10 |
-| R3 | Crear facturas a los clientes | HU-11, HU-12, HU-14, HU-15 |
-| R4 | Entregar la factura física (archivo con el desglose de pago) | HU-13 |
-| R5 | Ingreso con usuario y contraseña | HU-01, HU-02, HU-03 |
+| R1 | Creación de los registros de los clientes | HU 4, HU 5, HU 6 |
+| R2 | Registro de los productos (varios tipos de productos) | HU 7, HU 8, HU 9, HU 10 |
+| R3 | Crear facturas a los clientes | HU 11, HU 12, HU 14, HU 15 |
+| R4 | Entregar la factura física (archivo con el desglose de pago) | HU 13 |
+| R5 | Ingreso con usuario y contraseña | HU 1, HU 2, HU 3 |
 
 ## 1.2 Alcance y decisiones técnicas
 
@@ -313,153 +314,29 @@ El siguiente diagrama de secuencia muestra cómo se emite una factura y dónde s
 
 # 3. Historias de usuario
 
-Prioridad según MoSCoW (**Alta** = imprescindible para la entrega final). La estimación está en puntos de historia (1 = muy simple, 8 = compleja).
+Cada historia sigue el formato *Como un \<rol\>, necesito \<funcionalidad\>, con la finalidad de \<resultado\>* y se acompaña de sus escenarios de aceptación en la forma **Dado que** (contexto), **Cuando** (evento) y **resultado esperado**. Los escenarios cubren el caso exitoso y los errores que el sistema debe controlar.
 
-## Módulo de acceso
+TABLA_HISTORIAS_USUARIO
 
-**HU-01 · Iniciar sesión**
-*Como* vendedor o administrador, *quiero* ingresar a la aplicación con mi usuario y contraseña *para* que solo el personal autorizado pueda facturar y modificar el inventario.
-Prioridad: Alta · Estimación: 3 · Pantalla: P1
-
-* Si el usuario y la contraseña son correctos y el usuario está activo, se abre el menú principal mostrando el nombre y el rol.
-* Si son incorrectos, se muestra "Usuario o contraseña incorrectos" sin indicar cuál de los dos falló.
-* Tras 3 intentos fallidos seguidos, el botón *Ingresar* se bloquea durante 1 minuto.
-* La contraseña se escribe en un campo oculto y viaja/se guarda cifrada.
-
-**HU-02 · Cerrar sesión**
-*Como* usuario, *quiero* cerrar mi sesión *para* que otra persona no use mi cuenta en la misma caja.
-Prioridad: Alta · Estimación: 1 · Pantalla: P2
-
-* Al cerrar sesión se libera la conexión con el servidor y se regresa a la pantalla de inicio de sesión.
-
-**HU-03 · Administrar usuarios**
-*Como* administrador, *quiero* crear, editar y desactivar usuarios con rol de vendedor o administrador *para* controlar quién tiene acceso al sistema.
-Prioridad: Alta · Estimación: 5 · Pantalla: P8
-
-* El nombre de usuario no se puede repetir.
-* La contraseña debe tener al menos 8 caracteres y confirmarse.
-* Un usuario desactivado no puede iniciar sesión, pero sus facturas se conservan.
-* El módulo no es visible para usuarios con rol `VENDEDOR`.
-
-## Módulo de clientes
-
-**HU-04 · Registrar cliente**
-*Como* vendedor, *quiero* registrar un cliente con tipo e identificación, nombre, teléfono, correo y dirección *para* poder emitirle facturas.
-Prioridad: Alta · Estimación: 3 · Pantalla: P3
-
-* Identificación, tipo de identificación y nombre son obligatorios.
-* No se permite registrar dos clientes con la misma identificación.
-* El correo se valida con formato `algo@dominio`.
-* Al guardar, el cliente aparece de inmediato en la tabla.
-
-**HU-05 · Buscar y editar cliente**
-*Como* vendedor, *quiero* buscar un cliente por identificación o nombre y actualizar sus datos de contacto *para* mantener la información al día.
-Prioridad: Alta · Estimación: 2 · Pantalla: P3
-
-* La búsqueda acepta coincidencias parciales y no distingue mayúsculas.
-* Al seleccionar una fila de la tabla, sus datos se cargan en el formulario.
-
-**HU-06 · Desactivar cliente**
-*Como* administrador, *quiero* desactivar un cliente *para* que no aparezca al facturar sin perder sus facturas anteriores.
-Prioridad: Media · Estimación: 1 · Pantalla: P3
-
-* Se pide confirmación antes de desactivar.
-
-## Módulo de productos e inventario
-
-**HU-07 · Administrar tipos de producto**
-*Como* administrador, *quiero* crear, editar y eliminar categorías de producto (abarrotes, bebidas, limpieza, higiene…) *para* mantener el catálogo ordenado.
-Prioridad: Alta · Estimación: 2 · Pantalla: P4 (pestaña Categorías)
-
-* El nombre de la categoría es único.
-* No se puede eliminar una categoría que todavía tiene productos.
-
-**HU-08 · Registrar producto**
-*Como* administrador, *quiero* registrar un producto indicando su tipo (abarrote, bebida o artículo del hogar), código, nombre, categoría, valor de compra, valor de venta, existencias y stock mínimo *para* poder venderlo y controlar sus existencias.
-Prioridad: Alta · Estimación: 3 · Pantalla: P4
-
-* Según el tipo elegido se piden sus datos propios: fecha de vencimiento, peso y si es canasta básica (abarrote); volumen y unidades por paquete (bebida); marca y presentación (artículo del hogar).
-* El impuesto lo define el tipo: 1 % para abarrotes de canasta básica y 13 % para el resto.
-* El código es único; el valor de venta debe ser mayor que 0 y mayor o igual al de compra; las existencias no pueden ser negativas.
-* Se puede filtrar la lista por categoría y buscar por código o nombre.
-
-**HU-09 · Ajustar inventario**
-*Como* administrador, *quiero* registrar entradas de mercadería y ajustes de inventario indicando el motivo *para* que el stock del sistema coincida con la bodega.
-Prioridad: Alta · Estimación: 3 · Pantalla: P4 (diálogo Ajustar stock)
-
-* El ajuste pide el motivo (compra, merma, conteo físico) y se confirma antes de aplicarlo.
-* Un ajuste no puede dejar el stock en negativo.
-
-**HU-10 · Alertas de stock bajo**
-*Como* administrador, *quiero* ver qué productos están por debajo del stock mínimo *para* reabastecerlos a tiempo.
-Prioridad: Media · Estimación: 2 · Pantallas: P2 y P4
-
-* El menú principal muestra cuántos productos están bajo el mínimo y cuáles.
-* En la tabla de productos esos productos se marcan en rojo.
-* La tabla se refresca en segundo plano cada 30 segundos sin bloquear la ventana.
-
-## Módulo de facturación
-
-**HU-11 · Crear factura**
-*Como* vendedor, *quiero* seleccionar un cliente, agregar productos con su cantidad y elegir el método de pago *para* emitirle una factura.
-Prioridad: Alta · Estimación: 8 · Pantalla: P5
-
-* Al agregar un producto se muestran sus existencias disponibles; no se puede agregar una cantidad mayor.
-* Si el producto ya está en la factura, se suma la cantidad en la misma línea.
-* Subtotal, descuento, impuesto (según el tipo de cada producto) y total se recalculan en cada cambio.
-* No se puede emitir una factura sin cliente o sin líneas.
-* Al emitir, se asigna un número consecutivo único (`FC-000123`) y se descuenta el inventario.
-
-**HU-12 · Facturación simultánea sin vender de más**
-*Como* administrador, *quiero* que varias cajas puedan facturar al mismo tiempo sin que se venda más producto del que hay *para* que el inventario sea confiable.
-Prioridad: Alta · Estimación: 5 · Pantalla: P5
-
-* El servidor atiende a cada caja en un hilo distinto.
-* Si dos cajas venden el último stock de un producto al mismo tiempo, solo una factura se emite; la otra recibe el mensaje "Stock insuficiente de &lt;producto&gt;" y puede corregir la cantidad.
-* Dos facturas nunca reciben el mismo número.
-
-**HU-13 · Generar factura física**
-*Como* vendedor, *quiero* obtener la factura en un archivo con el desglose de pago *para* entregarla o imprimirla al cliente.
-Prioridad: Alta · Estimación: 3 · Pantalla: P6
-
-* El archivo incluye: datos de Fidecompro, número y fecha, vendedor, datos del cliente, cada línea (cantidad, descripción, precio unitario, total), subtotal, descuento, IVA, total y método de pago.
-* Se guarda como `FC-000123.txt` (u `.html`) en la carpeta que elija el usuario.
-* Se muestra una vista previa antes de guardar.
-
-**HU-14 · Consultar historial de facturas**
-*Como* vendedor o administrador, *quiero* consultar las facturas por rango de fechas, cliente y estado *para* dar seguimiento a las ventas.
-Prioridad: Media · Estimación: 3 · Pantalla: P7
-
-* Se muestra el total vendido del periodo (solo facturas emitidas).
-* Desde el historial se puede ver el detalle y volver a generar el archivo.
-
-**HU-15 · Anular factura**
-*Como* administrador, *quiero* anular una factura emitida por error *para* corregir las ventas y devolver el producto al inventario.
-Prioridad: Media · Estimación: 3 · Pantalla: P7
-
-* Solo el rol administrador puede anular.
-* Al anular, el estado pasa a `ANULADA` y las existencias de cada línea se devuelven al inventario.
-* Una factura anulada no se puede volver a anular.
-
-## Resumen
+## Resumen de las historias
 
 | ID | Historia | Rol | Prioridad | Puntos | Pantalla |
 |---|---|---|---|---|---|
-| HU-01 | Iniciar sesión | Todos | Alta | 3 | P1 |
-| HU-02 | Cerrar sesión | Todos | Alta | 1 | P2 |
-| HU-03 | Administrar usuarios | Administrador | Alta | 5 | P8 |
-| HU-04 | Registrar cliente | Vendedor | Alta | 3 | P3 |
-| HU-05 | Buscar y editar cliente | Vendedor | Alta | 2 | P3 |
-| HU-06 | Desactivar cliente | Administrador | Media | 1 | P3 |
-| HU-07 | Administrar tipos de producto | Administrador | Alta | 2 | P4 |
-| HU-08 | Registrar producto | Administrador | Alta | 3 | P4 |
-| HU-09 | Ajustar inventario | Administrador | Alta | 3 | P4 |
-| HU-10 | Alertas de stock bajo | Administrador | Media | 2 | P2, P4 |
-| HU-11 | Crear factura | Vendedor | Alta | 8 | P5 |
-| HU-12 | Facturación simultánea | Administrador | Alta | 5 | P5 |
-| HU-13 | Generar factura física | Vendedor | Alta | 3 | P6 |
-| HU-14 | Historial de facturas | Todos | Media | 3 | P7 |
-| HU-15 | Anular factura | Administrador | Media | 3 | P7 |
+| HU 1 | Iniciar sesión | Todos | Alta | 3 | P1 |
+| HU 2 | Cerrar sesión | Todos | Alta | 1 | P2 |
+| HU 3 | Administrar usuarios | Administrador | Alta | 5 | P8 |
+| HU 4 | Registrar cliente | Vendedor | Alta | 3 | P3 |
+| HU 5 | Buscar y editar cliente | Vendedor | Alta | 2 | P3 |
+| HU 6 | Desactivar cliente | Administrador | Media | 1 | P3 |
+| HU 7 | Administrar tipos de producto | Administrador | Alta | 2 | P4 |
+| HU 8 | Registrar producto | Administrador | Alta | 3 | P4 |
+| HU 9 | Ajustar inventario | Administrador | Alta | 3 | P4 |
+| HU 10 | Alertas de stock bajo | Administrador | Media | 2 | P2, P4 |
+| HU 11 | Crear factura | Vendedor | Alta | 8 | P5 |
+| HU 12 | Facturación simultánea | Administrador | Alta | 5 | P5 |
+| HU 13 | Generar factura física | Vendedor | Alta | 3 | P6 |
+| HU 14 | Historial de facturas | Todos | Media | 3 | P7 |
+| HU 15 | Anular factura | Administrador | Media | 3 | P7 |
 
 # 4. Prototipos de interfaz gráfica
 
@@ -469,49 +346,49 @@ Los prototipos representan las ventanas Swing de la aplicación final (look and 
 
 ![Mapa de navegación entre pantallas](img/05_navegacion.png)
 
-## 4.2 P1 · Inicio de sesión (HU-01)
+## 4.2 P1 · Inicio de sesión (HU 1)
 
 Campos de usuario y contraseña (oculta), dirección del servidor y mensaje de error ante credenciales inválidas.
 
 ![P1 Inicio de sesión](img/P1_inicio_sesion.png)
 
-## 4.3 P2 · Menú principal (HU-02, HU-10)
+## 4.3 P2 · Menú principal (HU 2, HU 10)
 
 Acceso a todos los módulos mediante menú y botones, resumen del día y alerta de productos bajo el stock mínimo. La barra de estado muestra el usuario, su rol y el estado de la conexión. El botón *Usuarios* solo aparece para administradores.
 
 ![P2 Menú principal](img/P2_menu_principal.png)
 
-## 4.4 P3 · Gestión de clientes (HU-04, HU-05, HU-06)
+## 4.4 P3 · Gestión de clientes (HU 4, HU 5, HU 6)
 
 Formulario de registro y edición, búsqueda y tabla de clientes.
 
 ![P3 Gestión de clientes](img/P3_clientes.png)
 
-## 4.5 P4 · Productos e inventario (HU-07, HU-08, HU-09, HU-10)
+## 4.5 P4 · Productos e inventario (HU 7, HU 8, HU 9, HU 10)
 
 Pestañas para productos, categorías y productos bajo el mínimo. El formulario cambia según el tipo de producto elegido (abarrote, bebida o artículo del hogar). Los productos bajo el mínimo se resaltan en rojo.
 
 ![P4 Productos e inventario](img/P4_productos_inventario.png)
 
-## 4.6 P5 · Nueva factura (HU-11, HU-12)
+## 4.6 P5 · Nueva factura (HU 11, HU 12)
 
 Selección de cliente, agregado de productos con validación de existencias, tabla de líneas con el IVA de cada tipo de producto, método de pago, descuento y totales calculados.
 
 ![P5 Nueva factura](img/P5_nueva_factura.png)
 
-## 4.7 P6 · Vista previa de la factura física (HU-13)
+## 4.7 P6 · Vista previa de la factura física (HU 13)
 
 Contenido exacto del archivo que se genera, con el desglose de pago, y botones para guardarlo como `.txt` o `.html`.
 
 ![P6 Vista previa de factura](img/P6_vista_previa_factura.png)
 
-## 4.8 P7 · Historial de facturas (HU-14, HU-15)
+## 4.8 P7 · Historial de facturas (HU 14, HU 15)
 
 Filtros por fecha, cliente y estado; total del periodo y acciones para ver el detalle, regenerar el archivo o anular.
 
 ![P7 Historial de facturas](img/P7_historial_facturas.png)
 
-## 4.9 P8 · Gestión de usuarios (HU-03)
+## 4.9 P8 · Gestión de usuarios (HU 3)
 
 Exclusiva del administrador: alta, edición, cambio de rol, restablecimiento de contraseña y desactivación de usuarios.
 
@@ -521,11 +398,11 @@ Exclusiva del administrador: alta, edición, cambio de rol, restablecimiento de 
 
 | Historia | Clases principales | Pantalla |
 |---|---|---|
-| HU-01, HU-02 | Usuario, RegistroUsuarios, CredencialesInvalidasException, VentanaLogin | P1, P2 |
-| HU-03 | Usuario, Rol, RegistroUsuarios | P8 |
-| HU-04 a HU-06 | Persona, Cliente, RegistroClientes, RegistroNoEncontradoException | P3 |
-| HU-07, HU-08 | Inventario, Categoria, Producto, Abarrote, Bebida, ArticuloHogar | P4 |
-| HU-09, HU-10 | Producto, Inventario, ComparadorPorExistencias | P2, P4 |
-| HU-11, HU-12 | Factura, DetalleFactura, Inventario, StockInsuficienteException (y en la arquitectura prevista: ServicioFacturacion, ManejadorCliente) | P5 |
-| HU-13 | Factura, DetalleFactura, Mostrable | P6 |
-| HU-14, HU-15 | Factura, EstadoFactura, RegistroFacturas | P7 |
+| HU 1, HU 2 | Usuario, RegistroUsuarios, CredencialesInvalidasException, VentanaLogin | P1, P2 |
+| HU 3 | Usuario, Rol, RegistroUsuarios | P8 |
+| HU 4 a HU 6 | Persona, Cliente, RegistroClientes, RegistroNoEncontradoException | P3 |
+| HU 7, HU 8 | Inventario, Categoria, Producto, Abarrote, Bebida, ArticuloHogar | P4 |
+| HU 9, HU 10 | Producto, Inventario, ComparadorPorExistencias | P2, P4 |
+| HU 11, HU 12 | Factura, DetalleFactura, Inventario, StockInsuficienteException (y en la arquitectura prevista: ServicioFacturacion, ManejadorCliente) | P5 |
+| HU 13 | Factura, DetalleFactura, Mostrable | P6 |
+| HU 14, HU 15 | Factura, EstadoFactura, RegistroFacturas | P7 |

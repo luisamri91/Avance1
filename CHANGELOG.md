@@ -8,6 +8,12 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 
 ## Documento de diseño
 
+### Documento v4 · 2026-10-08
+* Las 15 historias de usuario pasan al formato de tabla pedido: ID, rol, característica, razón y escenarios de aceptación con número, título, contexto (Dado que), evento (Cuando) y resultado esperado. Son 57 escenarios en total.
+* La sección 3 va en páginas horizontales para que la tabla se lea bien.
+* Los identificadores pasan de HU-01 a HU 1 en todo el documento.
+* El documento se genera con `docs/construir_documento.py` y las historias se editan en `docs/historias_usuario.json`.
+
 ### Documento v3 · 2026-10-08 · commit `bf66b07`
 * Se agrega la tabla de control de versiones al inicio del documento y la versión en la portada.
 * La versión va en el nombre del archivo y la numeración pasa a v1, v2, v3…
