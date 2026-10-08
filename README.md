@@ -13,6 +13,7 @@ Versión actual: **documento v7** y **código v2**. El detalle de cada cambio es
 |---|---|
 | Documento de diseño (para entregar) | [`docs/Avance1_Documento_Diseno_v7.pdf`](docs/Avance1_Documento_Diseno_v7.pdf) · [`.docx`](docs/Avance1_Documento_Diseno_v7.docx) |
 | Diagrama de clases (solo las clases) | [`docs/Avance1_Diagrama_de_Clases_v1.docx`](docs/Avance1_Diagrama_de_Clases_v1.docx) · editable en draw.io: [`.drawio`](docs/Avance1_Diagrama_de_Clases_v1.drawio) |
+| Diagrama de clases simplificado (una página) | [`docs/Avance1_Diagrama_de_Clases_Simplificado_v1.drawio`](docs/Avance1_Diagrama_de_Clases_Simplificado_v1.drawio) · [`.png`](docs/Avance1_Diagrama_de_Clases_Simplificado_v1.png) |
 | Fuente editable del documento | [`docs/Avance1_Documento_Diseno.md`](docs/Avance1_Documento_Diseno.md) |
 | Diagramas (clases, arquitectura, secuencia, navegación) | [`docs/diagramas/`](docs/diagramas) (Mermaid) → [`docs/img/`](docs/img) |
 | Prototipos de interfaz | [`docs/prototipos/html/`](docs/prototipos/html) → [`docs/img/P*.png`](docs/img) |

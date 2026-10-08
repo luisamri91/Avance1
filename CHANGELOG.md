@@ -58,6 +58,10 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 * Se genera con `docs/construir_diagrama_clases.py` a partir de la sección "Entidades y clases" del documento de diseño v7, así que siempre coincide con él.
 * Versión editable en draw.io (`Avance1_Diagrama_de_Clases_v1.drawio`, commit `e137e8c`) con tres páginas: inventario y excepciones, personas y facturación, y cliente-servidor. Se genera con `docs/exportar_drawio.py` desde los diagramas de Mermaid.
 
+### Diagrama de clases simplificado v1 · 2026-10-08 · commit `6942679`
+* Un solo diagrama, en una página, con las 12 clases principales del dominio (personas, productos, inventario y facturación), sus atributos y métodos más importantes y sus relaciones. Deja fuera los registros, las excepciones, las enumeraciones y las clases cliente-servidor.
+* Archivo editable `Avance1_Diagrama_de_Clases_Simplificado_v1.drawio` e imagen `.png`. Fuente: `docs/diagramas/00_clases_simplificado.mmd`.
+
 ## Código
 
 ### Código v2 · 2026-10-08 · commit `99f55d4`
