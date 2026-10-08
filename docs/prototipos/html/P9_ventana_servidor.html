@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>P9 Ventana del servidor</title><link rel="stylesheet" href="estilo.css"></head>
+<body>
+<div class="ventana" style="width:820px">
+  <div class="titulo"><span>Servidor Fidecompro</span><span class="botones"><span></span><span></span></span></div>
+  <div class="contenido">
+    <fieldset><legend>Servidor</legend>
+      <div class="fila"><label>Puerto:</label><span class="campo chico">5000</span>
+        <label style="min-width:auto;margin-left:12px">Base de datos:</label><span class="campo combo">MySQL · fidecompro</span>
+        <span class="boton primario">Iniciar</span><span class="boton peligro">Detener</span></div>
+      <div class="fila"><label>Estado:</label><span style="color:#1e7a3c;font-weight:600">● En ejecución desde 08:00:12</span>
+        <span style="margin-left:24px">Clientes conectados: <b>3</b></span><span style="margin-left:24px">Hilos activos: <b>3</b> de 10</span></div>
+    </fieldset>
+    <fieldset><legend>Clientes conectados</legend>
+      <table>
+        <tr><th>Hilo</th><th>Equipo (IP)</th><th>Usuario</th><th>Rol</th><th>Conectado desde</th></tr>
+        <tr><td>Hilo-1</td><td>192.168.1.21 (Caja 1)</td><td>cjimenez</td><td>VENDEDOR</td><td>08:02:40</td></tr>
+        <tr><td>Hilo-2</td><td>192.168.1.22 (Caja 2)</td><td>apineda</td><td>VENDEDOR</td><td>08:05:11</td></tr>
+        <tr><td>Hilo-3</td><td>192.168.1.10 (Administración)</td><td>mrodriguez</td><td>ADMINISTRADOR</td><td>08:01:03</td></tr>
+      </table>
+    </fieldset>
+    <fieldset style="margin-bottom:0"><legend>Bitácora de operaciones</legend>
+      <table>
+        <tr><th>Hora</th><th>Hilo</th><th>Operación</th><th>Resultado</th></tr>
+        <tr><td>08:41:05</td><td>Hilo-1</td><td>CREAR_FACTURA FC-000123 (cliente 3-101-456789)</td><td>OK</td></tr>
+        <tr><td>08:41:05</td><td>Hilo-2</td><td>CREAR_FACTURA (ABR-0012 × 9)</td><td class="alerta">Stock insuficiente</td></tr>
+        <tr><td>08:39:47</td><td>Hilo-3</td><td>ACTUALIZAR_PRODUCTO LIM-0230</td><td>OK</td></tr>
+        <tr><td>08:38:20</td><td>Hilo-3</td><td>ELIMINAR_CLIENTE 1-0987-0654</td><td>OK</td></tr>
+        <tr><td>08:36:02</td><td>Hilo-2</td><td>CREAR_CLIENTE 3-102-778899</td><td>OK</td></tr>
+      </table>
+    </fieldset>
+  </div>
+  <div class="barra-estado"><span>Cada cliente conectado se atiende en su propio hilo</span><span>Datos guardados en la base de datos</span></div>
+</div>
+</body></html>

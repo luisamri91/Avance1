@@ -14,3 +14,7 @@ flowchart TD
     VP -->|Guardar archivo| AR[/Factura_FC-000123.txt/]
     HI --> VP
     M -->|Cerrar sesión| L
+    subgraph SV["Equipo servidor"]
+        P9[P9. Ventana del servidor<br/>iniciar, detener, clientes conectados, bitácora]
+    end
+    P9 -. "atiende por sockets a cada cliente abierto" .-> L

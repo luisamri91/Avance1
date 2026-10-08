@@ -1,0 +1,73 @@
+erDiagram
+    USUARIOS ||--o{ FACTURAS : emite
+    CLIENTES ||--o{ FACTURAS : recibe
+    CATEGORIAS ||--o{ PRODUCTOS : agrupa
+    FACTURAS ||--|{ DETALLE_FACTURA : contiene
+    PRODUCTOS ||--o{ DETALLE_FACTURA : "se vende en"
+
+    USUARIOS {
+        int id PK
+        varchar nombre
+        varchar telefono
+        varchar correo
+        varchar nombre_usuario UK
+        varchar contrasena "cifrada SHA-256"
+        varchar rol "ADMINISTRADOR o VENDEDOR"
+        boolean activo
+    }
+    CLIENTES {
+        int id PK
+        varchar tipo_identificacion
+        varchar identificacion UK
+        varchar nombre
+        varchar telefono
+        varchar correo
+        varchar direccion
+        date fecha_registro
+        boolean activo
+    }
+    CATEGORIAS {
+        int id PK
+        varchar nombre UK
+        varchar descripcion
+    }
+    PRODUCTOS {
+        int id PK
+        varchar codigo UK
+        varchar tipo "ABARROTE, BEBIDA u HOGAR"
+        varchar nombre
+        varchar descripcion
+        decimal valor_compra
+        decimal valor_venta
+        int existencias
+        int stock_minimo
+        int id_categoria FK
+        date fecha_vencimiento "abarrote"
+        decimal peso_kg "abarrote"
+        boolean canasta_basica "abarrote"
+        int volumen_ml "bebida"
+        int unidades_paquete "bebida"
+        boolean retornable "bebida"
+        varchar marca "hogar"
+        varchar presentacion "hogar"
+        varchar advertencias "hogar"
+        boolean activo
+    }
+    FACTURAS {
+        int numero PK
+        datetime fecha
+        int id_cliente FK
+        int id_usuario FK
+        decimal porcentaje_descuento
+        varchar metodo_pago
+        varchar estado "EMITIDA o ANULADA"
+        decimal total
+    }
+    DETALLE_FACTURA {
+        int numero_factura PK,FK
+        int linea PK
+        int id_producto FK
+        int cantidad
+        decimal precio_unitario
+        decimal porcentaje_iva
+    }

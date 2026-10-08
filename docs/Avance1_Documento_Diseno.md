@@ -1,6 +1,6 @@
 ---
 title: "Proyecto Final – Avance 1: Documento de Diseño"
-subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 5"
+subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 6"
 author: "Estudiante: [Nombre completo] · Carné: [número]"
 date: "Programación Cliente-Servidor Concurrente · Profesor(a): [nombre] · Octubre 2026"
 lang: es
@@ -15,6 +15,7 @@ lang: es
 | v3 | 08/10/2026 | Se agrega esta tabla de control de versiones y la versión en el nombre del archivo |
 | v4 | 08/10/2026 | Historias de usuario en formato de tabla con escenarios de aceptación (Dado que / Cuando / Resultado esperado) |
 | v5 | 08/10/2026 | Se agregan las listas de requerimientos funcionales (10) y no funcionales (8); las secciones siguientes se renumeran |
+| v6 | 08/10/2026 | Diseño alineado con lo que el profesor pide para el proyecto final: CRUD completo (con eliminar) desde pantallas, ventana del servidor (HU 16 y P9), base de datos MySQL o Derby con su modelo de tablas y plan de demostración para el video final |
 
 # 1. Introducción
 
@@ -30,13 +31,28 @@ La cadena de venta al por mayor **Fidecompro** necesita una aplicación de escri
 | R4 | Entregar la factura física (archivo con el desglose de pago) | HU 13 |
 | R5 | Ingreso con usuario y contraseña | HU 1, HU 2, HU 3 |
 
-## 1.2 Alcance y decisiones técnicas
+## 1.2 Requisitos del proyecto final
 
-* **Lenguaje y entorno:** Java 17, proyecto Maven en NetBeans IDE, interfaz gráfica con **Java Swing**. No se usa ningún framework; todo el código se escribe desde cero.
-* **Base del diseño:** el modelo de clases (sección 4) aplica lo visto en las semanas 1 a 5: herencia, clases abstractas, interfaces, polimorfismo, colecciones y excepciones propias. Hilos, sockets, Swing y base de datos aún no se han visto en el curso; se incluyen como **arquitectura prevista** para cumplir el carácter cliente-servidor concurrente del proyecto y se detallarán en los siguientes avances.
-* **Arquitectura cliente-servidor:** un **servidor** central atiende a varias cajas (clientes Swing) al mismo tiempo mediante **sockets TCP**. Cada conexión es atendida por su propio hilo (`ManejadorCliente`) dentro de un pool de hilos.
-* **Concurrencia:** cuando dos vendedores facturan el mismo producto a la vez, el servidor valida y descuenta el stock dentro de un bloque `synchronized`, de modo que nunca se venda más inventario del que existe. El número de factura sale del contador `static Factura.ultimoNumero`, que se incrementa dentro de un método `synchronized` para que dos facturas nunca reciban el mismo número. En el cliente, las consultas largas se ejecutan con `SwingWorker` para no congelar la ventana.
-* **Persistencia:** base de datos MySQL accedida con JDBC (API estándar de Java) a través de clases DAO.
+El profesor indicó que el proyecto final debe cumplir cuatro requisitos técnicos y demostrarse en un video. Aunque varios temas todavía no se han visto en el curso, el diseño de este avance ya los contempla para no tener que rehacerlo después:
+
+| Requisito del proyecto final | Cómo lo cumple el diseño | Dónde |
+|---|---|---|
+| Cliente-servidor con **sockets** | Cada caja es una aplicación cliente que se conecta por `Socket` al `ServerSocket` del servidor (puerto 5000) e intercambia objetos `Solicitud` y `Respuesta` | Secciones 4.3 y 4.4 |
+| **Hilos** | El servidor atiende cada cliente conectado en su propio hilo (`ManejadorCliente`); las operaciones que modifican datos se sincronizan | Secciones 4.4 y 4.5 |
+| Pantallas **JFrame** | Ventanas Swing para el cliente (P1 a P8) y una ventana propia del servidor (P9) | Sección 6 |
+| Base de datos **MySQL o Derby** | Todo se guarda en la base de datos por medio de JDBC y clases DAO | Sección 4.6 |
+| **CRUD** completo desde pantallas | Crear, consultar, modificar y eliminar usuarios, clientes, categorías y productos; crear, consultar y anular facturas | Secciones 2 y 8 |
+| Varios clientes a la vez | Se pueden abrir varias ventanas cliente al mismo tiempo y el servidor las atiende en paralelo | HU 12, HU 16 |
+| Video final | Guion de demostración de todas las funcionalidades | Sección 8 |
+
+## 1.3 Alcance y decisiones técnicas
+
+* **Lenguaje y entorno:** Java 17, proyecto Maven en NetBeans IDE, interfaz gráfica con **Java Swing** (ventanas `JFrame` diseñadas en NetBeans). No se usa ningún framework; todo el código se escribe desde cero.
+* **Base del diseño:** el modelo de clases (sección 4) aplica lo visto en las semanas 1 a 5: herencia, clases abstractas, interfaces, polimorfismo, colecciones y excepciones propias. Hilos, sockets, pantallas JFrame y base de datos aún no se han visto en el curso; se incluyen como **arquitectura prevista**, porque son obligatorios en el proyecto final, y se detallarán en los siguientes avances.
+* **Arquitectura cliente-servidor:** un **servidor** central atiende a varias cajas (clientes JFrame) al mismo tiempo mediante **sockets TCP**. Cada conexión es atendida por su propio hilo (`ManejadorCliente`) dentro de un pool de hilos. El servidor tiene su propia ventana (`VentanaServidor`) para iniciarlo, detenerlo y ver los clientes conectados y cada operación que atiende.
+* **Concurrencia:** cuando dos vendedores facturan el mismo producto a la vez, el servidor valida y descuenta el stock dentro de un bloque `synchronized`, de modo que nunca se venda más inventario del que existe. El número de factura sale del contador `static Factura.ultimoNumero`, que se incrementa dentro de un método `synchronized` para que dos facturas nunca reciban el mismo número. Las demás operaciones que modifican datos (crear, modificar y eliminar) también se sincronizan en el servidor. En el cliente, las consultas largas se ejecutan con `SwingWorker` para no congelar la ventana, y cada pantalla tiene el botón *Actualizar lista* para ver los cambios hechos desde otras cajas.
+* **Persistencia:** base de datos **MySQL** accedida con JDBC (API estándar de Java) a través de clases DAO. Como alternativa se puede usar **Apache Derby**, la otra base de datos que se verá en el curso: las sentencias SQL son las mismas y solo cambia la URL de conexión en `ConexionBD`.
+* **Eliminar sin perder historial:** usuarios, clientes, categorías y productos se pueden eliminar desde su pantalla. Si un registro ya está en una factura (un cliente con compras, por ejemplo), el sistema no lo borra para no dañar el historial; lo desactiva y lo explica al usuario.
 * **Factura física:** el servidor genera un archivo `.txt` (y opcionalmente `.html`) con el desglose completo de la factura, que el usuario guarda o imprime.
 * **Roles:** `ADMINISTRADOR` (gestiona usuarios, catálogo e inventario, puede anular facturas) y `VENDEDOR` (registra clientes y emite facturas).
 
@@ -275,9 +291,9 @@ Clases que administran las colecciones, con el mismo patrón de `Inventario`.
 
 | Clase | Atributo | Métodos |
 |---|---|---|
-| **RegistroUsuarios** | `usuarios: ArrayList<Usuario>` | `agregarUsuario`, `editarUsuario`, `desactivarUsuario`, `iniciarSesion(nombreUsuario, contrasena)` que devuelve el `Usuario` o lanza `CredencialesInvalidasException` |
-| **RegistroClientes** | `clientes: ArrayList<Cliente>` | `agregarCliente` (rechaza identificaciones repetidas), `editarCliente`, `desactivarCliente`, `buscarCliente(identificacion)`, `mostrarClientes` |
-| **RegistroFacturas** | `facturas: ArrayList<Factura>` | `agregarFactura`, `buscarFactura(numero)`, `anularFactura(numero)` (devuelve las existencias al inventario), `facturasPorFecha(desde, hasta)` |
+| **RegistroUsuarios** | `usuarios: ArrayList<Usuario>` | `agregarUsuario`, `editarUsuario`, `eliminarUsuario`, `desactivarUsuario`, `iniciarSesion(nombreUsuario, contrasena)` que devuelve el `Usuario` o lanza `CredencialesInvalidasException` |
+| **RegistroClientes** | `clientes: ArrayList<Cliente>` | `agregarCliente` (rechaza identificaciones repetidas), `editarCliente`, `eliminarCliente`, `desactivarCliente`, `buscarCliente(identificacion)`, `mostrarClientes` |
+| **RegistroFacturas** | `facturas: ArrayList<Factura>` | `agregarFactura`, `buscarFactura(numero)`, `anularFactura(numero)` (devuelve las existencias al inventario), `facturasPorFecha(desde, hasta)`, `tieneFacturasCliente(idCliente)` y `tieneFacturasUsuario(idUsuario)` (se consultan antes de eliminar) |
 
 ### Excepciones propias (extends Exception)
 
@@ -295,7 +311,7 @@ Clases que administran las colecciones, con el mismo patrón de `Inventario`.
 
 ## 4.3 Diagrama de clases cliente-servidor
 
-Este diagrama es la **arquitectura prevista** para los siguientes avances, cuando el curso cubra hilos, sockets, Swing y bases de datos. Muestra las clases que harán funcionar la aplicación en red y de forma concurrente sobre el modelo de la sección 4.1: las ventanas Swing, la conexión por sockets, el servidor con sus hilos, los servicios y el acceso a datos.
+Este diagrama es la **arquitectura prevista** para los siguientes avances, cuando el curso cubra hilos, sockets, pantallas JFrame y bases de datos. Muestra las clases que harán funcionar la aplicación en red y de forma concurrente sobre el modelo de la sección 4.1: las ventanas del cliente y del servidor, la conexión por sockets, el servidor con sus hilos, los servicios y el acceso a datos. La enumeración `TipoOperacion` incluye las cuatro operaciones del CRUD de cada entidad.
 
 ![Diagrama de clases cliente-servidor](img/02_clases_cliente_servidor.png)
 
@@ -303,20 +319,21 @@ Este diagrama es la **arquitectura prevista** para los siguientes avances, cuand
 
 | Clase | Responsabilidad | Métodos principales | Relaciones |
 |---|---|---|---|
-| **ServidorFacturacion** | Abre un `ServerSocket` en el puerto 5000 y acepta conexiones; cada conexión se entrega a un pool de hilos (`ExecutorService`) | `iniciar()`, `detener()`, `aceptarConexiones()`, `main()` | Crea muchos `ManejadorCliente` (1 a \*) |
+| **VentanaServidor** (`JFrame`) | Pantalla del servidor: puerto, botones Iniciar y Detener, tabla de clientes conectados y bitácora de operaciones | `agregarCliente()`, `quitarCliente()`, `agregarBitacora()` | Inicia y detiene `ServidorFacturacion` |
+| **ServidorFacturacion** | Abre un `ServerSocket` en el puerto 5000 y acepta conexiones; cada conexión se entrega a un pool de hilos (`ExecutorService`). Lleva la lista de clientes conectados y avisa a la ventana de cada operación | `iniciar()`, `detener()`, `aceptarConexiones()`, `registrarOperacion()`, `main()` | Crea muchos `ManejadorCliente` (1 a \*) |
 | **ManejadorCliente** (implementa `Runnable`) | Atiende a un cliente conectado en su propio hilo: lee `Solicitud`, llama al servicio correspondiente y responde con `Respuesta`. Guarda el usuario de la sesión para validar permisos | `run()`, `procesar(Solicitud)`, `cerrarConexion()` | Usa los cuatro servicios |
 | **Solicitud** / **Respuesta** | Objetos serializables que viajan por el socket. La solicitud indica la operación (`TipoOperacion`) y los datos; la respuesta indica éxito, mensaje y datos | `getOperacion()`, `ok()`, `error()` | `Solicitud` usa `TipoOperacion` |
-| **ServicioAutenticacion** | Valida credenciales, bloquea usuarios inactivos y registra usuarios nuevos | `iniciarSesion()`, `registrarUsuario()`, `cifrarContrasena()` | Usa `UsuarioDAO` |
-| **ServicioClientes** | Reglas de negocio de clientes (identificación única, campos obligatorios) | `registrar()`, `actualizar()`, `buscar()`, `listar()` | Usa `ClienteDAO` |
-| **ServicioInventario** | Catálogo y stock. **Sección crítica:** `reservarStock()` y `ajustarStock()` se sincronizan sobre un mismo candado para que dos hilos no descuenten el mismo producto a la vez | `registrarProducto()`, `ajustarStock()`, `reservarStock()`, `productosBajoMinimo()` | Usa `Inventario` y `ProductoDAO` |
+| **ServicioAutenticacion** | Valida credenciales, bloquea usuarios inactivos y registra usuarios nuevos | `iniciarSesion()`, `registrarUsuario()`, `actualizarUsuario()`, `eliminarUsuario()`, `cifrarContrasena()` | Usa `UsuarioDAO` |
+| **ServicioClientes** | Reglas de negocio de clientes (identificación única, campos obligatorios, no eliminar clientes con facturas) | `registrar()`, `actualizar()`, `eliminar()`, `buscar()`, `listar()` | Usa `ClienteDAO` |
+| **ServicioInventario** | Catálogo y stock. **Sección crítica:** `reservarStock()` y `ajustarStock()` se sincronizan sobre un mismo candado para que dos hilos no descuenten el mismo producto a la vez | `registrarProducto()`, `actualizarProducto()`, `eliminarProducto()`, `ajustarStock()`, `reservarStock()`, `productosBajoMinimo()` | Usa `Inventario` y `ProductoDAO` |
 | **ServicioFacturacion** | Arma y guarda la factura, reserva el stock, asigna el consecutivo de `Factura` en un método `synchronized` y genera el archivo | `crearFactura()`, `anularFactura()`, `listarFacturas()` | Usa `ServicioInventario`, `FacturaDAO`, `GeneradorArchivoFactura` |
 | **GeneradorArchivoFactura** | Escribe la factura física con su desglose en `.txt` o `.html` usando `FileWriter`/`PrintWriter` | `generarTXT()`, `generarHTML()` | Usado por `ServicioFacturacion` |
-| **ConexionBD** (Singleton) | Centraliza la URL y credenciales de MySQL y entrega conexiones JDBC | `getInstancia()`, `obtenerConexion()` | Usada por todos los DAO |
-| **UsuarioDAO, ClienteDAO, ProductoDAO, FacturaDAO** | Ejecutan las sentencias SQL (`PreparedStatement`) de cada entidad | `insertar()`, `actualizar()`, `listar()`, `buscarPorId()`… | Dependen de `ConexionBD` |
+| **ConexionBD** (Singleton) | Centraliza la URL y credenciales de la base de datos (MySQL, o Derby si se cambia la URL) y entrega conexiones JDBC | `getInstancia()`, `obtenerConexion()` | Usada por todos los DAO |
+| **UsuarioDAO, ClienteDAO, ProductoDAO, FacturaDAO** | Ejecutan las sentencias SQL (`PreparedStatement`) de cada entidad | `insertar()`, `listar()`, `buscarPorId()`, `actualizar()`, `eliminar()` (CRUD) | Dependen de `ConexionBD` |
 | **ClienteSocket** | Del lado del cliente: abre el socket hacia el servidor y envía/recibe objetos | `conectar()`, `enviar(Solicitud)`, `desconectar()` | Usado por todas las ventanas |
 | **VentanaLogin** (`JFrame`) | Pide usuario y contraseña; si son válidos abre la ventana principal | `btnIngresarActionPerformed()` | Abre `VentanaPrincipal` |
 | **VentanaPrincipal** (`JFrame`) | Menú y pestañas de los módulos; oculta los módulos de administrador a los vendedores | `mostrarModulo()` | Contiene los paneles |
-| **PanelClientes, PanelProductos, PanelFacturacion** (`JPanel`) | Pantallas de cada módulo | `cargarTabla()`, `guardar…()`, `emitirFactura()` | Usan `ClienteSocket` |
+| **PanelClientes, PanelProductos, PanelFacturacion** (`JPanel`) | Pantallas de cada módulo | `cargarTabla()`, `guardar…()`, `eliminar…()`, `emitirFactura()` | Usan `ClienteSocket` |
 | **HiloActualizacionStock** (`SwingWorker`) | Refresca la tabla de inventario en segundo plano sin congelar la interfaz | `doInBackground()`, `done()` | Usado por `PanelProductos` |
 
 ## 4.5 Flujo concurrente de emisión de una factura
@@ -324,6 +341,21 @@ Este diagrama es la **arquitectura prevista** para los siguientes avances, cuand
 El siguiente diagrama de secuencia muestra cómo se emite una factura y dónde se controla la concurrencia.
 
 ![Diagrama de secuencia: emitir factura](img/04_secuencia_factura.png)
+
+## 4.6 Modelo de la base de datos
+
+La base de datos `fidecompro` guarda todo lo que se hace desde las pantallas. Se diseña para MySQL y funciona igual en Apache Derby. Los tres tipos de producto se guardan en una sola tabla `productos`, con una columna `tipo` y las columnas propias de cada tipo (las que no aplican quedan en `NULL`).
+
+![Modelo de la base de datos](img/06_modelo_bd.png)
+
+| Tabla | Guarda | Llave primaria | Relaciones |
+|---|---|---|---|
+| usuarios | Cuentas de acceso con su rol y contraseña cifrada | id | Un usuario emite muchas facturas |
+| clientes | Clientes de Fidecompro | id | Un cliente tiene muchas facturas |
+| categorias | Categorías del catálogo | id | Una categoría agrupa muchos productos |
+| productos | Productos de los tres tipos, con existencias | id | Pertenece a una categoría; aparece en muchas líneas de factura |
+| facturas | Encabezado de cada factura | numero | Pertenece a un cliente y a un usuario |
+| detalle_factura | Líneas de cada factura con el precio e IVA del momento | numero_factura + linea | Pertenece a una factura y a un producto |
 
 # 5. Historias de usuario
 
@@ -340,7 +372,7 @@ TABLA_HISTORIAS_USUARIO
 | HU 3 | Administrar usuarios | Administrador | Alta | 5 | P8 |
 | HU 4 | Registrar cliente | Vendedor | Alta | 3 | P3 |
 | HU 5 | Buscar y editar cliente | Vendedor | Alta | 2 | P3 |
-| HU 6 | Desactivar cliente | Administrador | Media | 1 | P3 |
+| HU 6 | Eliminar cliente | Administrador | Media | 2 | P3 |
 | HU 7 | Administrar tipos de producto | Administrador | Alta | 2 | P4 |
 | HU 8 | Registrar producto | Administrador | Alta | 3 | P4 |
 | HU 9 | Ajustar inventario | Administrador | Alta | 3 | P4 |
@@ -350,10 +382,11 @@ TABLA_HISTORIAS_USUARIO
 | HU 13 | Generar factura física | Vendedor | Alta | 3 | P6 |
 | HU 14 | Historial de facturas | Todos | Media | 3 | P7 |
 | HU 15 | Anular factura | Administrador | Media | 3 | P7 |
+| HU 16 | Ventana del servidor | Administrador | Alta | 5 | P9 |
 
 # 6. Prototipos de interfaz gráfica
 
-Los prototipos representan las ventanas Swing de la aplicación final (look and feel Nimbus). Se elaboraron como maquetas HTML/CSS, incluidas en `docs/prototipos/html/`, y se exportaron a imagen. Los datos mostrados son de ejemplo.
+Los prototipos representan las ventanas `JFrame` de la aplicación final (look and feel Nimbus): ocho del cliente y una del servidor. Se elaboraron como maquetas HTML/CSS, incluidas en `docs/prototipos/html/`, y se exportaron a imagen. Los datos mostrados son de ejemplo.
 
 ## 6.1 Mapa de navegación
 
@@ -373,13 +406,13 @@ Acceso a todos los módulos mediante menú y botones, resumen del día y alerta 
 
 ## 6.4 P3 · Gestión de clientes (HU 4, HU 5, HU 6)
 
-Formulario de registro y edición, búsqueda y tabla de clientes.
+CRUD completo de clientes: formulario para crear y modificar, búsqueda, tabla de clientes y botón *Eliminar*. El botón *Actualizar lista* vuelve a pedir los datos al servidor para ver los cambios hechos desde otras cajas.
 
 ![P3 Gestión de clientes](img/P3_clientes.png)
 
 ## 6.5 P4 · Productos e inventario (HU 7, HU 8, HU 9, HU 10)
 
-Pestañas para productos, categorías y productos bajo el mínimo. El formulario cambia según el tipo de producto elegido (abarrote, bebida o artículo del hogar). Los productos bajo el mínimo se resaltan en rojo.
+Pestañas para productos, categorías y productos bajo el mínimo. El formulario cambia según el tipo de producto elegido (abarrote, bebida o artículo del hogar). Los productos bajo el mínimo se resaltan en rojo. Los botones permiten crear, modificar, eliminar y ajustar el stock.
 
 ![P4 Productos e inventario](img/P4_productos_inventario.png)
 
@@ -403,9 +436,15 @@ Filtros por fecha, cliente y estado; total del periodo y acciones para ver el de
 
 ## 6.9 P8 · Gestión de usuarios (HU 3)
 
-Exclusiva del administrador: alta, edición, cambio de rol, restablecimiento de contraseña y desactivación de usuarios.
+Exclusiva del administrador: creación, consulta, modificación (incluido el rol y el estado activo), eliminación y restablecimiento de contraseña de usuarios.
 
 ![P8 Gestión de usuarios](img/P8_usuarios.png)
+
+## 6.10 P9 · Ventana del servidor (HU 16)
+
+Se ejecuta en el equipo servidor, aparte de las cajas. Permite elegir el puerto, iniciar y detener el servidor, y muestra los clientes conectados (cada uno con su hilo) y una bitácora con cada operación que llega y su resultado. Es la pantalla que demuestra en el video que el servidor atiende a varios clientes a la vez.
+
+![P9 Ventana del servidor](img/P9_ventana_servidor.png)
 
 # 7. Trazabilidad historias – clases – pantallas
 
@@ -419,3 +458,28 @@ Exclusiva del administrador: alta, edición, cambio de rol, restablecimiento de 
 | HU 11, HU 12 | Factura, DetalleFactura, Inventario, StockInsuficienteException (y en la arquitectura prevista: ServicioFacturacion, ManejadorCliente) | P5 |
 | HU 13 | Factura, DetalleFactura, Mostrable | P6 |
 | HU 14, HU 15 | Factura, EstadoFactura, RegistroFacturas | P7 |
+| HU 16 | VentanaServidor, ServidorFacturacion, ManejadorCliente | P9 |
+
+# 8. Plan de demostración del proyecto final
+
+El video final debe mostrar todas las funcionalidades, el CRUD completo desde las pantallas, que todo queda guardado en la base de datos y que el servidor soporta varios clientes a la vez. Esta matriz muestra qué operación del CRUD tiene cada entidad y en qué pantalla se hace:
+
+| Entidad | Crear | Consultar | Modificar | Eliminar | Pantalla |
+|---|---|---|---|---|---|
+| Usuarios | Sí | Sí | Sí | Sí (si tiene facturas, se desactiva) | P8 |
+| Clientes | Sí | Sí | Sí | Sí (si tiene facturas, se desactiva) | P3 |
+| Categorías | Sí | Sí | Sí | Sí (si no tiene productos) | P4 |
+| Productos | Sí | Sí | Sí | Sí (si está en facturas, se desactiva) | P4 |
+| Facturas | Sí | Sí (historial) | No: una factura emitida no se modifica | Se anula, no se borra | P5, P6, P7 |
+
+Guion previsto para el video:
+
+1. Abrir la ventana del servidor (P9), iniciarlo y mostrar que se conecta a la base de datos.
+2. Abrir dos o tres ventanas cliente al mismo tiempo e iniciar sesión con usuarios distintos; mostrar en P9 que cada uno tiene su hilo.
+3. Hacer el CRUD de usuarios, clientes, categorías y productos: crear, buscar, modificar y eliminar un registro de cada uno.
+4. Después de cada operación, mostrar la tabla correspondiente en la base de datos (MySQL Workbench o la consola de Derby) para comprobar que quedó guardada.
+5. Desde otra caja, presionar *Actualizar lista* y mostrar que ve los cambios hechos por la primera.
+6. Emitir una factura, ver la vista previa y generar el archivo de la factura física.
+7. Facturar el mismo producto desde dos cajas casi al mismo tiempo: una factura sale y la otra recibe el aviso de stock insuficiente, sin existencias negativas.
+8. Consultar el historial, anular una factura y mostrar que las existencias vuelven al inventario.
+9. Cerrar todo, volver a abrir el servidor y un cliente, y mostrar que los datos siguen ahí.

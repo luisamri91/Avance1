@@ -5,12 +5,27 @@ classDiagram
         -int puerto
         -ServerSocket serverSocket
         -ExecutorService poolHilos
+        -List~ManejadorCliente~ clientesConectados
+        -VentanaServidor ventana
         -volatile boolean activo
         +ServidorFacturacion(int puerto, int maxClientes)
         +iniciar() void
         +detener() void
         -aceptarConexiones() void
+        +registrarOperacion(String texto) void
         +main(String[] args)$ void
+    }
+
+    class VentanaServidor {
+        <<JFrame>>
+        -JTextField txtPuerto
+        -JButton btnIniciar
+        -JButton btnDetener
+        -JTable tablaClientes
+        -JTable tablaBitacora
+        +agregarCliente(ManejadorCliente m) void
+        +quitarCliente(ManejadorCliente m) void
+        +agregarBitacora(String texto) void
     }
 
     class ManejadorCliente {
@@ -47,23 +62,33 @@ classDiagram
         LOGIN
         LOGOUT
         CREAR_CLIENTE
-        ACTUALIZAR_CLIENTE
         LISTAR_CLIENTES
+        ACTUALIZAR_CLIENTE
+        ELIMINAR_CLIENTE
         CREAR_PRODUCTO
-        ACTUALIZAR_PRODUCTO
         LISTAR_PRODUCTOS
+        ACTUALIZAR_PRODUCTO
+        ELIMINAR_PRODUCTO
+        CREAR_CATEGORIA
         LISTAR_CATEGORIAS
+        ACTUALIZAR_CATEGORIA
+        ELIMINAR_CATEGORIA
         AJUSTAR_STOCK
         CREAR_FACTURA
         LISTAR_FACTURAS
         ANULAR_FACTURA
         CREAR_USUARIO
+        LISTAR_USUARIOS
+        ACTUALIZAR_USUARIO
+        ELIMINAR_USUARIO
     }
 
     class ServicioAutenticacion {
         -UsuarioDAO usuarioDAO
         +iniciarSesion(String usuario, String contrasena) Usuario
         +registrarUsuario(Usuario u) void
+        +actualizarUsuario(Usuario u) void
+        +eliminarUsuario(int id) void
         +cifrarContrasena(String texto)$ String
     }
 
@@ -71,6 +96,7 @@ classDiagram
         -ClienteDAO clienteDAO
         +registrar(Cliente c) void
         +actualizar(Cliente c) void
+        +eliminar(int id) void
         +buscar(String texto) List~Cliente~
         +listar() List~Cliente~
     }
@@ -81,6 +107,7 @@ classDiagram
         -Object candado
         +registrarProducto(Producto p) void
         +actualizarProducto(Producto p) void
+        +eliminarProducto(int id) void
         +ajustarStock(int idProducto, int cantidad, Usuario u) void
         +reservarStock(List~DetalleFactura~ detalles) void
         +productosBajoMinimo() List~Producto~
@@ -105,7 +132,7 @@ classDiagram
     class ConexionBD {
         <<Singleton>>
         -ConexionBD instancia$
-        -String url
+        -String url (MySQL o Derby)
         -String usuario
         -String clave
         +getInstancia()$ ConexionBD
@@ -116,16 +143,21 @@ classDiagram
         +buscarPorNombreUsuario(String n) Usuario
         +insertar(Usuario u) void
         +actualizar(Usuario u) void
+        +eliminar(int id) void
+        +listar() List~Usuario~
     }
     class ClienteDAO {
         +insertar(Cliente c) void
         +actualizar(Cliente c) void
+        +eliminar(int id) void
+        +tieneFacturas(int id) boolean
         +buscarPorId(int id) Cliente
         +listar() List~Cliente~
     }
     class ProductoDAO {
         +insertar(Producto p) void
         +actualizar(Producto p) void
+        +eliminar(int id) void
         +actualizarStock(int id, int nuevoStock) void
         +listar() List~Producto~
     }
@@ -164,11 +196,13 @@ classDiagram
         <<JPanel>>
         +cargarTabla() void
         +guardarCliente() void
+        +eliminarCliente() void
     }
     class PanelProductos {
         <<JPanel>>
         +cargarTabla() void
         +guardarProducto() void
+        +eliminarProducto() void
         +ajustarStock() void
     }
     class PanelFacturacion {
@@ -184,6 +218,7 @@ classDiagram
         #done() void
     }
 
+    VentanaServidor --> ServidorFacturacion : inicia / detiene
     ServidorFacturacion "1" --> "*" ManejadorCliente : crea un hilo por cliente
     ManejadorCliente ..> Solicitud : recibe
     ManejadorCliente ..> Respuesta : envía

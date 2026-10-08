@@ -29,6 +29,10 @@ public class RegistroClientes {
         clientes.set(clientes.indexOf(actual), clienteEditar);
     }
 
+    public void eliminarCliente(int id) throws RegistroNoEncontradoException {
+        clientes.remove(buscarClientePorId(id));
+    }
+
     public void desactivarCliente(int id) throws RegistroNoEncontradoException {
         buscarClientePorId(id).setActivo(false);
     }

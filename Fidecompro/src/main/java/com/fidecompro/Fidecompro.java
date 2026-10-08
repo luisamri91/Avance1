@@ -19,6 +19,7 @@ import com.fidecompro.modelo.Rol;
 import com.fidecompro.modelo.TipoIdentificacion;
 import com.fidecompro.modelo.Usuario;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  * Prueba por consola del modelo de Fidecompro: recorre las historias de usuario
@@ -159,6 +160,25 @@ public class Fidecompro {
         }
         System.out.println("Total vendido despues de anular: "
                 + Factura.formatearMonto(facturas.totalVendido(hoy, hoy)));
+
+        // ---------- HU-06: eliminar clientes (CRUD completo) ----------
+        titulo("HU-06 Eliminar clientes");
+        clientes.agregarCliente(new Cliente("Minisuper El Ahorro Ltda.", "2560-7788", "admin@elahorro.cr",
+                TipoIdentificacion.JURIDICA, "3-102-778899", "Cartago centro"));
+        for (Cliente c : new ArrayList<>(clientes.getClientes())) {
+            try {
+                if (facturas.tieneFacturasCliente(c.getId())) {
+                    clientes.desactivarCliente(c.getId());
+                    System.out.println(c.getNombre() + " tiene facturas: se desactiva para conservar el historial.");
+                } else {
+                    clientes.eliminarCliente(c.getId());
+                    System.out.println(c.getNombre() + " no tiene facturas: se elimina.");
+                }
+            } catch (RegistroNoEncontradoException e) {
+                System.out.println("Rechazado: " + e.getMessage());
+            }
+        }
+        System.out.print(clientes.mostrarClientes());
     }
 
     /**

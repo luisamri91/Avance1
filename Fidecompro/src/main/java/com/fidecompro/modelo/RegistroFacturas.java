@@ -76,6 +76,25 @@ public class RegistroFacturas {
         return total;
     }
 
+    // Se consultan antes de eliminar: un cliente o usuario con facturas solo se desactiva.
+    public boolean tieneFacturasCliente(int idCliente) {
+        for (Factura f : facturas) {
+            if (f.getCliente().getId() == idCliente) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean tieneFacturasUsuario(int idUsuario) {
+        for (Factura f : facturas) {
+            if (f.getVendedor().getId() == idUsuario) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public ArrayList<Factura> getFacturas() {
         return facturas;
     }

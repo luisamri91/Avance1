@@ -1,60 +1,101 @@
 {
   "funcionales": [
-    ["El sistema debe permitir crear, consultar, actualizar y desactivar usuarios, y que ingresen con usuario y contraseña.",
-     "Solo el personal autorizado puede usar el sistema. Cada usuario tiene un rol (administrador o vendedor) que define a qué módulos entra. Es el primer requerimiento a implementar porque todas las demás funciones dependen de saber quién está trabajando. Historias: HU 1, HU 2, HU 3.",
-     "Alta"],
-    ["El sistema debe permitir crear, consultar, actualizar y desactivar clientes.",
-     "Los clientes son la base de la facturación: cada factura se emite a uno de ellos. Incluye tipo y número de identificación, nombre o razón social, teléfono, correo y dirección. Un cliente desactivado conserva su historial. Historias: HU 4, HU 5, HU 6.",
-     "Alta"],
-    ["El sistema debe permitir crear, consultar, actualizar y eliminar categorías de productos.",
-     "Las categorías (abarrotes, bebidas, limpieza, higiene…) ordenan el catálogo y facilitan encontrar productos al facturar. Una categoría con productos no se puede eliminar. Historia: HU 7.",
-     "Media"],
-    ["El sistema debe permitir crear, consultar, actualizar y desactivar productos de distintos tipos.",
-     "La cadena maneja varios tipos de productos (abarrote, bebida y artículo del hogar), cada uno con datos propios y su propio porcentaje de IVA. Incluye código, nombre, valor de compra, valor de venta, existencias y stock mínimo. Historia: HU 8.",
-     "Alta"],
-    ["El sistema debe permitir registrar entradas de mercadería y ajustes de existencias.",
-     "Mantiene el inventario del sistema igual al de bodega. Cada ajuste indica su motivo y nunca puede dejar existencias en negativo. Historia: HU 9.",
-     "Alta"],
-    ["El sistema debe alertar sobre los productos que están por debajo del stock mínimo.",
-     "Permite reabastecer a tiempo y evitar ventas perdidas. La alerta aparece en el menú principal y en una lista ordenada de menos a más existencias. Historia: HU 10.",
-     "Media"],
-    ["El sistema debe permitir crear facturas a los clientes con uno o varios productos.",
-     "Calcula subtotal, descuento, IVA por línea según el tipo de producto y total; asigna un número consecutivo único y descuenta las existencias al emitir. Es el proceso central del negocio. Historias: HU 11, HU 12.",
-     "Alta"],
-    ["El sistema debe generar la factura física en un archivo con el desglose de pago.",
-     "El enunciado pide entregar la factura física. Se genera un archivo con los datos de la empresa, del cliente, cada línea, subtotal, descuento, IVA, total y método de pago, que se puede imprimir o enviar. Historia: HU 13.",
-     "Alta"],
-    ["El sistema debe permitir consultar el historial de facturas por fechas, cliente y estado.",
-     "Permite dar seguimiento a las ventas y conocer el total vendido en un periodo, contando solo las facturas emitidas. Historia: HU 14.",
-     "Media"],
-    ["El sistema debe permitir anular facturas emitidas.",
-     "Corrige ventas registradas por error. Al anular, la factura queda en estado ANULADA y las existencias de cada línea vuelven al inventario. Solo el administrador puede hacerlo. Historia: HU 15.",
-     "Media"]
+    [
+      "El sistema debe permitir crear, consultar, modificar y eliminar usuarios, y que ingresen con usuario y contraseña.",
+      "Solo el personal autorizado puede usar el sistema. Cada usuario tiene un rol (administrador o vendedor) que define a qué módulos entra. Un usuario con facturas emitidas no se elimina para no perder el historial; en ese caso se desactiva. Es el primer requerimiento a implementar porque todas las demás funciones dependen de saber quién está trabajando. Historias: HU 1, HU 2, HU 3.",
+      "Alta"
+    ],
+    [
+      "El sistema debe permitir crear, consultar, modificar y eliminar clientes.",
+      "Los clientes son la base de la facturación: cada factura se emite a uno de ellos. Incluye tipo y número de identificación, nombre o razón social, teléfono, correo y dirección. Un cliente con facturas no se puede eliminar; en ese caso se desactiva y conserva su historial. Historias: HU 4, HU 5, HU 6.",
+      "Alta"
+    ],
+    [
+      "El sistema debe permitir crear, consultar, modificar y eliminar categorías de productos.",
+      "Las categorías (abarrotes, bebidas, limpieza, higiene…) ordenan el catálogo y facilitan encontrar productos al facturar. Una categoría con productos no se puede eliminar. Historia: HU 7.",
+      "Media"
+    ],
+    [
+      "El sistema debe permitir crear, consultar, modificar y eliminar productos de distintos tipos.",
+      "La cadena maneja varios tipos de productos (abarrote, bebida y artículo del hogar), cada uno con datos propios y su propio porcentaje de IVA. Incluye código, nombre, valor de compra, valor de venta, existencias y stock mínimo. Un producto que ya aparece en facturas no se elimina; se desactiva. Historia: HU 8.",
+      "Alta"
+    ],
+    [
+      "El sistema debe permitir registrar entradas de mercadería y ajustes de existencias.",
+      "Mantiene el inventario del sistema igual al de bodega. Cada ajuste indica su motivo y nunca puede dejar existencias en negativo. Historia: HU 9.",
+      "Alta"
+    ],
+    [
+      "El sistema debe alertar sobre los productos que están por debajo del stock mínimo.",
+      "Permite reabastecer a tiempo y evitar ventas perdidas. La alerta aparece en el menú principal y en una lista ordenada de menos a más existencias. Historia: HU 10.",
+      "Media"
+    ],
+    [
+      "El sistema debe permitir crear facturas a los clientes con uno o varios productos.",
+      "Calcula subtotal, descuento, IVA por línea según el tipo de producto y total; asigna un número consecutivo único y descuenta las existencias al emitir. Es el proceso central del negocio. Historias: HU 11, HU 12.",
+      "Alta"
+    ],
+    [
+      "El sistema debe generar la factura física en un archivo con el desglose de pago.",
+      "El enunciado pide entregar la factura física. Se genera un archivo con los datos de la empresa, del cliente, cada línea, subtotal, descuento, IVA, total y método de pago, que se puede imprimir o enviar. Historia: HU 13.",
+      "Alta"
+    ],
+    [
+      "El sistema debe permitir consultar el historial de facturas por fechas, cliente y estado.",
+      "Permite dar seguimiento a las ventas y conocer el total vendido en un periodo, contando solo las facturas emitidas. Historia: HU 14.",
+      "Media"
+    ],
+    [
+      "El sistema debe permitir anular facturas emitidas.",
+      "Corrige ventas registradas por error. Al anular, la factura queda en estado ANULADA y las existencias de cada línea vuelven al inventario. Solo el administrador puede hacerlo. Historia: HU 15.",
+      "Media"
+    ],
+    [
+      "El servidor debe tener su propia ventana para iniciarlo, detenerlo y ver qué clientes están conectados y qué operaciones atiende.",
+      "Permite comprobar que el servidor atiende a varias cajas a la vez, cada una en su propio hilo, y que cada operación de las pantallas llega a la base de datos. Historia: HU 16.",
+      "Alta"
+    ]
   ],
   "no_funcionales": [
-    ["El sistema debe desarrollarse en Java 17 con NetBeans, sin frameworks ni código previo.",
-     "Es una condición del enunciado del proyecto: todo el código se escribe desde cero, usando solo las bibliotecas estándar de Java (Swing, sockets, hilos y JDBC).",
-     "Alta"],
-    ["El sistema debe contar con una interfaz gráfica de escritorio en español.",
-     "Se construye con Java Swing. Las pantallas siguen un mismo estilo, muestran mensajes claros y marcan los campos con error, para que el personal de las cajas la use sin capacitación extensa.",
-     "Alta"],
-    ["El sistema debe funcionar con una arquitectura cliente-servidor.",
-     "Las cajas (clientes) se conectan por sockets TCP a un servidor central que guarda la información. Así todas las cajas trabajan sobre los mismos datos de clientes, productos y facturas.",
-     "Alta"],
-    ["El sistema debe soportar varias cajas trabajando al mismo tiempo sin generar inconsistencias.",
-     "El servidor atiende cada conexión en un hilo distinto. La validación y el descuento de existencias y la asignación del número de factura se sincronizan, para que nunca se venda más producto del que hay ni se repita un número de factura.",
-     "Alta"],
-    ["El sistema debe proteger el acceso y la información de los usuarios.",
-     "Las contraseñas se guardan cifradas, el ingreso se bloquea por un minuto tras tres intentos fallidos y cada rol solo ve los módulos que le corresponden.",
-     "Alta"],
-    ["El sistema debe almacenar la información en una base de datos centralizada.",
-     "Usuarios, clientes, productos, categorías y facturas se guardan en MySQL a través de JDBC, de forma ordenada y sin perderse al cerrar la aplicación.",
-     "Alta"],
-    ["El sistema debe controlar los errores sin dejar datos incompletos.",
-     "Los errores se manejan con excepciones propias y mensajes claros. Una operación que falla (por ejemplo, una factura sin stock suficiente) no deja cambios a medias en el inventario.",
-     "Alta"],
-    ["El sistema debe responder rápido y sin congelar la pantalla.",
-     "Las operaciones frecuentes, como buscar un cliente o emitir una factura, deben responder en menos de 2 segundos. Las consultas largas se ejecutan en segundo plano para que la ventana siga respondiendo.",
-     "Media"]
+    [
+      "El sistema debe desarrollarse en Java 17 con NetBeans, sin frameworks ni código previo.",
+      "Es una condición del enunciado del proyecto: todo el código se escribe desde cero, usando solo las bibliotecas estándar de Java (Swing, sockets, hilos y JDBC).",
+      "Alta"
+    ],
+    [
+      "El sistema debe contar con pantallas gráficas de escritorio en español hechas con JFrame.",
+      "Las ventanas del cliente y del servidor se construyen con Java Swing (JFrame) en NetBeans. Siguen un mismo estilo, muestran mensajes claros y marcan los campos con error, para que el personal de las cajas las use sin capacitación extensa. Todo el CRUD se hace desde las pantallas.",
+      "Alta"
+    ],
+    [
+      "El sistema debe funcionar con una arquitectura cliente-servidor por sockets.",
+      "Se pueden abrir varias ventanas cliente al mismo tiempo, en la misma computadora o en varias, y todas se conectan por sockets TCP a un servidor central que guarda la información. Así todas las cajas trabajan sobre los mismos datos de clientes, productos y facturas.",
+      "Alta"
+    ],
+    [
+      "El sistema debe soportar varios clientes haciendo operaciones al mismo tiempo sin generar inconsistencias.",
+      "El servidor atiende cada conexión en un hilo distinto. Las operaciones que modifican datos (crear, modificar, eliminar, descontar existencias y numerar facturas) se sincronizan, para que nunca se venda más producto del que hay ni se repita un número de factura. Cada pantalla tiene el botón \"Actualizar lista\" para ver los cambios hechos desde otras cajas.",
+      "Alta"
+    ],
+    [
+      "El sistema debe proteger el acceso y la información de los usuarios.",
+      "Las contraseñas se guardan cifradas, el ingreso se bloquea por un minuto tras tres intentos fallidos y cada rol solo ve los módulos que le corresponden.",
+      "Alta"
+    ],
+    [
+      "El sistema debe almacenar la información en una base de datos MySQL o Derby.",
+      "Usuarios, clientes, categorías, productos y facturas se guardan en MySQL (o en Apache Derby, la otra base de datos que se verá en el curso) a través de JDBC, de forma ordenada y sin perderse al cerrar la aplicación. Solo la clase ConexionBD cambia si se pasa de una a otra.",
+      "Alta"
+    ],
+    [
+      "El sistema debe controlar los errores sin dejar datos incompletos.",
+      "Los errores se manejan con excepciones propias y mensajes claros. Una operación que falla (por ejemplo, una factura sin stock suficiente) no deja cambios a medias en el inventario.",
+      "Alta"
+    ],
+    [
+      "El sistema debe responder rápido y sin congelar la pantalla.",
+      "Las operaciones frecuentes, como buscar un cliente o emitir una factura, deben responder en menos de 2 segundos. Las consultas largas se ejecutan en segundo plano para que la ventana siga respondiendo.",
+      "Media"
+    ]
   ]
 }

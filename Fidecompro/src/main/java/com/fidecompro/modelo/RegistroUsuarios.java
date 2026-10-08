@@ -29,6 +29,10 @@ public class RegistroUsuarios {
         usuarios.set(usuarios.indexOf(actual), usuarioEditar);
     }
 
+    public void eliminarUsuario(int id) throws RegistroNoEncontradoException {
+        usuarios.remove(buscarUsuario(id));
+    }
+
     public void desactivarUsuario(int id) throws RegistroNoEncontradoException {
         buscarUsuario(id).setActivo(false);
     }
