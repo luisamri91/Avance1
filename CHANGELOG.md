@@ -8,6 +8,11 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 
 ## Documento de diseño
 
+### Documento v12 · 2026-10-08 · commit `34bfcec`
+* Historias de usuario de 16 a 12, una por pantalla CRUD como pidió el profesor: HU 1 une iniciar y cerrar sesión; HU 3 une registrar, buscar y modificar y eliminar clientes; HU 11 une consultar y anular facturas. Se conservan los 65 escenarios de aceptación.
+* Equivalencia con la numeración anterior: 1+2→1, 3→2, 4+5+6→3, 7→4, 8→5, 9→6, 10→7, 11→8, 12→9, 13→10, 14+15→11, 16→12.
+* Se renumeran las referencias en la guía del inicio, los requerimientos, los bocetos, la trazabilidad y el resumen de historias.
+
 ### Documento v11 · 2026-10-08 · commit `156cbdf`
 * Formato APA 7 (`docs/formato_apa.py`): márgenes de 2,54 cm en todas las páginas, también en las horizontales de las historias de usuario; Times New Roman 12; interlineado doble y sangría de 1,27 cm en el texto; número de página arriba a la derecha.
 * Portada de estudiante: título en negrita y centrado; nombre, universidad, curso, profesor y fecha debajo. El documento empieza en la página 2.
@@ -116,6 +121,9 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 * Archivo editable `Avance1_Diagrama_de_Clases_Simplificado_v1.drawio` e imagen `.png`. Fuente: `docs/diagramas/00_clases_simplificado.mmd`.
 
 ## Código
+
+### Código v4 · 2026-10-08 · commit `34bfcec`
+* Solo cambian los títulos y comentarios del `main` a la nueva numeración de historias (documento v12).
 
 ### Código v3 · 2026-10-08 · commit `626c373`
 * `RegistroUsuarios` y `RegistroClientes` usan `Map<Integer, …> = new HashMap<>()` con el id como clave; `RegistroFacturas` usa `TreeMap<Integer, Factura>` con el número como clave.
