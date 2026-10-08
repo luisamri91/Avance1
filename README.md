@@ -18,6 +18,14 @@ Contenido del documento:
 2. **Historias de usuario**: 15 historias (HU-01 a HU-15) con criterios de aceptación, prioridad y estimación.
 3. **Prototipos**: 8 pantallas (inicio de sesión, menú, clientes, productos e inventario, nueva factura, factura física, historial y usuarios) más el mapa de navegación.
 
+## Código de prueba del modelo (`Fidecompro/`)
+
+Proyecto Maven de NetBeans (Java 17) con las clases del diagrama de dominio: `Producto` abstracto con `Abarrote`, `Bebida` y `ArticuloHogar`, la interface `Mostrable`, `Inventario`/`Categoria`, `Factura`/`DetalleFactura`, los registros de usuarios, clientes y facturas, y las excepciones propias.
+
+`com.fidecompro.Fidecompro` es un `main` de consola que recorre las historias de usuario principales: login, registro de clientes, catálogo por tipo de producto con su IVA, alertas de stock, factura con descuento, factura física en `facturas/FC-000001.txt`, dos cajas vendiendo el último producto al mismo tiempo (adelanto de hilos) y anulación.
+
+Para correrlo: abrir la carpeta `Fidecompro` en NetBeans (File > Open Project) y dar *Run*.
+
 ### Antes de entregar
 
 Completar en la portada del documento: nombre del estudiante, carné y profesor(a).
