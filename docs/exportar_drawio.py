@@ -7,7 +7,8 @@ dependencia. Las clases y las flechas se acomodan con ELK (acomodar_drawio.js)
 para que las flechas no pasen por encima de las clases.
 
 Uso (desde docs/):
-    python3 exportar_drawio.py SALIDA.drawio diagramas/01a_modelo_inventario.mmd [otro.mmd ...]
+    python3 exportar_drawio.py [--simbologia] SALIDA.drawio diagramas/01a_modelo_inventario.mmd [otro.mmd ...]
+Con --simbologia se agrega a cada página un cuadro que explica los símbolos del diagrama.
 Necesita Node.js y el paquete elkjs (npm install elkjs; si está en otra carpeta, NODE_PATH=<carpeta>/node_modules).
 """
 import json
@@ -161,7 +162,75 @@ def anclaje(punto, nodo, prefijo):
     return f"{prefijo}X={x:.3f};{prefijo}Y={y:.3f};{prefijo}Dx=0;{prefijo}Dy=0;"
 
 
-def pagina(ruta_mmd, numero):
+# Filas de la simbología: (muestra, explicación). La muestra es texto HTML o el estilo de una flecha.
+SIMBOLOGIA = [
+    ("titulo", "Partes de cada clase"),
+    ("<b>Nombre</b>", "Arriba va el nombre de la clase; en el medio, sus atributos; abajo, sus métodos."),
+    ("nombre : Tipo", "Atributo y su tipo de dato. Ejemplo: <i>existencias : int</i>."),
+    ("metodo(…) : Tipo", "Método, los datos que recibe y el tipo de dato que devuelve (<i>void</i> = no devuelve nada)."),
+    ("titulo", "Visibilidad"),
+    ("+", "Público: cualquier clase lo puede usar."),
+    ("-", "Privado: solo lo usa la misma clase."),
+    ("#", "Protegido: lo usan la clase y sus subclases."),
+    ("titulo", "Otros símbolos"),
+    ("<u>subrayado</u>", "Static: pertenece a la clase y no a cada objeto (por ejemplo, el contador de ids)."),
+    ("<i>cursiva</i>", "Abstracto: la clase no se puede instanciar o el método no tiene código y lo escribe cada subclase."),
+    ("«abstract»", "Clase abstracta: sirve de base para otras clases (Persona, Producto)."),
+    ("«interface»", "Interface: lista de métodos que las clases que la implementan están obligadas a tener."),
+    ("titulo", "Multiplicidad (cuántos objetos se relacionan)"),
+    ("1", "Exactamente uno."),
+    ("*", "Cero o muchos."),
+    ("1..*", "Uno o muchos (al menos uno)."),
+    ("ejemplo", "Ejemplo: Factura <b>*</b> → <b>1</b> Cliente se lee \"cada factura es de un cliente y un cliente puede tener muchas facturas\"."),
+    ("titulo", "Relaciones"),
+    ("flecha:endArrow=block;endFill=0;endSize=12;", "Herencia: la subclase <i>es un</i> tipo de la superclase (Usuario es una Persona)."),
+    ("flecha:endArrow=block;endFill=0;endSize=12;dashed=1;", "Implementación: la clase cumple una interface (Producto implementa Mostrable)."),
+    ("flecha:startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;", "Composición: el todo contiene sus partes y estas no existen sin él (Factura y sus detalles)."),
+    ("flecha:startArrow=diamondThin;startFill=0;startSize=14;endArrow=none;", "Agregación: el todo agrupa partes que pueden existir por separado (Categoría y sus productos)."),
+    ("flecha:endArrow=open;endFill=0;endSize=10;", "Asociación: una clase conoce y usa a otra (la Factura conoce a su Cliente)."),
+]
+ANCHO_LEYENDA = 560
+
+
+def leyenda(x0, y0, numero):
+    """Cuadro con la explicación de cada símbolo del diagrama."""
+    celdas = []
+    y = y0 + 34
+    for indice, (muestra, texto) in enumerate(SIMBOLOGIA):
+        id_ = f"p{numero}l{indice}"
+        if muestra == "titulo":
+            y += 6
+            celdas.append(celda(id_, f"<b>{texto}</b>", "text;html=1;fillColor=none;strokeColor=none;align=left;verticalAlign=middle;fontSize=12;"
+                                "fontColor=#1F4E79;", "1", x0 + 12, y, ANCHO_LEYENDA - 24, 22))
+            y += 22
+            continue
+        alto = 34 if len(texto) > 70 else 22
+        if muestra == "ejemplo":
+            celdas.append(celda(id_, texto, "text;html=1;fillColor=none;strokeColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=11;"
+                                "fontColor=#000000;", "1", x0 + 12, y, ANCHO_LEYENDA - 24, alto))
+        else:
+            if muestra.startswith("flecha:"):
+                estilo = "html=1;strokeColor=#000000;" + muestra[len("flecha:"):]
+                celdas.append(f'<mxCell id="{id_}f" style="{estilo}" edge="1" parent="1">'
+                              '<mxGeometry relative="1" as="geometry">'
+                              f'<mxPoint x="{x0 + 16}" y="{y + alto / 2:.0f}" as="sourcePoint"/>'
+                              f'<mxPoint x="{x0 + 106}" y="{y + alto / 2:.0f}" as="targetPoint"/>'
+                              '</mxGeometry></mxCell>')
+            else:
+                celdas.append(celda(f"{id_}m", muestra, "text;html=1;align=center;verticalAlign=middle;fontSize=11;"
+                                    "fontColor=#000000;fillColor=#dae8fc;strokeColor=#6c8ebf;", "1",
+                                    x0 + 16, y + 2, 100, alto - 4))
+            celdas.append(celda(id_, texto, "text;html=1;fillColor=none;strokeColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=11;"
+                                "fontColor=#000000;", "1", x0 + 126, y, ANCHO_LEYENDA - 138, alto))
+        y += alto + 2
+    marco = celda(f"p{numero}leyenda", "<b>Simbología del diagrama</b>",
+                  "rounded=1;arcSize=2;html=1;align=center;verticalAlign=top;spacingTop=6;fontSize=14;"
+                  "fontColor=#000000;fillColor=#FFFFFF;strokeColor=#1F4E79;strokeWidth=2;", "1",
+                  x0, y0, ANCHO_LEYENDA, y - y0 + 10)
+    return [marco] + celdas
+
+
+def pagina(ruta_mmd, numero, con_leyenda=False):
     clases, relaciones = leer_mermaid(ruta_mmd)
     medidas = {n: medir(n, d) for n, d in clases.items()}
     nodos, rutas = acomodar(clases, medidas, relaciones)
@@ -222,6 +291,9 @@ def pagina(ruta_mmd, numero):
                               f'fontColor=#000000;" vertex="1" connectable="0" parent="{id_flecha}">'
                               f'<mxGeometry x="{posicion * 0.85}" relative="1" as="geometry">'
                               '<mxPoint x="6" as="offset"/></mxGeometry></mxCell>')
+    if con_leyenda:
+        derecha = max(n["x"] + n["width"] for n in nodos.values()) + 20
+        celdas += leyenda(derecha + 60, 20, numero)
     nombre_pagina = NOMBRES_PAGINA.get(Path(ruta_mmd).stem, Path(ruta_mmd).stem)
     return (f'<diagram id="pagina{numero}" name="{escape(nombre_pagina)}"><mxGraphModel grid="1" gridSize="10" '
             'guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" math="0" shadow="0">'
@@ -229,8 +301,10 @@ def pagina(ruta_mmd, numero):
 
 
 def main():
-    salida, *diagramas = sys.argv[1:]
-    paginas = [pagina(ruta, numero) for numero, ruta in enumerate(diagramas, start=1)]
+    argumentos = sys.argv[1:]
+    con_leyenda = "--simbologia" in argumentos
+    salida, *diagramas = [a for a in argumentos if a != "--simbologia"]
+    paginas = [pagina(ruta, numero, con_leyenda) for numero, ruta in enumerate(diagramas, start=1)]
     Path(salida).write_text('<mxfile host="Electron" type="device">' + "".join(paginas) + "</mxfile>\n",
                             encoding="utf-8")
     print("Generado", salida)
