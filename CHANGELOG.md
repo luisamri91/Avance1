@@ -66,6 +66,10 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 
 ## Diagrama de clases (Word aparte)
 
+### Diagrama de clases v4 · 2026-10-08
+* Numeración alineada con la carpeta de Nando (`Sem5\Avance1`), donde el diagrama con las colecciones ya se guardó como v4. Word y `.drawio` quedan ambos en v4.
+* Contenido: el de las entradas v2 y v3 de abajo (colecciones según su uso y la tabla que cita los ejemplos del profesor). Esos números solo existieron en el repositorio.
+
 ### Diagrama de clases v3 · 2026-10-08 · commit `5400cea`
 * Word aparte con la tabla de colecciones del documento v9 (cita los ejemplos del profesor). El `.drawio` sigue en v2 porque los diagramas no cambiaron.
 

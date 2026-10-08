@@ -12,7 +12,7 @@ Versión actual: **documento v9** y **código v3**. El detalle de cada cambio es
 | Entregable | Archivo |
 |---|---|
 | Documento de diseño (para entregar) | [`docs/Avance1_Documento_Diseno_v9.pdf`](docs/Avance1_Documento_Diseno_v9.pdf) · [`.docx`](docs/Avance1_Documento_Diseno_v9.docx) |
-| Diagrama de clases (solo las clases) | [`docs/Avance1_Diagrama_de_Clases_v3.docx`](docs/Avance1_Diagrama_de_Clases_v3.docx) · editable en draw.io: [`.drawio`](docs/Avance1_Diagrama_de_Clases_v2.drawio) |
+| Diagrama de clases (solo las clases) | [`docs/Avance1_Diagrama_de_Clases_v4.docx`](docs/Avance1_Diagrama_de_Clases_v4.docx) · editable en draw.io: [`.drawio`](docs/Avance1_Diagrama_de_Clases_v4.drawio) |
 | Diagrama de clases simplificado (una página) | [`docs/Avance1_Diagrama_de_Clases_Simplificado_v4.drawio`](docs/Avance1_Diagrama_de_Clases_Simplificado_v4.drawio) · [`.png`](docs/Avance1_Diagrama_de_Clases_Simplificado_v4.png) |
 | Fuente editable del documento | [`docs/Avance1_Documento_Diseno.md`](docs/Avance1_Documento_Diseno.md) |
 | Diagramas (clases, arquitectura, secuencia, navegación) | [`docs/diagramas/`](docs/diagramas) (Mermaid) → [`docs/img/`](docs/img) |
