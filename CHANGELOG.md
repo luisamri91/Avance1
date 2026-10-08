@@ -8,6 +8,15 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 
 ## Documento de diseño
 
+### Documento v8 · 2026-10-08 · commit `626c373`
+* El profesor explicó que un error común es usar listas para todo. Ahora cada colección se elige según su uso, como en sus ejemplos (`EjemploList`, `EjemploSet`, `EjemploMap`, `EjemploTreeMap`), y se declaran por su interface: `List<T> lista = new ArrayList<>()`.
+* `List` donde importa el orden: detalles de la factura, productos de la categoría, categorías del inventario y los resultados de las consultas.
+* `Set<String>` para las advertencias de `ArticuloHogar` (no se repiten).
+* `Map<Integer, Usuario>` y `Map<Integer, Cliente>` (`HashMap`) en los registros: el CRUD por id llega directo sin recorrer la colección.
+* `TreeMap<Integer, Factura>` en `RegistroFacturas`: búsqueda por número y facturas ordenadas por número.
+* `CopyOnWriteArrayList` para los clientes conectados al servidor (segura para hilos); nota sobre `ConcurrentHashMap` en el servidor.
+* Nueva tabla «Colecciones: cuál se usa y por qué» al final de la sección 4.2 y fila de colecciones en la tabla de conceptos del curso.
+
 ### Documento v7 · 2026-10-08 · commit `047b31c`
 * El profesor indicó que el Avance 1 es conceptual y pide tres partes: historias de usuario, diagrama de clases y bocetos (login, menú y pantallas CRUD de las clases). Se agrega al inicio una tabla que indica dónde está cada una.
 * La sección 6 abre con una tabla que relaciona cada pantalla con la clase que administra y sus operaciones CRUD.
@@ -53,10 +62,18 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 
 ## Diagrama de clases (Word aparte)
 
+### Diagrama de clases v2 · 2026-10-08 · commit `626c373`
+* Mismos cambios de colecciones del documento v8: `List`, `Set`, `Map`, `TreeMap` y `CopyOnWriteArrayList` en los diagramas y en las tablas de clases, más la tabla «Colecciones: cuál se usa y por qué».
+* `Avance1_Diagrama_de_Clases_v2.docx` y `Avance1_Diagrama_de_Clases_v2.drawio` (tres páginas, igual que v1).
+
 ### Diagrama de clases v1 · 2026-10-08 · commit `7900a76`
 * Word aparte con solo la parte de clases del Avance 1: entidades o clases identificadas, sus atributos, métodos y relaciones (diagramas y descripción de cada clase, del dominio y cliente-servidor).
 * Se genera con `docs/construir_diagrama_clases.py` a partir de la sección "Entidades y clases" del documento de diseño v7, así que siempre coincide con él.
 * Versión editable en draw.io (`Avance1_Diagrama_de_Clases_v1.drawio`, commit `e137e8c`) con tres páginas: inventario y excepciones, personas y facturación, y cliente-servidor. Se genera con `docs/exportar_drawio.py` desde los diagramas de Mermaid.
+
+### Diagrama de clases simplificado v4 · 2026-10-08 · commit `626c373`
+* Colecciones declaradas por su interface: `List<Producto>`, `List<Categoria>` y el atributo `detalles: List<DetalleFactura>` en `Factura`.
+* La simbología agrega el apartado **Colecciones**: qué es `List<Tipo>` y que el diagrama completo también usa `Set` y `Map`/`TreeMap`.
 
 ### Diagrama de clases simplificado v3 · 2026-10-08 · commit `4438bd1`
 * Formato vertical para poner la imagen en una página completa de Word: la simbología pasa debajo del diagrama, en dos columnas, y la imagen queda con la proporción de una página carta con márgenes de 2 cm (ancho/alto = 0,8).
@@ -70,6 +87,11 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 * Archivo editable `Avance1_Diagrama_de_Clases_Simplificado_v1.drawio` e imagen `.png`. Fuente: `docs/diagramas/00_clases_simplificado.mmd`.
 
 ## Código
+
+### Código v3 · 2026-10-08 · commit `626c373`
+* `RegistroUsuarios` y `RegistroClientes` usan `Map<Integer, …> = new HashMap<>()` con el id como clave; `RegistroFacturas` usa `TreeMap<Integer, Factura>` con el número como clave.
+* `ArticuloHogar.advertencias` es un `Set<String> = new HashSet<>()`; las demás colecciones se declaran como `List<T>`.
+* El `main` muestra que el `Set` no repite una advertencia y que el `TreeMap` da la primera y la última factura.
 
 ### Código v2 · 2026-10-08 · commit `99f55d4`
 * `eliminarCliente` y `eliminarUsuario` en los registros; `tieneFacturasCliente` y `tieneFacturasUsuario` en `RegistroFacturas`.
