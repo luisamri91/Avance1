@@ -8,6 +8,10 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 
 ## Documento de diseño
 
+### Documento v9 · 2026-10-08 · commit `5400cea`
+* La tabla «Colecciones: cuál se usa y por qué» tiene una columna nueva con el ejemplo del profesor que respalda cada elección: `EjemploList`, `EjemploCollection`, `EjemploSet`, `EjemploMap` y `EjemploTreeMap`.
+* El texto explica, con `EjemploColeccionGenerica` y `EjemploColeccionNoGenerica`, por qué todas las colecciones son genéricas (no hace falta cast).
+
 ### Documento v8 · 2026-10-08 · commit `626c373`
 * El profesor explicó que un error común es usar listas para todo. Ahora cada colección se elige según su uso, como en sus ejemplos (`EjemploList`, `EjemploSet`, `EjemploMap`, `EjemploTreeMap`), y se declaran por su interface: `List<T> lista = new ArrayList<>()`.
 * `List` donde importa el orden: detalles de la factura, productos de la categoría, categorías del inventario y los resultados de las consultas.
@@ -61,6 +65,9 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 * Primera versión del documento de diseño del Avance 1 (Proyecto 1, Fidecompro): clases con atributos, métodos y relaciones; 15 historias de usuario; 8 prototipos de pantalla; diagramas de arquitectura, secuencia y navegación.
 
 ## Diagrama de clases (Word aparte)
+
+### Diagrama de clases v3 · 2026-10-08 · commit `5400cea`
+* Word aparte con la tabla de colecciones del documento v9 (cita los ejemplos del profesor). El `.drawio` sigue en v2 porque los diagramas no cambiaron.
 
 ### Diagrama de clases v2 · 2026-10-08 · commit `626c373`
 * Mismos cambios de colecciones del documento v8: `List`, `Set`, `Map`, `TreeMap` y `CopyOnWriteArrayList` en los diagramas y en las tablas de clases, más la tabla «Colecciones: cuál se usa y por qué».
