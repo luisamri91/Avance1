@@ -1,6 +1,6 @@
 ---
 title: "Proyecto Final – Avance 1: Documento de Diseño"
-subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 8"
+subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 9"
 author: "Estudiante: [Nombre completo] · Carné: [número]"
 date: "Programación Cliente-Servidor Concurrente · Profesor: Mario Alberto Vargas Montes · Octubre 2026"
 lang: es
@@ -18,6 +18,7 @@ lang: es
 | v6 | 08/10/2026 | Diseño alineado con lo que el profesor pide para el proyecto final: CRUD completo (con eliminar) desde pantallas, ventana del servidor (HU 16 y P9), base de datos MySQL o Derby con su modelo de tablas y plan de demostración para el video final |
 | v7 | 08/10/2026 | Guía al inicio con las tres partes que pide el Avance 1 (historias de usuario, diagrama de clases y bocetos); tabla de pantallas CRUD por clase; nuevo boceto P10 de categorías; nombre del profesor en la portada |
 | v8 | 08/10/2026 | Cada colección según su uso, como en los ejemplos del profesor: `List` donde importa el orden, `Set` para advertencias sin repetir, `HashMap` para usuarios y clientes por id, `TreeMap` para facturas ordenadas por número y `CopyOnWriteArrayList` para los clientes conectados al servidor; nueva tabla «Colecciones: cuál se usa y por qué» en la sección 4.2 |
+| v9 | 08/10/2026 | La tabla «Colecciones: cuál se usa y por qué» cita el ejemplo del profesor que respalda cada elección (`EjemploList`, `EjemploSet`, `EjemploMap`, `EjemploTreeMap`, `EjemploCollection`) y explica, con `EjemploColeccionGenerica` y `EjemploColeccionNoGenerica`, por qué todas las colecciones son genéricas |
 
 # 1. Introducción
 
@@ -321,16 +322,16 @@ Clases que administran las colecciones, con el mismo patrón de `Inventario`. Us
 * `EstadoFactura`: EMITIDA, ANULADA.
 
 ### Colecciones: cuál se usa y por qué
-Como en los ejemplos del curso, no todo se guarda en una lista: cada colección se elige según lo que se necesita (orden, duplicados o búsqueda por clave). Las variables se declaran por su interface y se crean con una implementación, por ejemplo `List<DetalleFactura> detalles = new ArrayList<>()` o `Map<Integer, Cliente> clientes = new HashMap<>()`.
+Como en los ejemplos de colecciones del profesor (semana 4), no todo se guarda en una lista: cada colección se elige según lo que se necesita (orden, duplicados o búsqueda por clave). Las variables se declaran por su interface y se crean con una implementación, igual que `List<String> lista = new ArrayList<>()` en `EjemploList`, por ejemplo `List<DetalleFactura> detalles = new ArrayList<>()` o `Map<Integer, Cliente> clientes = new HashMap<>()`. Todas son genéricas, como en `EjemploColeccionGenerica`: así no se necesita conversión de tipo (cast) al sacar un elemento, que es el problema que muestra `EjemploColeccionNoGenerica`.
 
-| Colección | Dónde se usa | Por qué |
-|---|---|---|
-| `List` (`ArrayList`) | `Factura.detalles` | Las líneas se muestran en el orden en que se agregan y se quitan por posición (`eliminarDetalle(indice)`) |
-| `List` (`ArrayList`) | `Categoria.productos`, `Inventario.categorias` y los resultados de `listarProductos()`, `productosBajoMinimo()` y `facturasPorFecha()` | Se recorren y se muestran en orden, y se ordenan con `Collections.sort` usando `Comparable` (por nombre) o `Comparator` (por existencias) |
-| `Set` (`HashSet`) | `ArticuloHogar.advertencias` | Una advertencia no debe salir dos veces en el producto; el `Set` no acepta elementos repetidos |
-| `Map` (`HashMap`) | `RegistroUsuarios.usuarios`, `RegistroClientes.clientes` | El CRUD es por id: `get(id)`, `put(id, …)` y `remove(id)` llegan directo al registro sin recorrer la colección, y no puede haber dos con el mismo id (igual que la llave primaria en la base de datos) |
-| `TreeMap` | `RegistroFacturas.facturas` | Se busca la factura por su número y, además, el `TreeMap` las mantiene ordenadas por número: el historial sale en orden y `firstKey()`/`lastKey()` dan la primera y la última |
-| `CopyOnWriteArrayList` | `ServidorFacturacion.clientesConectados` | Varios hilos agregan y quitan clientes conectados mientras la ventana del servidor recorre la lista; esta lista es segura para hilos |
+| Colección | Dónde se usa | Por qué | Ejemplo del curso |
+|---|---|---|---|
+| `List` (`ArrayList`) | `Factura.detalles` | Las líneas se muestran en el orden en que se agregan y se quitan por posición (`eliminarDetalle(indice)`) | `EjemploList`: mantiene el orden de inserción y permite `get` y `remove` por índice |
+| `List` (`ArrayList`) | `Categoria.productos`, `Inventario.categorias` y los resultados de `listarProductos()`, `productosBajoMinimo()` y `facturasPorFecha()` | Se recorren y se muestran en orden, y se ordenan con `Collections.sort` usando `Comparable` (por nombre) o `Comparator` (por existencias) | `EjemploList` y `EjemploCollection` (recorrido con for mejorado) |
+| `Set` (`HashSet`) | `ArticuloHogar.advertencias` | Una advertencia no debe salir dos veces en el producto; el `Set` no acepta elementos repetidos | `EjemploSet`: `HashSet` ignora el elemento duplicado |
+| `Map` (`HashMap`) | `RegistroUsuarios.usuarios`, `RegistroClientes.clientes` | El CRUD es por id: `get(id)`, `put(id, …)` y `remove(id)` llegan directo al registro sin recorrer la colección, y no puede haber dos con el mismo id (igual que la llave primaria en la base de datos) | `EjemploMap`: pares clave-valor con `put`, `get`, `containsKey` y `remove` |
+| `TreeMap` | `RegistroFacturas.facturas` | Se busca la factura por su número y, además, el `TreeMap` las mantiene ordenadas por número: el historial sale en orden y `firstKey()`/`lastKey()` dan la primera y la última | `EjemploTreeMap`: claves ordenadas, primera y última entrada y rangos con `subMap` |
+| `CopyOnWriteArrayList` | `ServidorFacturacion.clientesConectados` | Varios hilos agregan y quitan clientes conectados mientras la ventana del servidor recorre la lista; esta lista es segura para hilos | No está en los ejemplos: corresponde a hilos, que el curso verá más adelante |
 
 En el servidor, cuando varios hilos `ManejadorCliente` usen los mismos registros a la vez, los `HashMap` se crean como `ConcurrentHashMap` o se protegen con métodos `synchronized`, como ya se hace en `agregarFactura` y `anularFactura`.
 
