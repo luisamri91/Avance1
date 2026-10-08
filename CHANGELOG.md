@@ -8,6 +8,10 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 
 ## Documento de diseño
 
+### Documento v13 · 2026-10-08 · commit `bce4e1c`
+* Escenarios de aceptación consolidados: como máximo 4 por historia, de 65 a 40. Se unen los casos parecidos sin perder ninguna regla: todos los datos inválidos de un formulario en un escenario, eliminar con o sin facturas en otro, búsqueda y edición de clientes juntas, y anulación no permitida (ya anulada o vendedor).
+* Escenarios por historia: HU 1 a HU 3, 4 cada una; HU 4, 3; HU 5, 4; HU 6, 3; HU 7, 2; HU 8, 4; HU 9 y HU 10, 2 cada una; HU 11 y HU 12, 4 cada una.
+
 ### Documento v12 · 2026-10-08 · commit `34bfcec`
 * Historias de usuario de 16 a 12, una por pantalla CRUD como pidió el profesor: HU 1 une iniciar y cerrar sesión; HU 3 une registrar, buscar y modificar y eliminar clientes; HU 11 une consultar y anular facturas. Se conservan los 65 escenarios de aceptación.
 * Equivalencia con la numeración anterior: 1+2→1, 3→2, 4+5+6→3, 7→4, 8→5, 9→6, 10→7, 11→8, 12→9, 13→10, 14+15→11, 16→12.
@@ -121,6 +125,9 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 * Archivo editable `Avance1_Diagrama_de_Clases_Simplificado_v1.drawio` e imagen `.png`. Fuente: `docs/diagramas/00_clases_simplificado.mmd`.
 
 ## Historias de usuario (Word aparte)
+
+### Historias de usuario v2 · 2026-10-08 · commit `bce4e1c`
+* Mismas 12 historias con los 40 escenarios consolidados del documento v13 (máximo 4 por historia).
 
 ### Historias de usuario v1 · 2026-10-08 · commit `9fae723`
 * `Avance1_Historias_de_Usuario_v1.docx`: solo la tabla de las 12 historias del documento v12 con sus 65 escenarios, en página horizontal con márgenes de 2,54 cm y Times New Roman, para copiarla a otro documento. Se genera con `docs/construir_historias.py`.
