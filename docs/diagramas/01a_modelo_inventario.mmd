@@ -1,0 +1,103 @@
+classDiagram
+    direction TB
+
+    class Mostrable {
+        <<interface>>
+        +mostrarInformacion() String
+    }
+    class Producto {
+        <<abstract>>
+        +double IVA_GENERAL = 0.13$
+        -int idAutoIncremental$
+        #int id
+        #String codigo
+        #String nombre
+        #String descripcion
+        #double valorCompra
+        #double valorVenta
+        #int existencias
+        #int stockMinimo
+        #Categoria categoria
+        +Producto(String codigo, String nombre, String descripcion, double valorCompra, double valorVenta, int existencias, int stockMinimo)
+        +obtenerPorcentajeImpuesto()* double
+        +descontarExistencias(int cantidad) void
+        +aumentarExistencias(int cantidad) void
+        +necesitaReabastecer() boolean
+        +compareTo(Producto otro) int
+        +mostrarInformacion() String
+    }
+    class Abarrote {
+        +double IVA_CANASTA_BASICA = 0.01$
+        -LocalDate fechaVencimiento
+        -double pesoKg
+        -boolean canastaBasica
+        +obtenerPorcentajeImpuesto() double
+        +estaVencido() boolean
+        +mostrarInformacion() String
+    }
+    class Bebida {
+        -int volumenMl
+        -int unidadesPorPaquete
+        -boolean retornable
+        +obtenerPorcentajeImpuesto() double
+        +mostrarInformacion() String
+    }
+    class ArticuloHogar {
+        -String marca
+        -String presentacion
+        -ArrayList~String~ advertencias
+        +agregarAdvertencia(String texto) void
+        +eliminarAdvertencia(String texto) void
+        +obtenerPorcentajeImpuesto() double
+        +mostrarInformacion() String
+    }
+    class Categoria {
+        -int idAutoIncremental$
+        -int id
+        -String nombre
+        -String descripcion
+        -ArrayList~Producto~ productos
+        +agregarProducto(Producto p) void
+        +editarProducto(int idProducto, Producto productoEditar) void
+        +eliminarProducto(int idProducto) void
+        +buscarProducto(int idProducto) Producto
+        +mostrarProductos() String
+    }
+    class Inventario {
+        -String nombre
+        -String sede
+        -ArrayList~Categoria~ categorias
+        +agregarCategoria(Categoria c) void
+        +editarCategoria(int idCategoria, Categoria categoriaEditar) void
+        +eliminarCategoria(int idCategoria) void
+        +agregarProductoCategoria(int idCategoria, Producto p) void
+        +editarProductoCategoria(int idCategoria, int idProducto, Producto p) void
+        +eliminarProductoCategoria(int idCategoria, int idProducto) void
+        +mostrarProductosCategoria(int idCategoria) String
+        +buscarProducto(String codigo) Producto
+        +productosBajoMinimo() ArrayList~Producto~
+    }
+    class ComparadorPorExistencias {
+        +compare(Producto a, Producto b) int
+    }
+    class StockInsuficienteException {
+        +StockInsuficienteException(String mensaje)
+    }
+    class CredencialesInvalidasException {
+        +CredencialesInvalidasException(String mensaje)
+    }
+    class RegistroNoEncontradoException {
+        +RegistroNoEncontradoException(String mensaje)
+    }
+    class Exception
+
+    Mostrable <|.. Producto
+    Producto <|-- Abarrote
+    Producto <|-- Bebida
+    Producto <|-- ArticuloHogar
+    Inventario "1" o-- "*" Categoria : categorias
+    Categoria "1" o-- "*" Producto : productos
+    ComparadorPorExistencias ..> Producto : ordena
+    Exception <|-- StockInsuficienteException
+    Exception <|-- CredencialesInvalidasException
+    Exception <|-- RegistroNoEncontradoException

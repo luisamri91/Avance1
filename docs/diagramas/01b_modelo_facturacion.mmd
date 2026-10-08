@@ -1,0 +1,135 @@
+classDiagram
+    direction TB
+
+    class Mostrable {
+        <<interface>>
+        +mostrarInformacion() String
+    }
+    class Persona {
+        <<abstract>>
+        #String nombre
+        #String telefono
+        #String correo
+        +Persona(String nombre, String telefono, String correo)
+        +mostrarInformacion() String
+    }
+    class Usuario {
+        -int idAutoIncremental$
+        -int id
+        -String nombreUsuario
+        -String contrasena
+        -Rol rol
+        -boolean activo
+        +Usuario(String nombre, String telefono, String correo, String nombreUsuario, String contrasena, Rol rol)
+        +validarCredenciales(String nombreUsuario, String contrasena) boolean
+        +esAdministrador() boolean
+        +mostrarInformacion() String
+    }
+    class Cliente {
+        -int idAutoIncremental$
+        -int id
+        -TipoIdentificacion tipoIdentificacion
+        -String identificacion
+        -String direccion
+        -LocalDate fechaRegistro
+        -boolean activo
+        +Cliente(String nombre, String telefono, String correo, TipoIdentificacion tipo, String identificacion, String direccion)
+        +mostrarInformacion() String
+    }
+    class Factura {
+        -int ultimoNumero$
+        -int numero
+        -LocalDateTime fecha
+        -Cliente cliente
+        -Usuario vendedor
+        -ArrayList~DetalleFactura~ detalles
+        -double porcentajeDescuento
+        -MetodoPago metodoPago
+        -EstadoFactura estado
+        +Factura(Cliente cliente, Usuario vendedor, MetodoPago metodoPago)
+        +agregarDetalle(Producto p, int cantidad) void
+        +eliminarDetalle(int indice) void
+        +calcularSubtotal() double
+        +calcularDescuento() double
+        +calcularImpuesto() double
+        +calcularTotal() double
+        +anular() void
+        +mostrarInformacion() String
+        +generarArchivo(String carpeta) void
+    }
+    class DetalleFactura {
+        -Producto producto
+        -int cantidad
+        -double precioUnitario
+        +DetalleFactura(Producto producto, int cantidad)
+        +calcularSubtotal() double
+        +calcularImpuesto() double
+        +calcularTotal() double
+        +mostrarInformacion() String
+    }
+    class RegistroUsuarios {
+        -ArrayList~Usuario~ usuarios
+        +agregarUsuario(Usuario u) void
+        +editarUsuario(int id, Usuario usuarioEditar) void
+        +desactivarUsuario(int id) void
+        +iniciarSesion(String nombreUsuario, String contrasena) Usuario
+    }
+    class RegistroClientes {
+        -ArrayList~Cliente~ clientes
+        +agregarCliente(Cliente c) void
+        +editarCliente(int id, Cliente clienteEditar) void
+        +desactivarCliente(int id) void
+        +buscarCliente(String identificacion) Cliente
+        +mostrarClientes() String
+    }
+    class RegistroFacturas {
+        -ArrayList~Factura~ facturas
+        +agregarFactura(Factura f) void
+        +buscarFactura(int numero) Factura
+        +anularFactura(int numero) void
+        +facturasPorFecha(LocalDate desde, LocalDate hasta) ArrayList~Factura~
+    }
+    class Rol {
+        <<enumeration>>
+        ADMINISTRADOR
+        VENDEDOR
+    }
+    class TipoIdentificacion {
+        <<enumeration>>
+        FISICA
+        JURIDICA
+        DIMEX
+        PASAPORTE
+    }
+    class MetodoPago {
+        <<enumeration>>
+        EFECTIVO
+        TARJETA
+        TRANSFERENCIA
+    }
+    class EstadoFactura {
+        <<enumeration>>
+        EMITIDA
+        ANULADA
+    }
+    class Producto {
+        <<abstract>>
+    }
+
+    Mostrable <|.. Persona
+    Mostrable <|.. Producto
+    Mostrable <|.. Factura
+    Mostrable <|.. DetalleFactura
+    Persona <|-- Usuario
+    Persona <|-- Cliente
+    Factura "1" *-- "1..*" DetalleFactura : detalles
+    DetalleFactura "*" --> "1" Producto
+    Factura "*" --> "1" Cliente
+    Factura "*" --> "1" Usuario : vendedor
+    RegistroUsuarios "1" o-- "*" Usuario
+    RegistroClientes "1" o-- "*" Cliente
+    RegistroFacturas "1" o-- "*" Factura
+    Usuario --> Rol
+    Cliente --> TipoIdentificacion
+    Factura --> MetodoPago
+    Factura --> EstadoFactura

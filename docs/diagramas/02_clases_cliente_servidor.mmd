@@ -76,6 +76,7 @@ classDiagram
     }
 
     class ServicioInventario {
+        -Inventario inventario
         -ProductoDAO productoDAO
         -Object candado
         +registrarProducto(Producto p) void
@@ -88,11 +89,10 @@ classDiagram
     class ServicioFacturacion {
         -FacturaDAO facturaDAO
         -ServicioInventario inventario
-        -AtomicInteger consecutivo
         +crearFactura(Factura f) Factura
         +anularFactura(int idFactura, Usuario u) void
         +listarFacturas(LocalDate desde, LocalDate hasta) List~Factura~
-        -generarNumero() String
+        -generarNumero()$ synchronized int
     }
 
     class GeneradorArchivoFactura {
