@@ -56,6 +56,7 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 ### Diagrama de clases v1 · 2026-10-08 · commit `7900a76`
 * Word aparte con solo la parte de clases del Avance 1: entidades o clases identificadas, sus atributos, métodos y relaciones (diagramas y descripción de cada clase, del dominio y cliente-servidor).
 * Se genera con `docs/construir_diagrama_clases.py` a partir de la sección "Entidades y clases" del documento de diseño v7, así que siempre coincide con él.
+* Versión editable en draw.io (`Avance1_Diagrama_de_Clases_v1.drawio`, commit `e137e8c`) con tres páginas: inventario y excepciones, personas y facturación, y cliente-servidor. Se genera con `docs/exportar_drawio.py` desde los diagramas de Mermaid.
 
 ## Código
 
