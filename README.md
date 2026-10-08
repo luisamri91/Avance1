@@ -5,13 +5,13 @@ Aplicación de escritorio en Java Swing con arquitectura cliente-servidor por so
 
 ## Versiones
 
-Versión actual: **documento v1.2** y **código v0.1.0**. El detalle de cada cambio está en [`CHANGELOG.md`](CHANGELOG.md), con el commit de cada versión.
+Versión actual: **documento v3** y **código v1**. El detalle de cada cambio está en [`CHANGELOG.md`](CHANGELOG.md), con el commit de cada versión.
 
 ## Avance 1 – Documento de diseño
 
 | Entregable | Archivo |
 |---|---|
-| Documento de diseño (para entregar) | [`docs/Avance1_Documento_Diseno.pdf`](docs/Avance1_Documento_Diseno.pdf) · [`.docx`](docs/Avance1_Documento_Diseno.docx) |
+| Documento de diseño (para entregar) | [`docs/Avance1_Documento_Diseno_v3.pdf`](docs/Avance1_Documento_Diseno_v3.pdf) · [`.docx`](docs/Avance1_Documento_Diseno_v3.docx) |
 | Fuente editable del documento | [`docs/Avance1_Documento_Diseno.md`](docs/Avance1_Documento_Diseno.md) |
 | Diagramas (clases, arquitectura, secuencia, navegación) | [`docs/diagramas/`](docs/diagramas) (Mermaid) → [`docs/img/`](docs/img) |
 | Prototipos de interfaz | [`docs/prototipos/html/`](docs/prototipos/html) → [`docs/img/P*.png`](docs/img) |
@@ -40,5 +40,5 @@ Los diagramas se escriben en Mermaid (`docs/diagramas/*.mmd`) y los prototipos e
 
 ```bash
 cd docs
-pandoc Avance1_Documento_Diseno.md -o Avance1_Documento_Diseno.docx --resource-path=.
+pandoc Avance1_Documento_Diseno.md -o Avance1_Documento_Diseno_vN.docx --resource-path=.
 ```

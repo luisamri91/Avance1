@@ -1,6 +1,6 @@
 ---
 title: "Proyecto Final – Avance 1: Documento de Diseño"
-subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 1.2"
+subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 3"
 author: "Estudiante: [Nombre completo] · Carné: [número]"
 date: "Programación Cliente-Servidor Concurrente · Profesor(a): [nombre] · Octubre 2026"
 lang: es
@@ -10,9 +10,9 @@ lang: es
 
 | Versión | Fecha | Cambios |
 |---|---|---|
-| 1.0 | 06/10/2026 | Primera versión: clases, 15 historias de usuario, 8 prototipos y diagramas de arquitectura, secuencia y navegación |
-| 1.1 | 08/10/2026 | Modelo de clases ajustado al material de las semanas 1 a 5 (estilo MultiSports); tabla de temas del curso; hilos, sockets, Swing y BD como arquitectura prevista; historias y prototipo de productos por tipo |
-| 1.2 | 08/10/2026 | Se agrega esta tabla de control de versiones |
+| v1 | 06/10/2026 | Primera versión: clases, 15 historias de usuario, 8 prototipos y diagramas de arquitectura, secuencia y navegación |
+| v2 | 08/10/2026 | Modelo de clases ajustado al material de las semanas 1 a 5 (estilo MultiSports); tabla de temas del curso; hilos, sockets, Swing y BD como arquitectura prevista; historias y prototipo de productos por tipo |
+| v3 | 08/10/2026 | Se agrega esta tabla de control de versiones y la versión en el nombre del archivo |
 
 # 1. Introducción
 
