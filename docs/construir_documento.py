@@ -86,7 +86,7 @@ def dar_formato_general(doc):
     seccion = doc.sections[0]
     seccion.page_width, seccion.page_height = ANCHO_CARTA, ALTO_CARTA
     seccion.left_margin = seccion.right_margin = Cm(2)
-    ancho_max, alto_max = Cm(17.5), Cm(22)
+    ancho_max, alto_max = Cm(17.5), Cm(20.5)  # deja lugar al título y al pie de figura
     for imagen in doc.inline_shapes:
         proporcion = imagen.height / imagen.width
         ancho, alto = ancho_max, int(ancho_max * proporcion)

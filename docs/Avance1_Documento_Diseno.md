@@ -1,6 +1,6 @@
 ---
 title: "Proyecto Final – Avance 1: Documento de Diseño"
-subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 9"
+subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 10"
 author: "Estudiante: [Nombre completo] · Carné: [número]"
 date: "Programación Cliente-Servidor Concurrente · Profesor: Mario Alberto Vargas Montes · Octubre 2026"
 lang: es
@@ -19,6 +19,7 @@ lang: es
 | v7 | 08/10/2026 | Guía al inicio con las tres partes que pide el Avance 1 (historias de usuario, diagrama de clases y bocetos); tabla de pantallas CRUD por clase; nuevo boceto P10 de categorías; nombre del profesor en la portada |
 | v8 | 08/10/2026 | Cada colección según su uso, como en los ejemplos del profesor: `List` donde importa el orden, `Set` para advertencias sin repetir, `HashMap` para usuarios y clientes por id, `TreeMap` para facturas ordenadas por número y `CopyOnWriteArrayList` para los clientes conectados al servidor; nueva tabla «Colecciones: cuál se usa y por qué» en la sección 4.2 |
 | v9 | 08/10/2026 | La tabla «Colecciones: cuál se usa y por qué» cita el ejemplo del profesor que respalda cada elección (`EjemploList`, `EjemploSet`, `EjemploMap`, `EjemploTreeMap`, `EjemploCollection`) y explica, con `EjemploColeccionGenerica` y `EjemploColeccionNoGenerica`, por qué todas las colecciones son genéricas |
+| v10 | 08/10/2026 | La sección 4.1 abre con la vista general del diagrama de clases en una página completa, con su simbología (la misma imagen del diagrama simplificado v4 de draw.io, ya con las colecciones), y menciona los archivos editables de draw.io; la tabla del inicio indica dónde está |
 
 # 1. Introducción
 
@@ -29,7 +30,7 @@ La cadena de venta al por mayor **Fidecompro** necesita una aplicación de escri
 | Parte pedida | Dónde está | Qué contiene |
 |---|---|---|
 | **Historias de usuario** | Sección 5 | 16 historias con su rol, funcionalidad, finalidad y escenarios de aceptación |
-| **Diagrama de clases** | Secciones 4.1 y 4.3 | Clases del sistema con atributos, métodos y relaciones; la sección 4.2 describe cada clase |
+| **Diagrama de clases** | Secciones 4.1 y 4.3 | Vista general en una página con su simbología (4.1), diagramas detallados con atributos, métodos y relaciones (4.1 y 4.3); la sección 4.2 describe cada clase |
 | **Bocetos (mockups) de las pantallas** | Sección 6 | Inicio de sesión, menú principal y pantallas CRUD de cada clase (clientes, productos, categorías, usuarios y facturas), más la ventana del servidor |
 
 ## 1.1 Requerimientos del enunciado
@@ -111,7 +112,15 @@ Las clases se organizan en paquetes de un proyecto Maven de NetBeans:
 
 ## 4.1 Diagramas de clases del modelo de dominio
 
-El modelo se presenta en dos diagramas para que se lea con claridad. El primero cubre el inventario, los tipos de producto y las excepciones; el segundo, las personas y la facturación.
+Primero se muestra una vista general en una sola página con las 12 clases principales, sus atributos y métodos más importantes, sus relaciones y una simbología que explica cada símbolo del diagrama (visibilidad, static, abstracto, multiplicidad, tipos de flecha y colecciones). Después, el detalle completo en dos diagramas para que se lea con claridad. Todos los diagramas de clases se entregan también en draw.io para editarlos (`Avance1_Diagrama_de_Clases_Simplificado_v4.drawio` y `Avance1_Diagrama_de_Clases_v4.drawio`).
+
+### Vista general del modelo de dominio
+
+![Diagrama de clases simplificado con simbología](img/00_clases_vista_general.png)
+
+### Detalle del modelo de dominio
+
+El primer diagrama detallado cubre el inventario, los tipos de producto y las excepciones; el segundo, las personas y la facturación.
 
 ![Diagrama de clases: inventario, tipos de producto y excepciones](img/01a_modelo_inventario.png)
 
