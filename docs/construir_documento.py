@@ -4,8 +4,9 @@ Uso (desde la carpeta docs):  python3 construir_documento.py
 
 1. Convierte el Markdown a .docx con pandoc.
 2. Da formato: tamaño carta, imágenes al ancho de la página y tablas con bordes.
-3. Reemplaza el marcador TABLA_HISTORIAS_USUARIO por la tabla de historias de
-   usuario (historias_usuario.json), en una sección horizontal.
+3. Reemplaza los marcadores TABLA_REQUERIMIENTOS_… por las tablas de
+   requerimientos (requerimientos.json) y TABLA_HISTORIAS_USUARIO por la tabla de
+   historias de usuario (historias_usuario.json), esta en una sección horizontal.
 4. Convierte el .docx a PDF con LibreOffice.
 
 El nombre de los archivos lleva la versión que dice el subtítulo del Markdown
@@ -29,11 +30,19 @@ from docx.shared import Cm, Pt, RGBColor
 CARPETA = Path(__file__).resolve().parent
 FUENTE = CARPETA / "Avance1_Documento_Diseno.md"
 HISTORIAS = CARPETA / "historias_usuario.json"
+REQUERIMIENTOS = CARPETA / "requerimientos.json"
 MARCADOR = "TABLA_HISTORIAS_USUARIO"
+MARCADORES_REQUERIMIENTOS = {
+    "TABLA_REQUERIMIENTOS_FUNCIONALES": "funcionales",
+    "TABLA_REQUERIMIENTOS_NO_FUNCIONALES": "no_funcionales",
+}
 
 ANCHO_CARTA, ALTO_CARTA = Cm(21.59), Cm(27.94)
 AZUL_ENCABEZADO = "1F3864"
 GRIS_SEPARADOR = "D9D9D9"
+AZUL_REQUERIMIENTOS = "1F4E79"
+CELESTE_FILA = "BDD7EE"
+COLUMNAS_REQUERIMIENTOS = [("#", 0.9), ("Requerimiento", 5.0), ("Descripción", 9.4), ("Prioridad", 2.2)]
 COLUMNAS_HU = [
     ("Identificador (ID) de la historia", 1.7),
     ("Rol", 2.1),
@@ -98,13 +107,13 @@ def dar_formato_general(doc):
                         trozo.font.size = Pt(9.5)
 
 
-def escribir(celda, texto, negrita=False, color=None, centrado=False):
+def escribir(celda, texto, negrita=False, color=None, centrado=False, tamano=8.5):
     parrafo = celda.paragraphs[0]
     parrafo.paragraph_format.space_after = Pt(0)
     if centrado:
         parrafo.alignment = WD_ALIGN_PARAGRAPH.CENTER
     trozo = parrafo.add_run(texto)
-    trozo.font.size = Pt(8.5)
+    trozo.font.size = Pt(tamano)
     trozo.bold = negrita
     if color:
         trozo.font.color.rgb = RGBColor.from_string(color)
@@ -148,26 +157,57 @@ def construir_tabla_historias(doc, historias):
             sombrear(celda, GRIS_SEPARADOR)
         fila += 1
 
-    fijar_anchos(tabla)
+    fijar_anchos(tabla, COLUMNAS_HU)
     return tabla
 
 
-def fijar_anchos(tabla):
+def construir_tabla_requerimientos(doc, requerimientos):
+    tabla = doc.add_table(rows=1 + len(requerimientos), cols=len(COLUMNAS_REQUERIMIENTOS))
+    tabla.alignment = WD_TABLE_ALIGNMENT.CENTER
+    tabla.autofit = False
+    poner_bordes(tabla, "000000")
+    encabezado = tabla.rows[0]
+    encabezado._tr.get_or_add_trPr().append(OxmlElement("w:tblHeader"))
+    for i, (titulo, _) in enumerate(COLUMNAS_REQUERIMIENTOS):
+        sombrear(encabezado.cells[i], AZUL_REQUERIMIENTOS)
+        escribir(encabezado.cells[i], titulo, negrita=True, color="FFFFFF", tamano=10)
+    for numero, (requerimiento, descripcion, prioridad) in enumerate(requerimientos, start=1):
+        celdas = tabla.rows[numero].cells
+        for celda, texto, negrita in zip(celdas, (str(numero), requerimiento, descripcion, prioridad),
+                                         (True, False, False, False)):
+            escribir(celda, texto, negrita=negrita, tamano=10)
+            if numero % 2 == 1:  # filas alternas en celeste
+                sombrear(celda, CELESTE_FILA)
+    fijar_anchos(tabla, COLUMNAS_REQUERIMIENTOS)
+    return tabla
+
+
+def insertar_tablas_requerimientos(doc):
+    with open(REQUERIMIENTOS, encoding="utf-8") as archivo:
+        requerimientos = json.load(archivo)
+    for marcador_texto, clave in MARCADORES_REQUERIMIENTOS.items():
+        marcador = next(p for p in doc.paragraphs if p.text.strip() == marcador_texto)
+        tabla = construir_tabla_requerimientos(doc, requerimientos[clave])
+        marcador._p.addnext(tabla._tbl)
+        marcador._p.getparent().remove(marcador._p)
+
+
+def fijar_anchos(tabla, columnas):
     # Word y LibreOffice respetan los anchos solo si la tabla tiene diseño fijo y la cuadrícula los declara
     propiedades = tabla._tbl.tblPr
     diseno = OxmlElement("w:tblLayout")
     diseno.set(qn("w:type"), "fixed")
     propiedades.append(diseno)
     ancho_total = OxmlElement("w:tblW")
-    ancho_total.set(qn("w:w"), str(sum(Cm(a).twips for _, a in COLUMNAS_HU)))
+    ancho_total.set(qn("w:w"), str(sum(Cm(a).twips for _, a in columnas)))
     ancho_total.set(qn("w:type"), "dxa")
     for viejo in propiedades.findall(qn("w:tblW")):
         propiedades.remove(viejo)
     propiedades.append(ancho_total)
-    for columna, (_, ancho) in zip(tabla._tbl.tblGrid.findall(qn("w:gridCol")), COLUMNAS_HU):
+    for columna, (_, ancho) in zip(tabla._tbl.tblGrid.findall(qn("w:gridCol")), columnas):
         columna.set(qn("w:w"), str(Cm(ancho).twips))
     for fila_tabla in tabla.rows:
-        for i, (_, ancho) in enumerate(COLUMNAS_HU):
+        for i, (_, ancho) in enumerate(columnas):
             fila_tabla.cells[i].width = Cm(ancho)
 
 
@@ -190,7 +230,7 @@ def insertar_tabla_historias(doc):
     with open(HISTORIAS, encoding="utf-8") as archivo:
         historias = json.load(archivo)
     marcador = next(p for p in doc.paragraphs if p.text.strip() == MARCADOR)
-    titulo = next(p for p in doc.paragraphs if p.text.strip().startswith("3. Historias de usuario"))
+    titulo = next(p for p in doc.paragraphs if re.match(r"\d+\. Historias de usuario", p.text.strip()))
     seccion_base = doc.sections[0]._sectPr
 
     # Un párrafo vacío antes del título de la sección 3 cierra la parte vertical,
@@ -220,6 +260,7 @@ def main():
                    cwd=CARPETA, check=True)
     doc = Document(salida)
     dar_formato_general(doc)
+    insertar_tablas_requerimientos(doc)
     insertar_tabla_historias(doc)
     doc.save(salida)
     subprocess.run(["soffice", "--headless", "--convert-to", "pdf", salida.name],

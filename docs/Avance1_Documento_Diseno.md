@@ -1,6 +1,6 @@
 ---
 title: "Proyecto Final – Avance 1: Documento de Diseño"
-subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 4"
+subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 5"
 author: "Estudiante: [Nombre completo] · Carné: [número]"
 date: "Programación Cliente-Servidor Concurrente · Profesor(a): [nombre] · Octubre 2026"
 lang: es
@@ -14,6 +14,7 @@ lang: es
 | v2 | 08/10/2026 | Modelo de clases ajustado al material de las semanas 1 a 5 (estilo MultiSports); tabla de temas del curso; hilos, sockets, Swing y BD como arquitectura prevista; historias y prototipo de productos por tipo |
 | v3 | 08/10/2026 | Se agrega esta tabla de control de versiones y la versión en el nombre del archivo |
 | v4 | 08/10/2026 | Historias de usuario en formato de tabla con escenarios de aceptación (Dado que / Cuando / Resultado esperado) |
+| v5 | 08/10/2026 | Se agregan las listas de requerimientos funcionales (10) y no funcionales (8); las secciones siguientes se renumeran |
 
 # 1. Introducción
 
@@ -32,7 +33,7 @@ La cadena de venta al por mayor **Fidecompro** necesita una aplicación de escri
 ## 1.2 Alcance y decisiones técnicas
 
 * **Lenguaje y entorno:** Java 17, proyecto Maven en NetBeans IDE, interfaz gráfica con **Java Swing**. No se usa ningún framework; todo el código se escribe desde cero.
-* **Base del diseño:** el modelo de clases (sección 2) aplica lo visto en las semanas 1 a 5: herencia, clases abstractas, interfaces, polimorfismo, colecciones y excepciones propias. Hilos, sockets, Swing y base de datos aún no se han visto en el curso; se incluyen como **arquitectura prevista** para cumplir el carácter cliente-servidor concurrente del proyecto y se detallarán en los siguientes avances.
+* **Base del diseño:** el modelo de clases (sección 4) aplica lo visto en las semanas 1 a 5: herencia, clases abstractas, interfaces, polimorfismo, colecciones y excepciones propias. Hilos, sockets, Swing y base de datos aún no se han visto en el curso; se incluyen como **arquitectura prevista** para cumplir el carácter cliente-servidor concurrente del proyecto y se detallarán en los siguientes avances.
 * **Arquitectura cliente-servidor:** un **servidor** central atiende a varias cajas (clientes Swing) al mismo tiempo mediante **sockets TCP**. Cada conexión es atendida por su propio hilo (`ManejadorCliente`) dentro de un pool de hilos.
 * **Concurrencia:** cuando dos vendedores facturan el mismo producto a la vez, el servidor valida y descuenta el stock dentro de un bloque `synchronized`, de modo que nunca se venda más inventario del que existe. El número de factura sale del contador `static Factura.ultimoNumero`, que se incrementa dentro de un método `synchronized` para que dos facturas nunca reciban el mismo número. En el cliente, las consultas largas se ejecutan con `SwingWorker` para no congelar la ventana.
 * **Persistencia:** base de datos MySQL accedida con JDBC (API estándar de Java) a través de clases DAO.
@@ -41,7 +42,19 @@ La cadena de venta al por mayor **Fidecompro** necesita una aplicación de escri
 
 ![Arquitectura general de la solución](img/03_arquitectura.png)
 
-# 2. Entidades y clases
+# 2. Lista de requerimientos funcionales
+
+Los requerimientos funcionales describen lo que el sistema debe hacer. Cada uno indica las historias de usuario que lo detallan (sección 5).
+
+TABLA_REQUERIMIENTOS_FUNCIONALES
+
+# 3. Lista de requerimientos no funcionales
+
+Los requerimientos no funcionales describen cómo debe comportarse el sistema y las condiciones técnicas que debe cumplir.
+
+TABLA_REQUERIMIENTOS_NO_FUNCIONALES
+
+# 4. Entidades y clases
 
 El modelo de clases sigue la forma de trabajo vista en las semanas 1 a 5 del curso, en particular la práctica integradora MultiSports de la semana 5:
 
@@ -64,11 +77,11 @@ Las clases se organizan en paquetes de un proyecto Maven de NetBeans:
 |---|---|
 | `com.fidecompro.modelo` | Entidades, enumeraciones, interface `Mostrable` y clases que administran colecciones (`Inventario`, `Registro…`) |
 | `com.fidecompro.excepciones` | Excepciones propias del negocio |
-| `com.fidecompro.servidor` | Servidor de sockets, hilos de atención y servicios (arquitectura prevista, sección 2.3) |
+| `com.fidecompro.servidor` | Servidor de sockets, hilos de atención y servicios (arquitectura prevista, sección 4.3) |
 | `com.fidecompro.datos` | Conexión a la base de datos y clases DAO (arquitectura prevista) |
 | `com.fidecompro.cliente` | Conexión del cliente y ventanas Swing (arquitectura prevista) |
 
-## 2.1 Diagramas de clases del modelo de dominio
+## 4.1 Diagramas de clases del modelo de dominio
 
 El modelo se presenta en dos diagramas para que se lea con claridad. El primero cubre el inventario, los tipos de producto y las excepciones; el segundo, las personas y la facturación.
 
@@ -76,7 +89,7 @@ El modelo se presenta en dos diagramas para que se lea con claridad. El primero 
 
 ![Diagrama de clases: personas y facturación](img/01b_modelo_facturacion.png)
 
-## 2.2 Descripción de las clases del dominio
+## 4.2 Descripción de las clases del dominio
 
 Todas las clases tienen constructor con sus campos, *getters* y *setters*. En las tablas se listan solo los métodos con lógica propia.
 
@@ -280,13 +293,13 @@ Clases que administran las colecciones, con el mismo patrón de `Inventario`.
 * `MetodoPago`: EFECTIVO, TARJETA, TRANSFERENCIA.
 * `EstadoFactura`: EMITIDA, ANULADA.
 
-## 2.3 Diagrama de clases cliente-servidor
+## 4.3 Diagrama de clases cliente-servidor
 
-Este diagrama es la **arquitectura prevista** para los siguientes avances, cuando el curso cubra hilos, sockets, Swing y bases de datos. Muestra las clases que harán funcionar la aplicación en red y de forma concurrente sobre el modelo de la sección 2.1: las ventanas Swing, la conexión por sockets, el servidor con sus hilos, los servicios y el acceso a datos.
+Este diagrama es la **arquitectura prevista** para los siguientes avances, cuando el curso cubra hilos, sockets, Swing y bases de datos. Muestra las clases que harán funcionar la aplicación en red y de forma concurrente sobre el modelo de la sección 4.1: las ventanas Swing, la conexión por sockets, el servidor con sus hilos, los servicios y el acceso a datos.
 
 ![Diagrama de clases cliente-servidor](img/02_clases_cliente_servidor.png)
 
-## 2.4 Descripción de las clases cliente-servidor
+## 4.4 Descripción de las clases cliente-servidor
 
 | Clase | Responsabilidad | Métodos principales | Relaciones |
 |---|---|---|---|
@@ -306,13 +319,13 @@ Este diagrama es la **arquitectura prevista** para los siguientes avances, cuand
 | **PanelClientes, PanelProductos, PanelFacturacion** (`JPanel`) | Pantallas de cada módulo | `cargarTabla()`, `guardar…()`, `emitirFactura()` | Usan `ClienteSocket` |
 | **HiloActualizacionStock** (`SwingWorker`) | Refresca la tabla de inventario en segundo plano sin congelar la interfaz | `doInBackground()`, `done()` | Usado por `PanelProductos` |
 
-## 2.5 Flujo concurrente de emisión de una factura
+## 4.5 Flujo concurrente de emisión de una factura
 
 El siguiente diagrama de secuencia muestra cómo se emite una factura y dónde se controla la concurrencia.
 
 ![Diagrama de secuencia: emitir factura](img/04_secuencia_factura.png)
 
-# 3. Historias de usuario
+# 5. Historias de usuario
 
 Cada historia sigue el formato *Como un \<rol\>, necesito \<funcionalidad\>, con la finalidad de \<resultado\>* y se acompaña de sus escenarios de aceptación en la forma **Dado que** (contexto), **Cuando** (evento) y **resultado esperado**. Los escenarios cubren el caso exitoso y los errores que el sistema debe controlar.
 
@@ -338,63 +351,63 @@ TABLA_HISTORIAS_USUARIO
 | HU 14 | Historial de facturas | Todos | Media | 3 | P7 |
 | HU 15 | Anular factura | Administrador | Media | 3 | P7 |
 
-# 4. Prototipos de interfaz gráfica
+# 6. Prototipos de interfaz gráfica
 
 Los prototipos representan las ventanas Swing de la aplicación final (look and feel Nimbus). Se elaboraron como maquetas HTML/CSS, incluidas en `docs/prototipos/html/`, y se exportaron a imagen. Los datos mostrados son de ejemplo.
 
-## 4.1 Mapa de navegación
+## 6.1 Mapa de navegación
 
 ![Mapa de navegación entre pantallas](img/05_navegacion.png)
 
-## 4.2 P1 · Inicio de sesión (HU 1)
+## 6.2 P1 · Inicio de sesión (HU 1)
 
 Campos de usuario y contraseña (oculta), dirección del servidor y mensaje de error ante credenciales inválidas.
 
 ![P1 Inicio de sesión](img/P1_inicio_sesion.png)
 
-## 4.3 P2 · Menú principal (HU 2, HU 10)
+## 6.3 P2 · Menú principal (HU 2, HU 10)
 
 Acceso a todos los módulos mediante menú y botones, resumen del día y alerta de productos bajo el stock mínimo. La barra de estado muestra el usuario, su rol y el estado de la conexión. El botón *Usuarios* solo aparece para administradores.
 
 ![P2 Menú principal](img/P2_menu_principal.png)
 
-## 4.4 P3 · Gestión de clientes (HU 4, HU 5, HU 6)
+## 6.4 P3 · Gestión de clientes (HU 4, HU 5, HU 6)
 
 Formulario de registro y edición, búsqueda y tabla de clientes.
 
 ![P3 Gestión de clientes](img/P3_clientes.png)
 
-## 4.5 P4 · Productos e inventario (HU 7, HU 8, HU 9, HU 10)
+## 6.5 P4 · Productos e inventario (HU 7, HU 8, HU 9, HU 10)
 
 Pestañas para productos, categorías y productos bajo el mínimo. El formulario cambia según el tipo de producto elegido (abarrote, bebida o artículo del hogar). Los productos bajo el mínimo se resaltan en rojo.
 
 ![P4 Productos e inventario](img/P4_productos_inventario.png)
 
-## 4.6 P5 · Nueva factura (HU 11, HU 12)
+## 6.6 P5 · Nueva factura (HU 11, HU 12)
 
 Selección de cliente, agregado de productos con validación de existencias, tabla de líneas con el IVA de cada tipo de producto, método de pago, descuento y totales calculados.
 
 ![P5 Nueva factura](img/P5_nueva_factura.png)
 
-## 4.7 P6 · Vista previa de la factura física (HU 13)
+## 6.7 P6 · Vista previa de la factura física (HU 13)
 
 Contenido exacto del archivo que se genera, con el desglose de pago, y botones para guardarlo como `.txt` o `.html`.
 
 ![P6 Vista previa de factura](img/P6_vista_previa_factura.png)
 
-## 4.8 P7 · Historial de facturas (HU 14, HU 15)
+## 6.8 P7 · Historial de facturas (HU 14, HU 15)
 
 Filtros por fecha, cliente y estado; total del periodo y acciones para ver el detalle, regenerar el archivo o anular.
 
 ![P7 Historial de facturas](img/P7_historial_facturas.png)
 
-## 4.9 P8 · Gestión de usuarios (HU 3)
+## 6.9 P8 · Gestión de usuarios (HU 3)
 
 Exclusiva del administrador: alta, edición, cambio de rol, restablecimiento de contraseña y desactivación de usuarios.
 
 ![P8 Gestión de usuarios](img/P8_usuarios.png)
 
-# 5. Trazabilidad historias – clases – pantallas
+# 7. Trazabilidad historias – clases – pantallas
 
 | Historia | Clases principales | Pantalla |
 |---|---|---|
