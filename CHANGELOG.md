@@ -120,6 +120,11 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 * Un solo diagrama, en una página, con las 12 clases principales del dominio (personas, productos, inventario y facturación), sus atributos y métodos más importantes y sus relaciones. Deja fuera los registros, las excepciones, las enumeraciones y las clases cliente-servidor.
 * Archivo editable `Avance1_Diagrama_de_Clases_Simplificado_v1.drawio` e imagen `.png`. Fuente: `docs/diagramas/00_clases_simplificado.mmd`.
 
+## Historias de usuario (Word aparte)
+
+### Historias de usuario v1 · 2026-10-08 · commit `9fae723`
+* `Avance1_Historias_de_Usuario_v1.docx`: solo la tabla de las 12 historias del documento v12 con sus 65 escenarios, en página horizontal con márgenes de 2,54 cm y Times New Roman, para copiarla a otro documento. Se genera con `docs/construir_historias.py`.
+
 ## Código
 
 ### Código v4 · 2026-10-08 · commit `34bfcec`
