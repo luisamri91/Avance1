@@ -8,6 +8,15 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 
 ## Documento de diseño
 
+### Documento v6 · 2026-10-08 · commit `99f55d4`
+* Diseño alineado con lo que el profesor pidió para el proyecto final: sockets, hilos, pantallas JFrame, base de datos MySQL o Derby, CRUD completo desde pantallas, varios clientes a la vez y un video final.
+* Nueva sección 1.2 con esos requisitos y dónde los cumple el diseño.
+* CRUD completo: usuarios, clientes, categorías y productos ahora se pueden **eliminar**. Si un registro ya está en facturas, se desactiva para no perder el historial. HU 3, HU 6 y HU 8 actualizadas; botones *Eliminar* y *Actualizar lista* en P3, P4 y P8.
+* Ventana del servidor (`VentanaServidor`): nueva historia HU 16, nuevo requerimiento funcional 11 y nuevo prototipo P9 con clientes conectados y bitácora.
+* Nueva sección 4.6 con el modelo de la base de datos (seis tablas).
+* Nueva sección 8 con la matriz del CRUD y el guion del video final.
+* Requerimientos no funcionales de pantallas, sockets, concurrencia y base de datos ajustados.
+
 ### Documento v5 · 2026-10-08 · commit `9a7a9a7`
 * Se agregan dos capítulos nuevos con el formato pedido (tabla con #, Requerimiento, Descripción y Prioridad): **Lista de requerimientos funcionales** (10) y **Lista de requerimientos no funcionales** (8).
 * Cada requerimiento funcional indica qué historias de usuario lo cubren.
@@ -36,6 +45,10 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 * Primera versión del documento de diseño del Avance 1 (Proyecto 1, Fidecompro): clases con atributos, métodos y relaciones; 15 historias de usuario; 8 prototipos de pantalla; diagramas de arquitectura, secuencia y navegación.
 
 ## Código
+
+### Código v2 · 2026-10-08 · commit `99f55d4`
+* `eliminarCliente` y `eliminarUsuario` en los registros; `tieneFacturasCliente` y `tieneFacturasUsuario` en `RegistroFacturas`.
+* El `main` muestra la regla: un cliente con facturas se desactiva y uno sin facturas se elimina.
 
 ### Código v1 · 2026-10-08 · commit `442187a`
 * Proyecto Maven `Fidecompro` (Java 17) con las clases del modelo de dominio del documento v2.
