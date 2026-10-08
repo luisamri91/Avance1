@@ -1,6 +1,6 @@
 ---
 title: "Proyecto Final – Avance 1: Documento de Diseño"
-subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 12"
+subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 13"
 author:
   - "[Nombre completo] · Carné: [número]"
   - "Universidad Fidélitas"
@@ -25,6 +25,7 @@ lang: es
 | v10 | 08/10/2026 | La sección 4.1 abre con la vista general del diagrama de clases en una página completa, con su simbología (la misma imagen del diagrama simplificado v4 de draw.io, ya con las colecciones), y menciona los archivos editables de draw.io; la tabla del inicio indica dónde está |
 | v11 | 08/10/2026 | Formato APA 7: márgenes de 2,54 cm (también en las páginas horizontales de las historias), Times New Roman 12, interlineado doble con sangría en el texto, número de página arriba a la derecha, portada de estudiante, títulos de nivel 1 a 3 al estilo APA y tablas y figuras numeradas con su título en cursiva arriba |
 | v12 | 08/10/2026 | Historias de usuario de 16 a 12, una por cada pantalla CRUD: se unen iniciar y cerrar sesión (HU 1), registrar, editar y eliminar clientes (HU 3) y consultar y anular facturas (HU 11), conservando todos los escenarios; se renumeran las referencias en requerimientos, bocetos, trazabilidad y plan de demostración |
+| v13 | 08/10/2026 | Escenarios de aceptación consolidados: como máximo 4 por historia (de 65 a 40), uniendo los casos parecidos (por ejemplo, todos los datos inválidos de un formulario en un solo escenario) sin perder ninguna regla |
 
 : Control de versiones del documento
 

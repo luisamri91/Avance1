@@ -14,7 +14,7 @@ from docx.shared import Cm, Pt
 
 from construir_documento import ALTO_CARTA, ANCHO_CARTA, HISTORIAS, MARGEN, construir_tabla_historias
 
-VERSION = 1
+VERSION = 2
 SALIDA = f"Avance1_Historias_de_Usuario_v{VERSION}.docx"
 
 

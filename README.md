@@ -5,13 +5,13 @@ Aplicación de escritorio en Java Swing con arquitectura cliente-servidor por so
 
 ## Versiones
 
-Versión actual: **documento v12** y **código v4**. El detalle de cada cambio está en [`CHANGELOG.md`](CHANGELOG.md), con el commit de cada versión.
+Versión actual: **documento v13** y **código v4**. El detalle de cada cambio está en [`CHANGELOG.md`](CHANGELOG.md), con el commit de cada versión.
 
 ## Avance 1 – Documento de diseño
 
 | Entregable | Archivo |
 |---|---|
-| Documento de diseño (para entregar) | [`docs/Avance1_Documento_Diseno_v12.pdf`](docs/Avance1_Documento_Diseno_v12.pdf) · [`.docx`](docs/Avance1_Documento_Diseno_v12.docx) |
+| Documento de diseño (para entregar) | [`docs/Avance1_Documento_Diseno_v13.pdf`](docs/Avance1_Documento_Diseno_v13.pdf) · [`.docx`](docs/Avance1_Documento_Diseno_v13.docx) |
 | Diagrama de clases (solo las clases) | [`docs/Avance1_Diagrama_de_Clases_v6.docx`](docs/Avance1_Diagrama_de_Clases_v6.docx) · editable en draw.io: [`.drawio`](docs/Avance1_Diagrama_de_Clases_v4.drawio) |
 | Diagrama de clases simplificado (una página) | [`docs/Avance1_Diagrama_de_Clases_Simplificado_v4.drawio`](docs/Avance1_Diagrama_de_Clases_Simplificado_v4.drawio) · [`.png`](docs/Avance1_Diagrama_de_Clases_Simplificado_v4.png) |
 | Fuente editable del documento | [`docs/Avance1_Documento_Diseno.md`](docs/Avance1_Documento_Diseno.md) |
@@ -21,7 +21,7 @@ Versión actual: **documento v12** y **código v4**. El detalle de cada cambio e
 Contenido del documento:
 
 1. **Entidades o clases**: modelo de dominio (Usuario, Cliente, CategoriaProducto, Producto, MovimientoInventario, Factura, DetalleFactura y enumeraciones) y clases cliente-servidor (servidor, hilos, servicios, DAO, ventanas Swing), con atributos, métodos y relaciones.
-2. **Historias de usuario**: 15 historias (HU 1 a HU 15) en tabla con 57 escenarios de aceptación (Dado que / Cuando / Resultado esperado); se editan en `docs/historias_usuario.json`.
+2. **Historias de usuario**: 12 historias (HU 1 a HU 12) en tabla con 40 escenarios de aceptación (Dado que / Cuando / Resultado esperado); se editan en `docs/historias_usuario.json`.
 3. **Prototipos**: 8 pantallas (inicio de sesión, menú, clientes, productos e inventario, nueva factura, factura física, historial y usuarios) más el mapa de navegación.
 
 ## Código de prueba del modelo (`Fidecompro/`)
