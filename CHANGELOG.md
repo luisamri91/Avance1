@@ -8,7 +8,7 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 
 ## Documento de diseño
 
-### Documento v4 · 2026-10-08
+### Documento v4 · 2026-10-08 · commit `b3e7477`
 * Las 15 historias de usuario pasan al formato de tabla pedido: ID, rol, característica, razón y escenarios de aceptación con número, título, contexto (Dado que), evento (Cuando) y resultado esperado. Son 57 escenarios en total.
 * La sección 3 va en páginas horizontales para que la tabla se lea bien.
 * Los identificadores pasan de HU-01 a HU 1 en todo el documento.
