@@ -58,6 +58,10 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 * Se genera con `docs/construir_diagrama_clases.py` a partir de la sección "Entidades y clases" del documento de diseño v7, así que siempre coincide con él.
 * Versión editable en draw.io (`Avance1_Diagrama_de_Clases_v1.drawio`, commit `e137e8c`) con tres páginas: inventario y excepciones, personas y facturación, y cliente-servidor. Se genera con `docs/exportar_drawio.py` desde los diagramas de Mermaid.
 
+### Diagrama de clases simplificado v3 · 2026-10-08 · commit `4438bd1`
+* Formato vertical para poner la imagen en una página completa de Word: la simbología pasa debajo del diagrama, en dos columnas, y la imagen queda con la proporción de una página carta con márgenes de 2 cm (ancho/alto = 0,8).
+* Los métodos muestran solo los tipos de sus parámetros, por ejemplo `agregarDetalle(Producto, int)`, para que las clases sean más angostas.
+
 ### Diagrama de clases simplificado v2 · 2026-10-08 · commit `75f343e`
 * Se agrega al lado del diagrama un cuadro de **simbología** que explica cada símbolo: partes de la clase, visibilidad (+, -, #), subrayado (static), cursiva (abstracto), «abstract» e «interface», multiplicidad (1, *, 1..*) con un ejemplo, y cada tipo de flecha (herencia, implementación, composición, agregación y asociación).
 
