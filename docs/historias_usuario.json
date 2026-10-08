@@ -2,8 +2,8 @@
   {
     "id": "HU 1",
     "rol": "Como un usuario (vendedor o administrador)",
-    "caracteristica": "Necesito ingresar a la aplicación con mi nombre de usuario y contraseña",
-    "razon": "Con la finalidad de que solo el personal autorizado pueda facturar y modificar el inventario",
+    "caracteristica": "Necesito ingresar a la aplicación con mi nombre de usuario y contraseña, y cerrar la sesión al terminar de trabajar",
+    "razon": "Con la finalidad de que solo el personal autorizado pueda facturar y modificar el inventario, y que nadie más use mi cuenta en la misma caja",
     "escenarios": [
       [
         "Inicio de sesión exitoso.",
@@ -34,15 +34,7 @@
         "Dado que el usuario deja vacío el campo Usuario, el campo Contraseña o ambos.",
         "Cuando presiona el botón \"Ingresar\".",
         "El sistema no envía la solicitud al servidor, resalta los campos vacíos y muestra el mensaje \"Debe ingresar usuario y contraseña.\"."
-      ]
-    ]
-  },
-  {
-    "id": "HU 2",
-    "rol": "Como un usuario (vendedor o administrador)",
-    "caracteristica": "Necesito cerrar mi sesión al terminar de trabajar",
-    "razon": "Con la finalidad de que otra persona no use mi cuenta en la misma caja",
-    "escenarios": [
+      ],
       [
         "Cierre de sesión.",
         "Dado que el usuario tiene una sesión abierta y no tiene ninguna factura en proceso.",
@@ -58,7 +50,7 @@
     ]
   },
   {
-    "id": "HU 3",
+    "id": "HU 2",
     "rol": "Como un administrador",
     "caracteristica": "Necesito crear, consultar, modificar y eliminar las cuentas de vendedores y administradores",
     "razon": "Con la finalidad de controlar quién tiene acceso al sistema",
@@ -102,10 +94,10 @@
     ]
   },
   {
-    "id": "HU 4",
-    "rol": "Como un vendedor",
-    "caracteristica": "Necesito registrar a un cliente con sus datos de identificación y de contacto",
-    "razon": "Con la finalidad de poder emitirle facturas",
+    "id": "HU 3",
+    "rol": "Como un vendedor (y como administrador para eliminar)",
+    "caracteristica": "Necesito registrar, buscar, modificar y eliminar clientes con sus datos de identificación y de contacto",
+    "razon": "Con la finalidad de poder emitirles facturas con su información al día, sin perder el historial de facturas",
     "escenarios": [
       [
         "Registro exitoso con datos válidos.",
@@ -136,15 +128,7 @@
         "Dado que el vendedor deja vacío el tipo de identificación, la identificación o el nombre.",
         "Cuando presiona el botón \"Guardar\".",
         "El sistema no crea el cliente, resalta los campos incompletos y muestra el mensaje \"Debe completar los campos obligatorios.\"."
-      ]
-    ]
-  },
-  {
-    "id": "HU 5",
-    "rol": "Como un vendedor",
-    "caracteristica": "Necesito buscar a un cliente y actualizar sus datos de contacto",
-    "razon": "Con la finalidad de mantener su información al día",
-    "escenarios": [
+      ],
       [
         "Búsqueda por coincidencia parcial.",
         "Dado que el vendedor escribe parte del nombre o de la identificación de un cliente (por ejemplo, \"esquina\").",
@@ -168,15 +152,7 @@
         "Dado que el vendedor está modificando los datos de un cliente.",
         "Cuando presiona el botón \"Limpiar\".",
         "El sistema descarta los cambios, deja el formulario vacío y el cliente conserva sus datos originales."
-      ]
-    ]
-  },
-  {
-    "id": "HU 6",
-    "rol": "Como un administrador",
-    "caracteristica": "Necesito eliminar un cliente registrado",
-    "razon": "Con la finalidad de mantener la lista de clientes limpia sin perder el historial de facturas",
-    "escenarios": [
+      ],
       [
         "Eliminación confirmada.",
         "Dado que el administrador selecciona en la tabla un cliente que no tiene facturas.",
@@ -196,7 +172,7 @@
         "El sistema no hace ningún cambio."
       ],
       [
-        "Intento de un vendedor.",
+        "Un vendedor intenta eliminar.",
         "Dado que inició sesión un usuario con rol VENDEDOR y abre la gestión de clientes.",
         "Cuando selecciona un cliente en la tabla.",
         "El sistema mantiene deshabilitado el botón \"Eliminar\", porque solo el administrador puede usarlo."
@@ -204,7 +180,7 @@
     ]
   },
   {
-    "id": "HU 7",
+    "id": "HU 4",
     "rol": "Como un administrador",
     "caracteristica": "Necesito crear, editar y eliminar las categorías de productos (abarrotes, bebidas, limpieza, higiene…)",
     "razon": "Con la finalidad de mantener el catálogo ordenado",
@@ -236,7 +212,7 @@
     ]
   },
   {
-    "id": "HU 8",
+    "id": "HU 5",
     "rol": "Como un administrador",
     "caracteristica": "Necesito registrar, consultar, modificar y eliminar productos indicando su tipo (abarrote, bebida o artículo del hogar)",
     "razon": "Con la finalidad de poder venderlos y controlar sus existencias",
@@ -274,7 +250,7 @@
     ]
   },
   {
-    "id": "HU 9",
+    "id": "HU 6",
     "rol": "Como un administrador",
     "caracteristica": "Necesito registrar entradas de mercadería y ajustes de existencias",
     "razon": "Con la finalidad de que el inventario del sistema coincida con lo que hay en bodega",
@@ -306,7 +282,7 @@
     ]
   },
   {
-    "id": "HU 10",
+    "id": "HU 7",
     "rol": "Como un administrador",
     "caracteristica": "Necesito ver qué productos están por debajo del stock mínimo",
     "razon": "Con la finalidad de reabastecerlos a tiempo",
@@ -332,7 +308,7 @@
     ]
   },
   {
-    "id": "HU 11",
+    "id": "HU 8",
     "rol": "Como un vendedor",
     "caracteristica": "Necesito crear una factura seleccionando al cliente y los productos que compra",
     "razon": "Con la finalidad de registrar la venta y cobrarle el monto correcto",
@@ -370,7 +346,7 @@
     ]
   },
   {
-    "id": "HU 12",
+    "id": "HU 9",
     "rol": "Como un administrador",
     "caracteristica": "Necesito que varias cajas puedan facturar al mismo tiempo",
     "razon": "Con la finalidad de atender a más clientes sin vender más producto del que hay en inventario",
@@ -396,7 +372,7 @@
     ]
   },
   {
-    "id": "HU 13",
+    "id": "HU 10",
     "rol": "Como un vendedor",
     "caracteristica": "Necesito obtener la factura en un archivo con el desglose de pago",
     "razon": "Con la finalidad de entregarla o imprimirla al cliente",
@@ -422,10 +398,10 @@
     ]
   },
   {
-    "id": "HU 14",
+    "id": "HU 11",
     "rol": "Como un usuario (vendedor o administrador)",
-    "caracteristica": "Necesito consultar las facturas por rango de fechas, cliente y estado",
-    "razon": "Con la finalidad de dar seguimiento a las ventas",
+    "caracteristica": "Necesito consultar las facturas por rango de fechas, cliente y estado, y anular las emitidas por error",
+    "razon": "Con la finalidad de dar seguimiento a las ventas y corregirlas devolviendo el producto al inventario",
     "escenarios": [
       [
         "Consulta por rango de fechas.",
@@ -450,15 +426,7 @@
         "Dado que no hay facturas que cumplan los filtros.",
         "Cuando presiona el botón \"Consultar\".",
         "El sistema deja la tabla vacía y muestra el mensaje \"No hay facturas para los filtros seleccionados.\"."
-      ]
-    ]
-  },
-  {
-    "id": "HU 15",
-    "rol": "Como un administrador",
-    "caracteristica": "Necesito anular una factura emitida por error",
-    "razon": "Con la finalidad de corregir las ventas y devolver el producto al inventario",
-    "escenarios": [
+      ],
       [
         "Anulación exitosa.",
         "Dado que el administrador selecciona en el historial una factura en estado EMITIDA.",
@@ -472,7 +440,7 @@
         "El sistema no hace cambios y muestra el mensaje \"La factura ya estaba anulada.\"."
       ],
       [
-        "Intento de un vendedor.",
+        "Un vendedor intenta anular.",
         "Dado que inició sesión un usuario con rol VENDEDOR y abre el historial de facturas.",
         "Cuando selecciona una factura.",
         "El sistema no muestra el botón \"Anular factura\", porque solo el administrador puede anular."
@@ -480,7 +448,7 @@
     ]
   },
   {
-    "id": "HU 16",
+    "id": "HU 12",
     "rol": "Como un administrador",
     "caracteristica": "Necesito una ventana del servidor donde pueda iniciarlo, detenerlo y ver los clientes conectados y las operaciones que atiende",
     "razon": "Con la finalidad de comprobar que el servidor atiende a varias cajas al mismo tiempo y que todo queda guardado en la base de datos",

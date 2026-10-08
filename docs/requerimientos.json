@@ -2,57 +2,57 @@
   "funcionales": [
     [
       "El sistema debe permitir crear, consultar, modificar y eliminar usuarios, y que ingresen con usuario y contraseña.",
-      "Solo el personal autorizado puede usar el sistema. Cada usuario tiene un rol (administrador o vendedor) que define a qué módulos entra. Un usuario con facturas emitidas no se elimina para no perder el historial; en ese caso se desactiva. Es el primer requerimiento a implementar porque todas las demás funciones dependen de saber quién está trabajando. Historias: HU 1, HU 2, HU 3.",
+      "Solo el personal autorizado puede usar el sistema. Cada usuario tiene un rol (administrador o vendedor) que define a qué módulos entra. Un usuario con facturas emitidas no se elimina para no perder el historial; en ese caso se desactiva. Es el primer requerimiento a implementar porque todas las demás funciones dependen de saber quién está trabajando. Historias: HU 1 y HU 2.",
       "Alta"
     ],
     [
       "El sistema debe permitir crear, consultar, modificar y eliminar clientes.",
-      "Los clientes son la base de la facturación: cada factura se emite a uno de ellos. Incluye tipo y número de identificación, nombre o razón social, teléfono, correo y dirección. Un cliente con facturas no se puede eliminar; en ese caso se desactiva y conserva su historial. Historias: HU 4, HU 5, HU 6.",
+      "Los clientes son la base de la facturación: cada factura se emite a uno de ellos. Incluye tipo y número de identificación, nombre o razón social, teléfono, correo y dirección. Un cliente con facturas no se puede eliminar; en ese caso se desactiva y conserva su historial. Historia: HU 3.",
       "Alta"
     ],
     [
       "El sistema debe permitir crear, consultar, modificar y eliminar categorías de productos.",
-      "Las categorías (abarrotes, bebidas, limpieza, higiene…) ordenan el catálogo y facilitan encontrar productos al facturar. Una categoría con productos no se puede eliminar. Historia: HU 7.",
+      "Las categorías (abarrotes, bebidas, limpieza, higiene…) ordenan el catálogo y facilitan encontrar productos al facturar. Una categoría con productos no se puede eliminar. Historia: HU 4.",
       "Media"
     ],
     [
       "El sistema debe permitir crear, consultar, modificar y eliminar productos de distintos tipos.",
-      "La cadena maneja varios tipos de productos (abarrote, bebida y artículo del hogar), cada uno con datos propios y su propio porcentaje de IVA. Incluye código, nombre, valor de compra, valor de venta, existencias y stock mínimo. Un producto que ya aparece en facturas no se elimina; se desactiva. Historia: HU 8.",
+      "La cadena maneja varios tipos de productos (abarrote, bebida y artículo del hogar), cada uno con datos propios y su propio porcentaje de IVA. Incluye código, nombre, valor de compra, valor de venta, existencias y stock mínimo. Un producto que ya aparece en facturas no se elimina; se desactiva. Historia: HU 5.",
       "Alta"
     ],
     [
       "El sistema debe permitir registrar entradas de mercadería y ajustes de existencias.",
-      "Mantiene el inventario del sistema igual al de bodega. Cada ajuste indica su motivo y nunca puede dejar existencias en negativo. Historia: HU 9.",
+      "Mantiene el inventario del sistema igual al de bodega. Cada ajuste indica su motivo y nunca puede dejar existencias en negativo. Historia: HU 6.",
       "Alta"
     ],
     [
       "El sistema debe alertar sobre los productos que están por debajo del stock mínimo.",
-      "Permite reabastecer a tiempo y evitar ventas perdidas. La alerta aparece en el menú principal y en una lista ordenada de menos a más existencias. Historia: HU 10.",
+      "Permite reabastecer a tiempo y evitar ventas perdidas. La alerta aparece en el menú principal y en una lista ordenada de menos a más existencias. Historia: HU 7.",
       "Media"
     ],
     [
       "El sistema debe permitir crear facturas a los clientes con uno o varios productos.",
-      "Calcula subtotal, descuento, IVA por línea según el tipo de producto y total; asigna un número consecutivo único y descuenta las existencias al emitir. Es el proceso central del negocio. Historias: HU 11, HU 12.",
+      "Calcula subtotal, descuento, IVA por línea según el tipo de producto y total; asigna un número consecutivo único y descuenta las existencias al emitir. Es el proceso central del negocio. Historias: HU 8 y HU 9.",
       "Alta"
     ],
     [
       "El sistema debe generar la factura física en un archivo con el desglose de pago.",
-      "El enunciado pide entregar la factura física. Se genera un archivo con los datos de la empresa, del cliente, cada línea, subtotal, descuento, IVA, total y método de pago, que se puede imprimir o enviar. Historia: HU 13.",
+      "El enunciado pide entregar la factura física. Se genera un archivo con los datos de la empresa, del cliente, cada línea, subtotal, descuento, IVA, total y método de pago, que se puede imprimir o enviar. Historia: HU 10.",
       "Alta"
     ],
     [
       "El sistema debe permitir consultar el historial de facturas por fechas, cliente y estado.",
-      "Permite dar seguimiento a las ventas y conocer el total vendido en un periodo, contando solo las facturas emitidas. Historia: HU 14.",
+      "Permite dar seguimiento a las ventas y conocer el total vendido en un periodo, contando solo las facturas emitidas. Historia: HU 11.",
       "Media"
     ],
     [
       "El sistema debe permitir anular facturas emitidas.",
-      "Corrige ventas registradas por error. Al anular, la factura queda en estado ANULADA y las existencias de cada línea vuelven al inventario. Solo el administrador puede hacerlo. Historia: HU 15.",
+      "Corrige ventas registradas por error. Al anular, la factura queda en estado ANULADA y las existencias de cada línea vuelven al inventario. Solo el administrador puede hacerlo. Historia: HU 11.",
       "Media"
     ],
     [
       "El servidor debe tener su propia ventana para iniciarlo, detenerlo y ver qué clientes están conectados y qué operaciones atiende.",
-      "Permite comprobar que el servidor atiende a varias cajas a la vez, cada una en su propio hilo, y que cada operación de las pantallas llega a la base de datos. Historia: HU 16.",
+      "Permite comprobar que el servidor atiende a varias cajas a la vez, cada una en su propio hilo, y que cada operación de las pantallas llega a la base de datos. Historia: HU 12.",
       "Alta"
     ]
   ],

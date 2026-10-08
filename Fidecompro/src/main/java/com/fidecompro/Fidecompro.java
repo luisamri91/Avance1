@@ -33,7 +33,7 @@ public class Fidecompro {
         RegistroFacturas facturas = new RegistroFacturas();
         Inventario inventario = new Inventario("Inventario central", "Heredia");
 
-        // ---------- HU-03: usuarios ----------
+        // ---------- HU-02: usuarios ----------
         usuarios.agregarUsuario(new Usuario("Maria Rodriguez", "8888-0001", "maria@fidecompro.cr",
                 "mrodriguez", "admin123", Rol.ADMINISTRADOR));
         usuarios.agregarUsuario(new Usuario("Carlos Jimenez", "8888-0002", "carlos@fidecompro.cr",
@@ -55,8 +55,8 @@ public class Fidecompro {
             return;
         }
 
-        // ---------- HU-04: clientes ----------
-        titulo("HU-04 Registro de clientes");
+        // ---------- HU-03: clientes ----------
+        titulo("HU-03 Registro de clientes");
         clientes.agregarCliente(new Cliente("Abastecedor La Esquina S.A.", "2222-3344", "compras@laesquina.cr",
                 TipoIdentificacion.JURIDICA, "3-101-456789", "Heredia, San Pablo"));
         clientes.agregarCliente(new Cliente("Pulperia Dona Ana", "8888-1020", "ana.pulperia@gmail.com",
@@ -69,8 +69,8 @@ public class Fidecompro {
         }
         System.out.print(clientes.mostrarClientes());
 
-        // ---------- HU-07 y HU-08: categorías y productos ----------
-        titulo("HU-07 / HU-08 Categorias y productos (polimorfismo en el IVA)");
+        // ---------- HU-04 y HU-05: categorías y productos ----------
+        titulo("HU-04 / HU-05 Categorias y productos (polimorfismo en el IVA)");
         Categoria abarrotes = new Categoria("Abarrotes", "Granos, aceites y basicos");
         Categoria bebidas = new Categoria("Bebidas", "Refrescos, jugos y agua");
         Categoria limpieza = new Categoria("Limpieza", "Limpieza e higiene del hogar");
@@ -104,14 +104,14 @@ public class Fidecompro {
             System.out.println(e.getMessage());
         }
 
-        // ---------- HU-10: alertas de stock (Comparator) ----------
-        titulo("HU-10 Productos bajo el minimo (ordenados por existencias)");
+        // ---------- HU-07: alertas de stock (Comparator) ----------
+        titulo("HU-07 Productos bajo el minimo (ordenados por existencias)");
         for (Producto p : inventario.productosBajoMinimo()) {
             System.out.println(p.getExistencias() + " uds. - " + p.getNombre());
         }
 
-        // ---------- HU-11: crear factura ----------
-        titulo("HU-11 Nueva factura");
+        // ---------- HU-08: crear factura ----------
+        titulo("HU-08 Nueva factura");
         Factura factura = null;
         try {
             Cliente cliente = clientes.buscarCliente("3-101-456789");
@@ -132,20 +132,20 @@ public class Fidecompro {
             System.out.println("No se pudo emitir la factura: " + e.getMessage());
         }
 
-        // ---------- HU-13: factura física ----------
-        titulo("HU-13 Factura fisica");
+        // ---------- HU-10: factura física ----------
+        titulo("HU-10 Factura fisica");
         if (factura != null) {
             String ruta = factura.generarArchivo("facturas");
             System.out.println(ruta != null ? "Archivo generado: " + ruta : "No se genero el archivo");
         }
 
-        // ---------- HU-12: dos cajas a la vez (adelanto de hilos) ----------
-        titulo("HU-12 Dos cajas venden el ultimo detergente al mismo tiempo");
+        // ---------- HU-09: dos cajas a la vez (adelanto de hilos) ----------
+        titulo("HU-09 Dos cajas venden el ultimo detergente al mismo tiempo");
         venderEnParalelo(clientes, facturas, vendedor, detergente);
         System.out.println("Existencias finales de detergente: " + detergente.getExistencias());
 
-        // ---------- HU-14 y HU-15: historial y anulación ----------
-        titulo("HU-14 / HU-15 Historial y anulacion");
+        // ---------- HU-11: historial y anulación ----------
+        titulo("HU-11 Historial y anulacion");
         LocalDate hoy = LocalDate.now();
         System.out.println("Facturas de hoy: " + facturas.facturasPorFecha(hoy, hoy).size()
                 + " | Total vendido: " + Factura.formatearMonto(facturas.totalVendido(hoy, hoy)));
@@ -165,8 +165,8 @@ public class Fidecompro {
         System.out.println("Total vendido despues de anular: "
                 + Factura.formatearMonto(facturas.totalVendido(hoy, hoy)));
 
-        // ---------- HU-06: eliminar clientes (CRUD completo) ----------
-        titulo("HU-06 Eliminar clientes");
+        // ---------- HU-03: eliminar clientes (CRUD completo) ----------
+        titulo("HU-03 Eliminar clientes");
         clientes.agregarCliente(new Cliente("Minisuper El Ahorro Ltda.", "2560-7788", "admin@elahorro.cr",
                 TipoIdentificacion.JURIDICA, "3-102-778899", "Cartago centro"));
         for (Cliente c : new ArrayList<>(clientes.getClientes().values())) {

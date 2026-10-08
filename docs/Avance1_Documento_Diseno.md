@@ -1,6 +1,6 @@
 ---
 title: "Proyecto Final – Avance 1: Documento de Diseño"
-subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 11"
+subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 12"
 author:
   - "[Nombre completo] · Carné: [número]"
   - "Universidad Fidélitas"
@@ -24,6 +24,7 @@ lang: es
 | v9 | 08/10/2026 | La tabla «Colecciones: cuál se usa y por qué» cita el ejemplo del profesor que respalda cada elección (`EjemploList`, `EjemploSet`, `EjemploMap`, `EjemploTreeMap`, `EjemploCollection`) y explica, con `EjemploColeccionGenerica` y `EjemploColeccionNoGenerica`, por qué todas las colecciones son genéricas |
 | v10 | 08/10/2026 | La sección 4.1 abre con la vista general del diagrama de clases en una página completa, con su simbología (la misma imagen del diagrama simplificado v4 de draw.io, ya con las colecciones), y menciona los archivos editables de draw.io; la tabla del inicio indica dónde está |
 | v11 | 08/10/2026 | Formato APA 7: márgenes de 2,54 cm (también en las páginas horizontales de las historias), Times New Roman 12, interlineado doble con sangría en el texto, número de página arriba a la derecha, portada de estudiante, títulos de nivel 1 a 3 al estilo APA y tablas y figuras numeradas con su título en cursiva arriba |
+| v12 | 08/10/2026 | Historias de usuario de 16 a 12, una por cada pantalla CRUD: se unen iniciar y cerrar sesión (HU 1), registrar, editar y eliminar clientes (HU 3) y consultar y anular facturas (HU 11), conservando todos los escenarios; se renumeran las referencias en requerimientos, bocetos, trazabilidad y plan de demostración |
 
 : Control de versiones del documento
 
@@ -35,7 +36,7 @@ La cadena de venta al por mayor **Fidecompro** necesita una aplicación de escri
 
 | Parte pedida | Dónde está | Qué contiene |
 |---|---|---|
-| **Historias de usuario** | Sección 5 | 16 historias con su rol, funcionalidad, finalidad y escenarios de aceptación |
+| **Historias de usuario** | Sección 5 | 12 historias con su rol, funcionalidad, finalidad y escenarios de aceptación |
 | **Diagrama de clases** | Secciones 4.1 y 4.3 | Vista general en una página con su simbología (4.1), diagramas detallados con atributos, métodos y relaciones (4.1 y 4.3); la sección 4.2 describe cada clase |
 | **Bocetos (mockups) de las pantallas** | Sección 6 | Inicio de sesión, menú principal y pantallas CRUD de cada clase (clientes, productos, categorías, usuarios y facturas), más la ventana del servidor |
 
@@ -45,11 +46,11 @@ La cadena de venta al por mayor **Fidecompro** necesita una aplicación de escri
 
 | # | Requerimiento del enunciado | Historias de usuario que lo cubren |
 |---|---|---|
-| R1 | Creación de los registros de los clientes | HU 4, HU 5, HU 6 |
-| R2 | Registro de los productos (varios tipos de productos) | HU 7, HU 8, HU 9, HU 10 |
-| R3 | Crear facturas a los clientes | HU 11, HU 12, HU 14, HU 15 |
-| R4 | Entregar la factura física (archivo con el desglose de pago) | HU 13 |
-| R5 | Ingreso con usuario y contraseña | HU 1, HU 2, HU 3 |
+| R1 | Creación de los registros de los clientes | HU 3 |
+| R2 | Registro de los productos (varios tipos de productos) | HU 4, HU 5, HU 6 y HU 7 |
+| R3 | Crear facturas a los clientes | HU 8, HU 9 y HU 11 |
+| R4 | Entregar la factura física (archivo con el desglose de pago) | HU 10 |
+| R5 | Ingreso con usuario y contraseña | HU 1 y HU 2 |
 
 : Requerimientos del enunciado y las historias de usuario que los cubren
 
@@ -64,7 +65,7 @@ El profesor indicó que el proyecto final debe cumplir cuatro requisitos técnic
 | Pantallas **JFrame** | Ventanas Swing para el cliente (P1 a P8 y P10) y una ventana propia del servidor (P9) | Sección 6 |
 | Base de datos **MySQL o Derby** | Todo se guarda en la base de datos por medio de JDBC y clases DAO | Sección 4.6 |
 | **CRUD** completo desde pantallas | Crear, consultar, modificar y eliminar usuarios, clientes, categorías y productos; crear, consultar y anular facturas | Secciones 2 y 8 |
-| Varios clientes a la vez | Se pueden abrir varias ventanas cliente al mismo tiempo y el servidor las atiende en paralelo | HU 12, HU 16 |
+| Varios clientes a la vez | Se pueden abrir varias ventanas cliente al mismo tiempo y el servidor las atiende en paralelo | HU 9 y HU 12 |
 | Video final | Guion de demostración de todas las funcionalidades | Sección 8 |
 
 : Requisitos del proyecto final y cómo los cumple el diseño
@@ -462,22 +463,18 @@ TABLA_HISTORIAS_USUARIO
 
 | ID | Historia | Rol | Prioridad | Puntos | Pantalla |
 |---|---|---|---|---|---|
-| HU 1 | Iniciar sesión | Todos | Alta | 3 | P1 |
-| HU 2 | Cerrar sesión | Todos | Alta | 1 | P2 |
-| HU 3 | Administrar usuarios | Administrador | Alta | 5 | P8 |
-| HU 4 | Registrar cliente | Vendedor | Alta | 3 | P3 |
-| HU 5 | Buscar y editar cliente | Vendedor | Alta | 2 | P3 |
-| HU 6 | Eliminar cliente | Administrador | Media | 2 | P3 |
-| HU 7 | Administrar categorías | Administrador | Alta | 2 | P4, P10 |
-| HU 8 | Registrar producto | Administrador | Alta | 3 | P4 |
-| HU 9 | Ajustar inventario | Administrador | Alta | 3 | P4 |
-| HU 10 | Alertas de stock bajo | Administrador | Media | 2 | P2, P4 |
-| HU 11 | Crear factura | Vendedor | Alta | 8 | P5 |
-| HU 12 | Facturación simultánea | Administrador | Alta | 5 | P5 |
-| HU 13 | Generar factura física | Vendedor | Alta | 3 | P6 |
-| HU 14 | Historial de facturas | Todos | Media | 3 | P7 |
-| HU 15 | Anular factura | Administrador | Media | 3 | P7 |
-| HU 16 | Ventana del servidor | Administrador | Alta | 5 | P9 |
+| HU 1 | Iniciar y cerrar sesión | Todos | Alta | 4 | P1, P2 |
+| HU 2 | Administrar usuarios | Administrador | Alta | 5 | P8 |
+| HU 3 | Administrar clientes | Vendedor (eliminar: administrador) | Alta | 7 | P3 |
+| HU 4 | Administrar categorías | Administrador | Alta | 2 | P4, P10 |
+| HU 5 | Registrar producto | Administrador | Alta | 3 | P4 |
+| HU 6 | Ajustar inventario | Administrador | Alta | 3 | P4 |
+| HU 7 | Alertas de stock bajo | Administrador | Media | 2 | P2, P4 |
+| HU 8 | Crear factura | Vendedor | Alta | 8 | P5 |
+| HU 9 | Facturación simultánea | Administrador | Alta | 5 | P5 |
+| HU 10 | Generar factura física | Vendedor | Alta | 3 | P6 |
+| HU 11 | Consultar y anular facturas | Todos (anular: administrador) | Media | 6 | P7 |
+| HU 12 | Ventana del servidor | Administrador | Alta | 5 | P9 |
 
 : Resumen de las historias de usuario
 
@@ -510,55 +507,55 @@ Campos de usuario y contraseña (oculta), dirección del servidor y mensaje de e
 
 ![P1 Inicio de sesión](img/P1_inicio_sesion.png)
 
-## 6.3 P2 · Menú principal (HU 2, HU 10)
+## 6.3 P2 · Menú principal (HU 1 y HU 7)
 
 Acceso a todos los módulos mediante menú y botones, resumen del día y alerta de productos bajo el stock mínimo. La barra de estado muestra el usuario, su rol y el estado de la conexión. El botón *Usuarios* solo aparece para administradores.
 
 ![P2 Menú principal](img/P2_menu_principal.png)
 
-## 6.4 P3 · Gestión de clientes (HU 4, HU 5, HU 6)
+## 6.4 P3 · Gestión de clientes (HU 3)
 
 CRUD completo de clientes: formulario para crear y modificar, búsqueda, tabla de clientes y botón *Eliminar*. El botón *Actualizar lista* vuelve a pedir los datos al servidor para ver los cambios hechos desde otras cajas.
 
 ![P3 Gestión de clientes](img/P3_clientes.png)
 
-## 6.5 P4 · Productos e inventario (HU 8, HU 9, HU 10)
+## 6.5 P4 · Productos e inventario (HU 5, HU 6 y HU 7)
 
 Pestañas para productos, categorías y productos bajo el mínimo. El formulario cambia según el tipo de producto elegido (abarrote, bebida o artículo del hogar). Los productos bajo el mínimo se resaltan en rojo. Los botones permiten crear, modificar, eliminar y ajustar el stock.
 
 ![P4 Productos e inventario](img/P4_productos_inventario.png)
 
-## 6.6 P5 · Nueva factura (HU 11, HU 12)
+## 6.6 P5 · Nueva factura (HU 8 y HU 9)
 
 Selección de cliente, agregado de productos con validación de existencias, tabla de líneas con el IVA de cada tipo de producto, método de pago, descuento y totales calculados.
 
 ![P5 Nueva factura](img/P5_nueva_factura.png)
 
-## 6.7 P6 · Vista previa de la factura física (HU 13)
+## 6.7 P6 · Vista previa de la factura física (HU 10)
 
 Contenido exacto del archivo que se genera, con el desglose de pago, y botones para guardarlo como `.txt` o `.html`.
 
 ![P6 Vista previa de factura](img/P6_vista_previa_factura.png)
 
-## 6.8 P7 · Historial de facturas (HU 14, HU 15)
+## 6.8 P7 · Historial de facturas (HU 11)
 
 Filtros por fecha, cliente y estado; total del periodo y acciones para ver el detalle, regenerar el archivo o anular.
 
 ![P7 Historial de facturas](img/P7_historial_facturas.png)
 
-## 6.9 P8 · Gestión de usuarios (HU 3)
+## 6.9 P8 · Gestión de usuarios (HU 2)
 
 Exclusiva del administrador: creación, consulta, modificación (incluido el rol y el estado activo), eliminación y restablecimiento de contraseña de usuarios.
 
 ![P8 Gestión de usuarios](img/P8_usuarios.png)
 
-## 6.10 P9 · Ventana del servidor (HU 16)
+## 6.10 P9 · Ventana del servidor (HU 12)
 
 Se ejecuta en el equipo servidor, aparte de las cajas. Permite elegir el puerto, iniciar y detener el servidor, y muestra los clientes conectados (cada uno con su hilo) y una bitácora con cada operación que llega y su resultado. Es la pantalla que demuestra en el video que el servidor atiende a varios clientes a la vez.
 
 ![P9 Ventana del servidor](img/P9_ventana_servidor.png)
 
-## 6.11 P10 · Gestión de categorías (HU 7)
+## 6.11 P10 · Gestión de categorías (HU 4)
 
 Se abre desde la pantalla de productos. CRUD de categorías con su nombre y descripción; la tabla indica cuántos productos tiene cada una, porque una categoría con productos no se puede eliminar.
 
@@ -568,15 +565,15 @@ Se abre desde la pantalla de productos. CRUD de categorías con su nombre y desc
 
 | Historia | Clases principales | Pantalla |
 |---|---|---|
-| HU 1, HU 2 | Usuario, RegistroUsuarios, CredencialesInvalidasException, VentanaLogin | P1, P2 |
-| HU 3 | Usuario, Rol, RegistroUsuarios | P8 |
-| HU 4 a HU 6 | Persona, Cliente, RegistroClientes, RegistroNoEncontradoException | P3 |
-| HU 7, HU 8 | Inventario, Categoria, Producto, Abarrote, Bebida, ArticuloHogar | P4, P10 |
-| HU 9, HU 10 | Producto, Inventario, ComparadorPorExistencias | P2, P4 |
-| HU 11, HU 12 | Factura, DetalleFactura, Inventario, StockInsuficienteException (y en la arquitectura prevista: ServicioFacturacion, ManejadorCliente) | P5 |
-| HU 13 | Factura, DetalleFactura, Mostrable | P6 |
-| HU 14, HU 15 | Factura, EstadoFactura, RegistroFacturas | P7 |
-| HU 16 | VentanaServidor, ServidorFacturacion, ManejadorCliente | P9 |
+| HU 1 | Usuario, RegistroUsuarios, CredencialesInvalidasException, VentanaLogin | P1, P2 |
+| HU 2 | Usuario, Rol, RegistroUsuarios | P8 |
+| HU 3 | Persona, Cliente, RegistroClientes, RegistroNoEncontradoException | P3 |
+| HU 4 y HU 5 | Inventario, Categoria, Producto, Abarrote, Bebida, ArticuloHogar | P4, P10 |
+| HU 6 y HU 7 | Producto, Inventario, ComparadorPorExistencias | P2, P4 |
+| HU 8 y HU 9 | Factura, DetalleFactura, Inventario, StockInsuficienteException (y en la arquitectura prevista: ServicioFacturacion, ManejadorCliente) | P5 |
+| HU 10 | Factura, DetalleFactura, Mostrable | P6 |
+| HU 11 | Factura, EstadoFactura, RegistroFacturas | P7 |
+| HU 12 | VentanaServidor, ServidorFacturacion, ManejadorCliente | P9 |
 
 : Trazabilidad entre historias, clases y pantallas
 
