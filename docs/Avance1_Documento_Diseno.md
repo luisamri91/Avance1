@@ -1,8 +1,8 @@
 ---
 title: "Proyecto Final – Avance 1: Documento de Diseño"
-subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 6"
+subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 7"
 author: "Estudiante: [Nombre completo] · Carné: [número]"
-date: "Programación Cliente-Servidor Concurrente · Profesor(a): [nombre] · Octubre 2026"
+date: "Programación Cliente-Servidor Concurrente · Profesor: Mario Alberto Vargas Montes · Octubre 2026"
 lang: es
 ---
 
@@ -16,10 +16,19 @@ lang: es
 | v4 | 08/10/2026 | Historias de usuario en formato de tabla con escenarios de aceptación (Dado que / Cuando / Resultado esperado) |
 | v5 | 08/10/2026 | Se agregan las listas de requerimientos funcionales (10) y no funcionales (8); las secciones siguientes se renumeran |
 | v6 | 08/10/2026 | Diseño alineado con lo que el profesor pide para el proyecto final: CRUD completo (con eliminar) desde pantallas, ventana del servidor (HU 16 y P9), base de datos MySQL o Derby con su modelo de tablas y plan de demostración para el video final |
+| v7 | 08/10/2026 | Guía al inicio con las tres partes que pide el Avance 1 (historias de usuario, diagrama de clases y bocetos); tabla de pantallas CRUD por clase; nuevo boceto P10 de categorías; nombre del profesor en la portada |
 
 # 1. Introducción
 
 La cadena de venta al por mayor **Fidecompro** necesita una aplicación de escritorio para llevar el inventario de sus productos y emitir facturas a sus clientes. Este documento presenta el diseño de la solución para el Avance 1 del proyecto final: las clases identificadas (con atributos, métodos y relaciones), las funcionalidades expresadas como historias de usuario y los prototipos de la interfaz gráfica.
+
+**Contenido del Avance 1.** El Avance 1 es conceptual y pide tres partes. Esta tabla indica dónde está cada una; el resto del documento (requerimientos, arquitectura, base de datos y plan de demostración) las complementa.
+
+| Parte pedida | Dónde está | Qué contiene |
+|---|---|---|
+| **Historias de usuario** | Sección 5 | 16 historias con su rol, funcionalidad, finalidad y escenarios de aceptación |
+| **Diagrama de clases** | Secciones 4.1 y 4.3 | Clases del sistema con atributos, métodos y relaciones; la sección 4.2 describe cada clase |
+| **Bocetos (mockups) de las pantallas** | Sección 6 | Inicio de sesión, menú principal y pantallas CRUD de cada clase (clientes, productos, categorías, usuarios y facturas), más la ventana del servidor |
 
 ## 1.1 Requerimientos del enunciado
 
@@ -39,7 +48,7 @@ El profesor indicó que el proyecto final debe cumplir cuatro requisitos técnic
 |---|---|---|
 | Cliente-servidor con **sockets** | Cada caja es una aplicación cliente que se conecta por `Socket` al `ServerSocket` del servidor (puerto 5000) e intercambia objetos `Solicitud` y `Respuesta` | Secciones 4.3 y 4.4 |
 | **Hilos** | El servidor atiende cada cliente conectado en su propio hilo (`ManejadorCliente`); las operaciones que modifican datos se sincronizan | Secciones 4.4 y 4.5 |
-| Pantallas **JFrame** | Ventanas Swing para el cliente (P1 a P8) y una ventana propia del servidor (P9) | Sección 6 |
+| Pantallas **JFrame** | Ventanas Swing para el cliente (P1 a P8 y P10) y una ventana propia del servidor (P9) | Sección 6 |
 | Base de datos **MySQL o Derby** | Todo se guarda en la base de datos por medio de JDBC y clases DAO | Sección 4.6 |
 | **CRUD** completo desde pantallas | Crear, consultar, modificar y eliminar usuarios, clientes, categorías y productos; crear, consultar y anular facturas | Secciones 2 y 8 |
 | Varios clientes a la vez | Se pueden abrir varias ventanas cliente al mismo tiempo y el servidor las atiende en paralelo | HU 12, HU 16 |
@@ -373,7 +382,7 @@ TABLA_HISTORIAS_USUARIO
 | HU 4 | Registrar cliente | Vendedor | Alta | 3 | P3 |
 | HU 5 | Buscar y editar cliente | Vendedor | Alta | 2 | P3 |
 | HU 6 | Eliminar cliente | Administrador | Media | 2 | P3 |
-| HU 7 | Administrar tipos de producto | Administrador | Alta | 2 | P4 |
+| HU 7 | Administrar categorías | Administrador | Alta | 2 | P4, P10 |
 | HU 8 | Registrar producto | Administrador | Alta | 3 | P4 |
 | HU 9 | Ajustar inventario | Administrador | Alta | 3 | P4 |
 | HU 10 | Alertas de stock bajo | Administrador | Media | 2 | P2, P4 |
@@ -386,7 +395,20 @@ TABLA_HISTORIAS_USUARIO
 
 # 6. Prototipos de interfaz gráfica
 
-Los prototipos representan las ventanas `JFrame` de la aplicación final (look and feel Nimbus): ocho del cliente y una del servidor. Se elaboraron como maquetas HTML/CSS, incluidas en `docs/prototipos/html/`, y se exportaron a imagen. Los datos mostrados son de ejemplo.
+Los prototipos (bocetos o mockups) representan las ventanas `JFrame` de la aplicación final (look and feel Nimbus): nueve del cliente y una del servidor. Se elaboraron como maquetas HTML/CSS, incluidas en `docs/prototipos/html/`, y se exportaron a imagen. Los datos mostrados son de ejemplo.
+
+Cada clase que el usuario administra tiene su pantalla para crear, consultar, modificar y eliminar:
+
+| Pantalla | Clase que administra | Operaciones |
+|---|---|---|
+| P1 · Inicio de sesión | `Usuario` | Validar usuario y contraseña |
+| P2 · Menú principal | — | Acceso a todos los módulos según el rol |
+| P3 · Gestión de clientes | `Cliente` | Crear, consultar, modificar y eliminar |
+| P4 · Productos e inventario | `Producto` (`Abarrote`, `Bebida`, `ArticuloHogar`) e `Inventario` | Crear, consultar, modificar, eliminar y ajustar existencias |
+| P10 · Gestión de categorías | `Categoria` | Crear, consultar, modificar y eliminar |
+| P8 · Gestión de usuarios | `Usuario` | Crear, consultar, modificar y eliminar |
+| P5, P6 y P7 · Facturación | `Factura` y `DetalleFactura` | Crear, ver la factura física, consultar el historial y anular |
+| P9 · Ventana del servidor | `ServidorFacturacion` | Iniciar, detener y ver clientes conectados |
 
 ## 6.1 Mapa de navegación
 
@@ -410,7 +432,7 @@ CRUD completo de clientes: formulario para crear y modificar, búsqueda, tabla d
 
 ![P3 Gestión de clientes](img/P3_clientes.png)
 
-## 6.5 P4 · Productos e inventario (HU 7, HU 8, HU 9, HU 10)
+## 6.5 P4 · Productos e inventario (HU 8, HU 9, HU 10)
 
 Pestañas para productos, categorías y productos bajo el mínimo. El formulario cambia según el tipo de producto elegido (abarrote, bebida o artículo del hogar). Los productos bajo el mínimo se resaltan en rojo. Los botones permiten crear, modificar, eliminar y ajustar el stock.
 
@@ -446,6 +468,12 @@ Se ejecuta en el equipo servidor, aparte de las cajas. Permite elegir el puerto,
 
 ![P9 Ventana del servidor](img/P9_ventana_servidor.png)
 
+## 6.11 P10 · Gestión de categorías (HU 7)
+
+Se abre desde la pantalla de productos. CRUD de categorías con su nombre y descripción; la tabla indica cuántos productos tiene cada una, porque una categoría con productos no se puede eliminar.
+
+![P10 Gestión de categorías](img/P10_categorias.png)
+
 # 7. Trazabilidad historias – clases – pantallas
 
 | Historia | Clases principales | Pantalla |
@@ -453,7 +481,7 @@ Se ejecuta en el equipo servidor, aparte de las cajas. Permite elegir el puerto,
 | HU 1, HU 2 | Usuario, RegistroUsuarios, CredencialesInvalidasException, VentanaLogin | P1, P2 |
 | HU 3 | Usuario, Rol, RegistroUsuarios | P8 |
 | HU 4 a HU 6 | Persona, Cliente, RegistroClientes, RegistroNoEncontradoException | P3 |
-| HU 7, HU 8 | Inventario, Categoria, Producto, Abarrote, Bebida, ArticuloHogar | P4 |
+| HU 7, HU 8 | Inventario, Categoria, Producto, Abarrote, Bebida, ArticuloHogar | P4, P10 |
 | HU 9, HU 10 | Producto, Inventario, ComparadorPorExistencias | P2, P4 |
 | HU 11, HU 12 | Factura, DetalleFactura, Inventario, StockInsuficienteException (y en la arquitectura prevista: ServicioFacturacion, ManejadorCliente) | P5 |
 | HU 13 | Factura, DetalleFactura, Mostrable | P6 |
@@ -468,7 +496,7 @@ El video final debe mostrar todas las funcionalidades, el CRUD completo desde la
 |---|---|---|---|---|---|
 | Usuarios | Sí | Sí | Sí | Sí (si tiene facturas, se desactiva) | P8 |
 | Clientes | Sí | Sí | Sí | Sí (si tiene facturas, se desactiva) | P3 |
-| Categorías | Sí | Sí | Sí | Sí (si no tiene productos) | P4 |
+| Categorías | Sí | Sí | Sí | Sí (si no tiene productos) | P10 |
 | Productos | Sí | Sí | Sí | Sí (si está en facturas, se desactiva) | P4 |
 | Facturas | Sí | Sí (historial) | No: una factura emitida no se modifica | Se anula, no se borra | P5, P6, P7 |
 
