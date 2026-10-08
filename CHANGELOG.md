@@ -8,7 +8,7 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 
 ## Documento de diseño
 
-### Documento v3 · 2026-10-08
+### Documento v3 · 2026-10-08 · commit `bf66b07`
 * Se agrega la tabla de control de versiones al inicio del documento y la versión en la portada.
 * La versión va en el nombre del archivo y la numeración pasa a v1, v2, v3…
 
