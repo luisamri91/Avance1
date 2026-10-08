@@ -5,7 +5,7 @@ Aplicación de escritorio en Java Swing con arquitectura cliente-servidor por so
 
 ## Versiones
 
-Versión actual: **documento v1.2** y **código v0.1.0**. El detalle de cada cambio está en [`CHANGELOG.md`](CHANGELOG.md), y cada versión tiene su etiqueta en git (`doc-v1.2`, `codigo-v0.1.0`…).
+Versión actual: **documento v1.2** y **código v0.1.0**. El detalle de cada cambio está en [`CHANGELOG.md`](CHANGELOG.md), con el commit de cada versión.
 
 ## Avance 1 – Documento de diseño
 
