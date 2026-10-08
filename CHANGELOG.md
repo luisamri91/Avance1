@@ -8,6 +8,13 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 
 ## Documento de diseño
 
+### Documento v7 · 2026-10-08 · commit `047b31c`
+* El profesor indicó que el Avance 1 es conceptual y pide tres partes: historias de usuario, diagrama de clases y bocetos (login, menú y pantallas CRUD de las clases). Se agrega al inicio una tabla que indica dónde está cada una.
+* La sección 6 abre con una tabla que relaciona cada pantalla con la clase que administra y sus operaciones CRUD.
+* Nuevo boceto P10 de gestión de categorías (antes solo se mencionaba como diálogo).
+* La HU 7 se llama ahora "Administrar categorías" en el resumen.
+* El nombre del profesor (Mario Alberto Vargas Montes) queda en la portada.
+
 ### Documento v6 · 2026-10-08 · commit `99f55d4`
 * Diseño alineado con lo que el profesor pidió para el proyecto final: sockets, hilos, pantallas JFrame, base de datos MySQL o Derby, CRUD completo desde pantallas, varios clientes a la vez y un video final.
 * Nueva sección 1.2 con esos requisitos y dónde los cumple el diseño.
