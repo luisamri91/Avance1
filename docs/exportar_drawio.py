@@ -27,6 +27,7 @@ ANCHO_MAYUSCULA = 7.6
 ACOMODAR = Path(__file__).with_name("acomodar_drawio.js")
 
 NOMBRES_PAGINA = {
+    "00_clases_simplificado": "Diagrama de clases",
     "01a_modelo_inventario": "Inventario y excepciones",
     "01b_modelo_facturacion": "Personas y facturación",
     "02_clases_cliente_servidor": "Cliente-servidor",

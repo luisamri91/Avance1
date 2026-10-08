@@ -1,0 +1,96 @@
+classDiagram
+    direction TB
+
+    class Mostrable {
+        <<interface>>
+        +mostrarInformacion() String
+    }
+    class Persona {
+        <<abstract>>
+        #String nombre
+        #String telefono
+        #String correo
+        +mostrarInformacion() String
+    }
+    class Usuario {
+        -String nombreUsuario
+        -String contrasena
+        -Rol rol
+        -boolean activo
+        +validarCredenciales(String usuario, String contrasena) boolean
+        +esAdministrador() boolean
+    }
+    class Cliente {
+        -TipoIdentificacion tipoIdentificacion
+        -String identificacion
+        -String direccion
+        -boolean activo
+    }
+    class Producto {
+        <<abstract>>
+        #String codigo
+        #String nombre
+        #double valorVenta
+        #int existencias
+        #int stockMinimo
+        +obtenerPorcentajeImpuesto()* double
+        +descontarExistencias(int cantidad) void
+        +necesitaReabastecer() boolean
+    }
+    class Abarrote {
+        -LocalDate fechaVencimiento
+        -boolean canastaBasica
+        +obtenerPorcentajeImpuesto() double
+    }
+    class Bebida {
+        -int volumenMl
+        -boolean retornable
+        +obtenerPorcentajeImpuesto() double
+    }
+    class ArticuloHogar {
+        -String marca
+        -String presentacion
+        +obtenerPorcentajeImpuesto() double
+    }
+    class Categoria {
+        -String nombre
+        -ArrayList~Producto~ productos
+        +agregarProducto(Producto p) void
+        +eliminarProducto(int id) void
+    }
+    class Inventario {
+        -ArrayList~Categoria~ categorias
+        +buscarProducto(String codigo) Producto
+        +productosBajoMinimo() ArrayList~Producto~
+    }
+    class Factura {
+        -int numero
+        -LocalDateTime fecha
+        -MetodoPago metodoPago
+        -EstadoFactura estado
+        +agregarDetalle(Producto p, int cantidad) void
+        +calcularTotal() double
+        +anular() void
+        +generarArchivo(String carpeta) void
+    }
+    class DetalleFactura {
+        -int cantidad
+        -double precioUnitario
+        +calcularSubtotal() double
+        +calcularImpuesto() double
+    }
+
+    Mostrable <|.. Persona
+    Mostrable <|.. Producto
+    Mostrable <|.. Factura
+    Persona <|-- Usuario
+    Persona <|-- Cliente
+    Producto <|-- Abarrote
+    Producto <|-- Bebida
+    Producto <|-- ArticuloHogar
+    Inventario "1" o-- "*" Categoria
+    Categoria "1" o-- "*" Producto
+    Factura "1" *-- "1..*" DetalleFactura
+    DetalleFactura "*" --> "1" Producto
+    Factura "*" --> "1" Cliente : cliente
+    Factura "*" --> "1" Usuario : vendedor
