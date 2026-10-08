@@ -17,7 +17,7 @@ classDiagram
         -String contrasena
         -Rol rol
         -boolean activo
-        +validarCredenciales(String usuario, String contrasena) boolean
+        +validarCredenciales(String, String) boolean
         +esAdministrador() boolean
     }
     class Cliente {
@@ -34,7 +34,7 @@ classDiagram
         #int existencias
         #int stockMinimo
         +obtenerPorcentajeImpuesto()* double
-        +descontarExistencias(int cantidad) void
+        +descontarExistencias(int) void
         +necesitaReabastecer() boolean
     }
     class Abarrote {
@@ -55,12 +55,12 @@ classDiagram
     class Categoria {
         -String nombre
         -ArrayList~Producto~ productos
-        +agregarProducto(Producto p) void
-        +eliminarProducto(int id) void
+        +agregarProducto(Producto) void
+        +eliminarProducto(int) void
     }
     class Inventario {
         -ArrayList~Categoria~ categorias
-        +buscarProducto(String codigo) Producto
+        +buscarProducto(String) Producto
         +productosBajoMinimo() ArrayList~Producto~
     }
     class Factura {
@@ -68,10 +68,10 @@ classDiagram
         -LocalDateTime fecha
         -MetodoPago metodoPago
         -EstadoFactura estado
-        +agregarDetalle(Producto p, int cantidad) void
+        +agregarDetalle(Producto, int) void
         +calcularTotal() double
         +anular() void
-        +generarArchivo(String carpeta) void
+        +generarArchivo(String) void
     }
     class DetalleFactura {
         -int cantidad

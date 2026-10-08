@@ -5,6 +5,7 @@ const fs = require('fs');
 const ELK = require('elkjs/lib/elk.bundled.js');
 
 const grafo = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
+const opciones = grafo.layoutOptions || {};
 grafo.layoutOptions = {
   'elk.algorithm': 'layered',
   'elk.direction': 'DOWN',
@@ -16,5 +17,6 @@ grafo.layoutOptions = {
   'elk.layered.spacing.edgeNodeBetweenLayers': '25',
   'elk.layered.nodePlacement.strategy': 'NETWORK_SIMPLEX',
   'elk.layered.crossingMinimization.strategy': 'LAYER_SWEEP',
+  ...opciones,
 };
 new ELK().layout(grafo).then(r => fs.writeFileSync(process.argv[3], JSON.stringify(r)));

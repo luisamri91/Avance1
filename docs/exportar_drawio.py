@@ -8,7 +8,7 @@ para que las flechas no pasen por encima de las clases.
 
 Uso (desde docs/):
     python3 exportar_drawio.py [--simbologia] SALIDA.drawio diagramas/01a_modelo_inventario.mmd [otro.mmd ...]
-Con --simbologia se agrega a cada página un cuadro que explica los símbolos del diagrama.
+Con --simbologia se agrega debajo de cada diagrama un cuadro que explica sus símbolos.
 Necesita Node.js y el paquete elkjs (npm install elkjs; si está en otra carpeta, NODE_PATH=<carpeta>/node_modules).
 """
 import json
@@ -131,9 +131,10 @@ def medir(nombre, datos):
     return atributos, metodos, alto_titulo, ancho, alto
 
 
-def acomodar(clases, medidas, relaciones):
+def acomodar(clases, medidas, relaciones, opciones=None):
     grafo = {
         "id": "raiz",
+        "layoutOptions": opciones or {},
         "children": [{"id": n, "width": medidas[n][3], "height": medidas[n][4]} for n in clases],
         "edges": [{"id": f"e{i}", "sources": [r[0]], "targets": [r[4]]} for i, r in enumerate(relaciones)],
     }
@@ -189,51 +190,67 @@ SIMBOLOGIA = [
     ("flecha:startArrow=diamondThin;startFill=0;startSize=14;endArrow=none;", "Agregación: el todo agrupa partes que pueden existir por separado (Categoría y sus productos)."),
     ("flecha:endArrow=open;endFill=0;endSize=10;", "Asociación: una clase conoce y usa a otra (la Factura conoce a su Cliente)."),
 ]
-ANCHO_LEYENDA = 560
+ANCHO_MUESTRA = 100
 
 
-def leyenda(x0, y0, numero):
-    """Cuadro con la explicación de cada símbolo del diagrama."""
+def columna_leyenda(filas, x0, y, ancho, prefijo):
+    """Dibuja una columna de la simbología y devuelve sus celdas y la altura donde termina."""
     celdas = []
-    y = y0 + 34
-    for indice, (muestra, texto) in enumerate(SIMBOLOGIA):
-        id_ = f"p{numero}l{indice}"
+    ancho_texto_fila = ancho - ANCHO_MUESTRA - 26
+    for indice, (muestra, texto) in enumerate(filas):
+        id_ = f"{prefijo}{indice}"
         if muestra == "titulo":
             y += 6
-            celdas.append(celda(id_, f"<b>{texto}</b>", "text;html=1;fillColor=none;strokeColor=none;align=left;verticalAlign=middle;fontSize=12;"
-                                "fontColor=#1F4E79;", "1", x0 + 12, y, ANCHO_LEYENDA - 24, 22))
+            celdas.append(celda(id_, f"<b>{texto}</b>", "text;html=1;fillColor=none;strokeColor=none;align=left;"
+                                "verticalAlign=middle;fontSize=12;fontColor=#1F4E79;", "1", x0, y, ancho, 22))
             y += 22
             continue
-        alto = 34 if len(texto) > 70 else 22
+        caracteres_por_linea = ancho_texto_fila / 5.6
+        lineas = max(1, -(-len(re.sub(r"<[^>]+>", "", texto)) // int(caracteres_por_linea)))
+        alto = max(22, 14 * lineas + 8)
         if muestra == "ejemplo":
-            celdas.append(celda(id_, texto, "text;html=1;fillColor=none;strokeColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=11;"
-                                "fontColor=#000000;", "1", x0 + 12, y, ANCHO_LEYENDA - 24, alto))
+            celdas.append(celda(id_, texto, "text;html=1;fillColor=none;strokeColor=none;align=left;"
+                                "verticalAlign=middle;whiteSpace=wrap;fontSize=11;fontColor=#000000;", "1",
+                                x0, y, ancho, alto))
         else:
             if muestra.startswith("flecha:"):
                 estilo = "html=1;strokeColor=#000000;" + muestra[len("flecha:"):]
                 celdas.append(f'<mxCell id="{id_}f" style="{estilo}" edge="1" parent="1">'
                               '<mxGeometry relative="1" as="geometry">'
-                              f'<mxPoint x="{x0 + 16}" y="{y + alto / 2:.0f}" as="sourcePoint"/>'
-                              f'<mxPoint x="{x0 + 106}" y="{y + alto / 2:.0f}" as="targetPoint"/>'
+                              f'<mxPoint x="{x0 + 4}" y="{y + alto / 2:.0f}" as="sourcePoint"/>'
+                              f'<mxPoint x="{x0 + ANCHO_MUESTRA - 6}" y="{y + alto / 2:.0f}" as="targetPoint"/>'
                               '</mxGeometry></mxCell>')
             else:
                 celdas.append(celda(f"{id_}m", muestra, "text;html=1;align=center;verticalAlign=middle;fontSize=11;"
                                     "fontColor=#000000;fillColor=#dae8fc;strokeColor=#6c8ebf;", "1",
-                                    x0 + 16, y + 2, 100, alto - 4))
-            celdas.append(celda(id_, texto, "text;html=1;fillColor=none;strokeColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=11;"
-                                "fontColor=#000000;", "1", x0 + 126, y, ANCHO_LEYENDA - 138, alto))
+                                    x0, y + 2, ANCHO_MUESTRA, alto - 4))
+            celdas.append(celda(id_, texto, "text;html=1;fillColor=none;strokeColor=none;align=left;"
+                                "verticalAlign=middle;whiteSpace=wrap;fontSize=11;fontColor=#000000;", "1",
+                                x0 + ANCHO_MUESTRA + 10, y, ancho_texto_fila, alto))
         y += alto + 2
+    return celdas, y
+
+
+def leyenda(x0, y0, numero, ancho):
+    """Cuadro con la explicación de cada símbolo del diagrama, en dos columnas debajo del diagrama."""
+    corte = next(i for i, (m, t) in enumerate(SIMBOLOGIA) if m == "titulo" and t.startswith("Multiplicidad"))
+    ancho_columna = (ancho - 24 - 30) / 2
+    izquierda, fin_izquierda = columna_leyenda(SIMBOLOGIA[:corte], x0 + 12, y0 + 34, ancho_columna, f"p{numero}la")
+    derecha, fin_derecha = columna_leyenda(SIMBOLOGIA[corte:], x0 + 12 + ancho_columna + 30, y0 + 34,
+                                           ancho_columna, f"p{numero}lb")
     marco = celda(f"p{numero}leyenda", "<b>Simbología del diagrama</b>",
                   "rounded=1;arcSize=2;html=1;align=center;verticalAlign=top;spacingTop=6;fontSize=14;"
                   "fontColor=#000000;fillColor=#FFFFFF;strokeColor=#1F4E79;strokeWidth=2;", "1",
-                  x0, y0, ANCHO_LEYENDA, y - y0 + 10)
-    return [marco] + celdas
+                  x0, y0, ancho, max(fin_izquierda, fin_derecha) - y0 + 10)
+    return [marco] + izquierda + derecha
 
 
 def pagina(ruta_mmd, numero, con_leyenda=False):
     clases, relaciones = leer_mermaid(ruta_mmd)
     medidas = {n: medir(n, d) for n, d in clases.items()}
-    nodos, rutas = acomodar(clases, medidas, relaciones)
+    # Con simbología, más espacio entre filas de clases para que la imagen quede vertical (página de Word).
+    opciones = {"elk.layered.spacing.nodeNodeBetweenLayers": "95"} if con_leyenda else None
+    nodos, rutas = acomodar(clases, medidas, relaciones, opciones)
     celdas = ['<mxCell id="0"/>', '<mxCell id="1" parent="0"/>']
     ids = {}
     for indice, (nombre, datos) in enumerate(clases.items()):
@@ -293,7 +310,8 @@ def pagina(ruta_mmd, numero, con_leyenda=False):
                               '<mxPoint x="6" as="offset"/></mxGeometry></mxCell>')
     if con_leyenda:
         derecha = max(n["x"] + n["width"] for n in nodos.values()) + 20
-        celdas += leyenda(derecha + 60, 20, numero)
+        abajo = max(n["y"] + n["height"] for n in nodos.values()) + 20
+        celdas += leyenda(20, abajo + 50, numero, max(derecha - 20, 1000))
     nombre_pagina = NOMBRES_PAGINA.get(Path(ruta_mmd).stem, Path(ruta_mmd).stem)
     return (f'<diagram id="pagina{numero}" name="{escape(nombre_pagina)}"><mxGraphModel grid="1" gridSize="10" '
             'guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" math="0" shadow="0">'
