@@ -8,6 +8,12 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 
 ## Documento de diseño
 
+### Documento v5 · 2026-10-08 · commit `9a7a9a7`
+* Se agregan dos capítulos nuevos con el formato pedido (tabla con #, Requerimiento, Descripción y Prioridad): **Lista de requerimientos funcionales** (10) y **Lista de requerimientos no funcionales** (8).
+* Cada requerimiento funcional indica qué historias de usuario lo cubren.
+* Las secciones siguientes se renumeran: Entidades y clases pasa a 4, Historias de usuario a 5, Prototipos a 6 y Trazabilidad a 7.
+* Los requerimientos se editan en `docs/requerimientos.json`.
+
 ### Documento v4 · 2026-10-08 · commit `b3e7477`
 * Las 15 historias de usuario pasan al formato de tabla pedido: ID, rol, característica, razón y escenarios de aceptación con número, título, contexto (Dado que), evento (Cuando) y resultado esperado. Son 57 escenarios en total.
 * La sección 3 va en páginas horizontales para que la tabla se lea bien.

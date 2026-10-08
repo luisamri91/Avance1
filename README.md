@@ -5,13 +5,13 @@ Aplicación de escritorio en Java Swing con arquitectura cliente-servidor por so
 
 ## Versiones
 
-Versión actual: **documento v4** y **código v1**. El detalle de cada cambio está en [`CHANGELOG.md`](CHANGELOG.md), con el commit de cada versión.
+Versión actual: **documento v5** y **código v1**. El detalle de cada cambio está en [`CHANGELOG.md`](CHANGELOG.md), con el commit de cada versión.
 
 ## Avance 1 – Documento de diseño
 
 | Entregable | Archivo |
 |---|---|
-| Documento de diseño (para entregar) | [`docs/Avance1_Documento_Diseno_v4.pdf`](docs/Avance1_Documento_Diseno_v4.pdf) · [`.docx`](docs/Avance1_Documento_Diseno_v4.docx) |
+| Documento de diseño (para entregar) | [`docs/Avance1_Documento_Diseno_v5.pdf`](docs/Avance1_Documento_Diseno_v5.pdf) · [`.docx`](docs/Avance1_Documento_Diseno_v5.docx) |
 | Fuente editable del documento | [`docs/Avance1_Documento_Diseno.md`](docs/Avance1_Documento_Diseno.md) |
 | Diagramas (clases, arquitectura, secuencia, navegación) | [`docs/diagramas/`](docs/diagramas) (Mermaid) → [`docs/img/`](docs/img) |
 | Prototipos de interfaz | [`docs/prototipos/html/`](docs/prototipos/html) → [`docs/img/P*.png`](docs/img) |
