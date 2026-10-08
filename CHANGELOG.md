@@ -8,6 +8,13 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 
 ## Documento de diseño
 
+### Documento v11 · 2026-10-08 · commit `156cbdf`
+* Formato APA 7 (`docs/formato_apa.py`): márgenes de 2,54 cm en todas las páginas, también en las horizontales de las historias de usuario; Times New Roman 12; interlineado doble y sangría de 1,27 cm en el texto; número de página arriba a la derecha.
+* Portada de estudiante: título en negrita y centrado; nombre, universidad, curso, profesor y fecha debajo. El documento empieza en la página 2.
+* Títulos de nivel 1 centrados en negrita, nivel 2 a la izquierda en negrita y nivel 3 en negrita y cursiva.
+* Las 35 tablas y las 18 figuras van numeradas ("Tabla N", "Figura N") con su título en cursiva arriba. Las tablas usan solo líneas horizontales; la de historias de usuario y las de requerimientos conservan su formato con colores.
+* Columnas de la tabla de historias ajustadas al nuevo ancho para que no se corten palabras.
+
 ### Documento v10 · 2026-10-08 · commit `fee9361`
 * La sección 4.1 abre con la **vista general** del diagrama de clases en una página completa, con su simbología: es la imagen del diagrama simplificado v4 de draw.io, ya con las colecciones. Después sigue el detalle en dos diagramas.
 * Se mencionan los archivos editables de draw.io y la tabla del inicio indica dónde está la vista general.
@@ -70,6 +77,9 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 * Primera versión del documento de diseño del Avance 1 (Proyecto 1, Fidecompro): clases con atributos, métodos y relaciones; 15 historias de usuario; 8 prototipos de pantalla; diagramas de arquitectura, secuencia y navegación.
 
 ## Diagrama de clases (Word aparte)
+
+### Diagrama de clases v6 · 2026-10-08 · commit `156cbdf`
+* Mismo formato APA 7 que el documento v11.
 
 ### Diagrama de clases v5 · 2026-10-08 · commit `fee9361`
 * Incluye la vista general en una página con simbología, igual que el documento v10. El `.drawio` sigue en v4 porque no cambió.

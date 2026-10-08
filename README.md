@@ -5,14 +5,14 @@ Aplicación de escritorio en Java Swing con arquitectura cliente-servidor por so
 
 ## Versiones
 
-Versión actual: **documento v10** y **código v3**. El detalle de cada cambio está en [`CHANGELOG.md`](CHANGELOG.md), con el commit de cada versión.
+Versión actual: **documento v11** y **código v3**. El detalle de cada cambio está en [`CHANGELOG.md`](CHANGELOG.md), con el commit de cada versión.
 
 ## Avance 1 – Documento de diseño
 
 | Entregable | Archivo |
 |---|---|
-| Documento de diseño (para entregar) | [`docs/Avance1_Documento_Diseno_v10.pdf`](docs/Avance1_Documento_Diseno_v10.pdf) · [`.docx`](docs/Avance1_Documento_Diseno_v10.docx) |
-| Diagrama de clases (solo las clases) | [`docs/Avance1_Diagrama_de_Clases_v5.docx`](docs/Avance1_Diagrama_de_Clases_v5.docx) · editable en draw.io: [`.drawio`](docs/Avance1_Diagrama_de_Clases_v4.drawio) |
+| Documento de diseño (para entregar) | [`docs/Avance1_Documento_Diseno_v11.pdf`](docs/Avance1_Documento_Diseno_v11.pdf) · [`.docx`](docs/Avance1_Documento_Diseno_v11.docx) |
+| Diagrama de clases (solo las clases) | [`docs/Avance1_Diagrama_de_Clases_v6.docx`](docs/Avance1_Diagrama_de_Clases_v6.docx) · editable en draw.io: [`.drawio`](docs/Avance1_Diagrama_de_Clases_v4.drawio) |
 | Diagrama de clases simplificado (una página) | [`docs/Avance1_Diagrama_de_Clases_Simplificado_v4.drawio`](docs/Avance1_Diagrama_de_Clases_Simplificado_v4.drawio) · [`.png`](docs/Avance1_Diagrama_de_Clases_Simplificado_v4.png) |
 | Fuente editable del documento | [`docs/Avance1_Documento_Diseno.md`](docs/Avance1_Documento_Diseno.md) |
 | Diagramas (clases, arquitectura, secuencia, navegación) | [`docs/diagramas/`](docs/diagramas) (Mermaid) → [`docs/img/`](docs/img) |
