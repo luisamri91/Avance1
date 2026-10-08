@@ -8,6 +8,11 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 
 ## Documento de diseño
 
+### Documento v10 · 2026-10-08 · commit `fee9361`
+* La sección 4.1 abre con la **vista general** del diagrama de clases en una página completa, con su simbología: es la imagen del diagrama simplificado v4 de draw.io, ya con las colecciones. Después sigue el detalle en dos diagramas.
+* Se mencionan los archivos editables de draw.io y la tabla del inicio indica dónde está la vista general.
+* Las imágenes grandes se limitan a 20,5 cm de alto para que el título y el pie de figura queden en la misma página.
+
 ### Documento v9 · 2026-10-08 · commit `5400cea`
 * La tabla «Colecciones: cuál se usa y por qué» tiene una columna nueva con el ejemplo del profesor que respalda cada elección: `EjemploList`, `EjemploCollection`, `EjemploSet`, `EjemploMap` y `EjemploTreeMap`.
 * El texto explica, con `EjemploColeccionGenerica` y `EjemploColeccionNoGenerica`, por qué todas las colecciones son genéricas (no hace falta cast).
@@ -65,6 +70,9 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 * Primera versión del documento de diseño del Avance 1 (Proyecto 1, Fidecompro): clases con atributos, métodos y relaciones; 15 historias de usuario; 8 prototipos de pantalla; diagramas de arquitectura, secuencia y navegación.
 
 ## Diagrama de clases (Word aparte)
+
+### Diagrama de clases v5 · 2026-10-08 · commit `fee9361`
+* Incluye la vista general en una página con simbología, igual que el documento v10. El `.drawio` sigue en v4 porque no cambió.
 
 ### Diagrama de clases v4 · 2026-10-08 · commit `7d53a0e`
 * Numeración alineada con la carpeta de Nando (`Sem5\Avance1`), donde el diagrama con las colecciones ya se guardó como v4. Word y `.drawio` quedan ambos en v4.
