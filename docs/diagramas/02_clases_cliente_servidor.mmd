@@ -5,7 +5,7 @@ classDiagram
         -int puerto
         -ServerSocket serverSocket
         -ExecutorService poolHilos
-        -List~ManejadorCliente~ clientesConectados
+        -CopyOnWriteArrayList~ManejadorCliente~ clientesConectados
         -VentanaServidor ventana
         -volatile boolean activo
         +ServidorFacturacion(int puerto, int maxClientes)

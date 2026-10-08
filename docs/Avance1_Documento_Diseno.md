@@ -1,6 +1,6 @@
 ---
 title: "Proyecto Final – Avance 1: Documento de Diseño"
-subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 7"
+subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 8"
 author: "Estudiante: [Nombre completo] · Carné: [número]"
 date: "Programación Cliente-Servidor Concurrente · Profesor: Mario Alberto Vargas Montes · Octubre 2026"
 lang: es
@@ -17,6 +17,7 @@ lang: es
 | v5 | 08/10/2026 | Se agregan las listas de requerimientos funcionales (10) y no funcionales (8); las secciones siguientes se renumeran |
 | v6 | 08/10/2026 | Diseño alineado con lo que el profesor pide para el proyecto final: CRUD completo (con eliminar) desde pantallas, ventana del servidor (HU 16 y P9), base de datos MySQL o Derby con su modelo de tablas y plan de demostración para el video final |
 | v7 | 08/10/2026 | Guía al inicio con las tres partes que pide el Avance 1 (historias de usuario, diagrama de clases y bocetos); tabla de pantallas CRUD por clase; nuevo boceto P10 de categorías; nombre del profesor en la portada |
+| v8 | 08/10/2026 | Cada colección según su uso, como en los ejemplos del profesor: `List` donde importa el orden, `Set` para advertencias sin repetir, `HashMap` para usuarios y clientes por id, `TreeMap` para facturas ordenadas por número y `CopyOnWriteArrayList` para los clientes conectados al servidor; nueva tabla «Colecciones: cuál se usa y por qué» en la sección 4.2 |
 
 # 1. Introducción
 
@@ -90,7 +91,8 @@ El modelo de clases sigue la forma de trabajo vista en las semanas 1 a 5 del cur
 | Polimorfismo: distintos objetos responden distinto al mismo mensaje (semana 3) | Cada tipo de producto responde `obtenerPorcentajeImpuesto()` a su manera |
 | Atributos `static` e IDs autoincrementales (semanas 1 y 5) | `idAutoIncremental` en `Producto`, `Categoria`, `Cliente` y `Usuario`; `Factura.ultimoNumero` |
 | Constantes `final` (semana 1, ejemplo del IVA) | `Producto.IVA_GENERAL = 0.13` y `Abarrote.IVA_CANASTA_BASICA = 0.01` |
-| Composición y agregación con `ArrayList<T>` (semanas 1 y 5) | `Factura` *contiene* sus `DetalleFactura`; `Inventario` agrupa `Categoria` y `Categoria` agrupa `Producto` |
+| Composición y agregación con colecciones genéricas (semanas 1 y 5) | `Factura` *contiene* sus `DetalleFactura`; `Inventario` agrupa `Categoria` y `Categoria` agrupa `Producto` |
+| Colecciones `List`, `Set` y `Map` (`HashMap`, `TreeMap`) declaradas por su interface, cada una según su uso (semana 4) | `List` en detalles, productos y categorías; `Set` en advertencias; `Map` en los registros de usuarios, clientes y facturas (tabla «Colecciones» en la sección 4.2) |
 | Métodos `agregarX / editarX / eliminarX / mostrarX` por id (semana 5) | `Inventario`, `Categoria`, `RegistroClientes`, `RegistroUsuarios`, `RegistroFacturas` |
 | Enumeraciones para catálogos cerrados (semana 1) | `Rol`, `TipoIdentificacion`, `MetodoPago`, `EstadoFactura` |
 | `Comparable` y `Comparator` (semana 4) | `Producto implements Comparable<Producto>` (orden por nombre) y `ComparadorPorExistencias` |
@@ -208,7 +210,7 @@ Representa cualquier artículo que vende la cadena. Como el enunciado indica que
 |---|---|---|---|
 | **Abarrote** (arroz, frijoles, aceite, café…) | `fechaVencimiento: LocalDate`, `pesoKg: double`, `canastaBasica: boolean`; constante `IVA_CANASTA_BASICA = 0.01` | 1 % si es canasta básica, si no `IVA_GENERAL` | `estaVencido(): boolean` |
 | **Bebida** (refrescos, jugos, agua) | `volumenMl: int`, `unidadesPorPaquete: int`, `retornable: boolean` | `IVA_GENERAL` | — |
-| **ArticuloHogar** (limpieza e higiene) | `marca: String`, `presentacion: String`, `advertencias: ArrayList<String>` | `IVA_GENERAL` | `agregarAdvertencia(String)`, `eliminarAdvertencia(String)` |
+| **ArticuloHogar** (limpieza e higiene) | `marca: String`, `presentacion: String`, `advertencias: Set<String>` (sin repetidas) | `IVA_GENERAL` | `agregarAdvertencia(String)`, `eliminarAdvertencia(String)` |
 
 Las tres sobrescriben `mostrarInformacion()` llamando a `super.mostrarInformacion()` y agregando sus datos propios.
 
@@ -220,7 +222,7 @@ Agrupa productos para ordenar el catálogo (Abarrotes, Bebidas, Limpieza, Higien
 | idAutoIncremental | static int | Contador de la clase |
 | id | int | Identificador |
 | nombre, descripcion | String | Datos de la categoría |
-| productos | ArrayList&lt;Producto&gt; | Productos de la categoría |
+| productos | List&lt;Producto&gt; | Productos de la categoría, en orden |
 
 | Método | Descripción |
 |---|---|
@@ -239,7 +241,7 @@ Punto central del catálogo de una sede.
 |---|---|---|
 | nombre | String | Nombre del inventario |
 | sede | String | Sucursal de Fidecompro |
-| categorias | ArrayList&lt;Categoria&gt; | Categorías registradas |
+| categorias | List&lt;Categoria&gt; | Categorías registradas |
 
 | Método | Descripción |
 |---|---|
@@ -248,7 +250,7 @@ Punto central del catálogo de una sede.
 | editarProductoCategoria / eliminarProductoCategoria | Edita o elimina un producto dentro de una categoría |
 | mostrarProductosCategoria(int idCategoria): String | Lista los productos de una categoría |
 | buscarProducto(String codigo): Producto | Busca en todas las categorías; se usa al facturar |
-| productosBajoMinimo(): ArrayList&lt;Producto&gt; | Productos con `necesitaReabastecer()`, ordenados con `ComparadorPorExistencias` |
+| productosBajoMinimo(): List&lt;Producto&gt; | Productos con `necesitaReabastecer()`, ordenados con `ComparadorPorExistencias` |
 
 ### ComparadorPorExistencias (implements Comparator&lt;Producto&gt;)
 Orden alterno al natural: de menos a más existencias, para mostrar primero lo que urge reabastecer.
@@ -263,7 +265,7 @@ Documento de venta emitido a un cliente. Implementa `Mostrable`.
 | fecha | LocalDateTime | Fecha y hora de emisión |
 | cliente | Cliente | A quién se factura |
 | vendedor | Usuario | Quién la emite |
-| detalles | ArrayList&lt;DetalleFactura&gt; | Líneas de la factura |
+| detalles | List&lt;DetalleFactura&gt; | Líneas de la factura, en el orden en que se agregan |
 | porcentajeDescuento | double | Descuento aplicado al subtotal |
 | metodoPago | MetodoPago | Efectivo, tarjeta o transferencia |
 | estado | EstadoFactura | `EMITIDA` o `ANULADA` |
@@ -296,13 +298,13 @@ Línea de una factura. Implementa `Mostrable`.
 | mostrarInformacion(): String | Una línea del desglose: cantidad, descripción, precio y total |
 
 ### RegistroUsuarios, RegistroClientes y RegistroFacturas
-Clases que administran las colecciones, con el mismo patrón de `Inventario`.
+Clases que administran las colecciones, con el mismo patrón de `Inventario`. Usuarios y clientes se guardan en un `Map` cuya clave es su id, y las facturas en un `TreeMap` cuya clave es el número, así buscar, editar o eliminar no necesita recorrer toda la colección.
 
 | Clase | Atributo | Métodos |
 |---|---|---|
-| **RegistroUsuarios** | `usuarios: ArrayList<Usuario>` | `agregarUsuario`, `editarUsuario`, `eliminarUsuario`, `desactivarUsuario`, `iniciarSesion(nombreUsuario, contrasena)` que devuelve el `Usuario` o lanza `CredencialesInvalidasException` |
-| **RegistroClientes** | `clientes: ArrayList<Cliente>` | `agregarCliente` (rechaza identificaciones repetidas), `editarCliente`, `eliminarCliente`, `desactivarCliente`, `buscarCliente(identificacion)`, `mostrarClientes` |
-| **RegistroFacturas** | `facturas: ArrayList<Factura>` | `agregarFactura`, `buscarFactura(numero)`, `anularFactura(numero)` (devuelve las existencias al inventario), `facturasPorFecha(desde, hasta)`, `tieneFacturasCliente(idCliente)` y `tieneFacturasUsuario(idUsuario)` (se consultan antes de eliminar) |
+| **RegistroUsuarios** | `usuarios: Map<Integer, Usuario>` (clave: id) | `agregarUsuario`, `editarUsuario`, `eliminarUsuario`, `desactivarUsuario`, `iniciarSesion(nombreUsuario, contrasena)` que devuelve el `Usuario` o lanza `CredencialesInvalidasException` |
+| **RegistroClientes** | `clientes: Map<Integer, Cliente>` (clave: id) | `agregarCliente` (rechaza identificaciones repetidas), `editarCliente`, `eliminarCliente`, `desactivarCliente`, `buscarCliente(identificacion)`, `mostrarClientes` |
+| **RegistroFacturas** | `facturas: TreeMap<Integer, Factura>` (clave: número, ordenadas) | `agregarFactura`, `buscarFactura(numero)`, `anularFactura(numero)` (devuelve las existencias al inventario), `facturasPorFecha(desde, hasta)`, `tieneFacturasCliente(idCliente)` y `tieneFacturasUsuario(idUsuario)` (se consultan antes de eliminar) |
 
 ### Excepciones propias (extends Exception)
 
@@ -318,6 +320,20 @@ Clases que administran las colecciones, con el mismo patrón de `Inventario`.
 * `MetodoPago`: EFECTIVO, TARJETA, TRANSFERENCIA.
 * `EstadoFactura`: EMITIDA, ANULADA.
 
+### Colecciones: cuál se usa y por qué
+Como en los ejemplos del curso, no todo se guarda en una lista: cada colección se elige según lo que se necesita (orden, duplicados o búsqueda por clave). Las variables se declaran por su interface y se crean con una implementación, por ejemplo `List<DetalleFactura> detalles = new ArrayList<>()` o `Map<Integer, Cliente> clientes = new HashMap<>()`.
+
+| Colección | Dónde se usa | Por qué |
+|---|---|---|
+| `List` (`ArrayList`) | `Factura.detalles` | Las líneas se muestran en el orden en que se agregan y se quitan por posición (`eliminarDetalle(indice)`) |
+| `List` (`ArrayList`) | `Categoria.productos`, `Inventario.categorias` y los resultados de `listarProductos()`, `productosBajoMinimo()` y `facturasPorFecha()` | Se recorren y se muestran en orden, y se ordenan con `Collections.sort` usando `Comparable` (por nombre) o `Comparator` (por existencias) |
+| `Set` (`HashSet`) | `ArticuloHogar.advertencias` | Una advertencia no debe salir dos veces en el producto; el `Set` no acepta elementos repetidos |
+| `Map` (`HashMap`) | `RegistroUsuarios.usuarios`, `RegistroClientes.clientes` | El CRUD es por id: `get(id)`, `put(id, …)` y `remove(id)` llegan directo al registro sin recorrer la colección, y no puede haber dos con el mismo id (igual que la llave primaria en la base de datos) |
+| `TreeMap` | `RegistroFacturas.facturas` | Se busca la factura por su número y, además, el `TreeMap` las mantiene ordenadas por número: el historial sale en orden y `firstKey()`/`lastKey()` dan la primera y la última |
+| `CopyOnWriteArrayList` | `ServidorFacturacion.clientesConectados` | Varios hilos agregan y quitan clientes conectados mientras la ventana del servidor recorre la lista; esta lista es segura para hilos |
+
+En el servidor, cuando varios hilos `ManejadorCliente` usen los mismos registros a la vez, los `HashMap` se crean como `ConcurrentHashMap` o se protegen con métodos `synchronized`, como ya se hace en `agregarFactura` y `anularFactura`.
+
 ## 4.3 Diagrama de clases cliente-servidor
 
 Este diagrama es la **arquitectura prevista** para los siguientes avances, cuando el curso cubra hilos, sockets, pantallas JFrame y bases de datos. Muestra las clases que harán funcionar la aplicación en red y de forma concurrente sobre el modelo de la sección 4.1: las ventanas del cliente y del servidor, la conexión por sockets, el servidor con sus hilos, los servicios y el acceso a datos. La enumeración `TipoOperacion` incluye las cuatro operaciones del CRUD de cada entidad.
@@ -329,7 +345,7 @@ Este diagrama es la **arquitectura prevista** para los siguientes avances, cuand
 | Clase | Responsabilidad | Métodos principales | Relaciones |
 |---|---|---|---|
 | **VentanaServidor** (`JFrame`) | Pantalla del servidor: puerto, botones Iniciar y Detener, tabla de clientes conectados y bitácora de operaciones | `agregarCliente()`, `quitarCliente()`, `agregarBitacora()` | Inicia y detiene `ServidorFacturacion` |
-| **ServidorFacturacion** | Abre un `ServerSocket` en el puerto 5000 y acepta conexiones; cada conexión se entrega a un pool de hilos (`ExecutorService`). Lleva la lista de clientes conectados y avisa a la ventana de cada operación | `iniciar()`, `detener()`, `aceptarConexiones()`, `registrarOperacion()`, `main()` | Crea muchos `ManejadorCliente` (1 a \*) |
+| **ServidorFacturacion** | Abre un `ServerSocket` en el puerto 5000 y acepta conexiones; cada conexión se entrega a un pool de hilos (`ExecutorService`). Lleva los clientes conectados en una `CopyOnWriteArrayList` (segura para hilos) y avisa a la ventana de cada operación | `iniciar()`, `detener()`, `aceptarConexiones()`, `registrarOperacion()`, `main()` | Crea muchos `ManejadorCliente` (1 a \*) |
 | **ManejadorCliente** (implementa `Runnable`) | Atiende a un cliente conectado en su propio hilo: lee `Solicitud`, llama al servicio correspondiente y responde con `Respuesta`. Guarda el usuario de la sesión para validar permisos | `run()`, `procesar(Solicitud)`, `cerrarConexion()` | Usa los cuatro servicios |
 | **Solicitud** / **Respuesta** | Objetos serializables que viajan por el socket. La solicitud indica la operación (`TipoOperacion`) y los datos; la respuesta indica éxito, mensaje y datos | `getOperacion()`, `ok()`, `error()` | `Solicitud` usa `TipoOperacion` |
 | **ServicioAutenticacion** | Valida credenciales, bloquea usuarios inactivos y registra usuarios nuevos | `iniciarSesion()`, `registrarUsuario()`, `actualizarUsuario()`, `eliminarUsuario()`, `cifrarContrasena()` | Usa `UsuarioDAO` |

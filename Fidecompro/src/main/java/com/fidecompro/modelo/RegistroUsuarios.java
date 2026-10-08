@@ -2,35 +2,38 @@ package com.fidecompro.modelo;
 
 import com.fidecompro.excepciones.CredencialesInvalidasException;
 import com.fidecompro.excepciones.RegistroNoEncontradoException;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Administra los usuarios del sistema y el inicio de sesión.
  */
 public class RegistroUsuarios {
 
-    private ArrayList<Usuario> usuarios;
+    // Map: cada usuario se guarda con su id como clave, sin ids repetidos.
+    private Map<Integer, Usuario> usuarios;
 
     public RegistroUsuarios() {
-        this.usuarios = new ArrayList<>();
+        this.usuarios = new HashMap<>();
     }
 
     public void agregarUsuario(Usuario usuario) {
-        for (Usuario u : usuarios) {
+        for (Usuario u : usuarios.values()) {
             if (u.getNombreUsuario().equalsIgnoreCase(usuario.getNombreUsuario())) {
                 throw new IllegalArgumentException("Ya existe el usuario " + usuario.getNombreUsuario());
             }
         }
-        usuarios.add(usuario);
+        usuarios.put(usuario.getId(), usuario);
     }
 
     public void editarUsuario(int id, Usuario usuarioEditar) throws RegistroNoEncontradoException {
-        Usuario actual = buscarUsuario(id);
-        usuarios.set(usuarios.indexOf(actual), usuarioEditar);
+        buscarUsuario(id);
+        usuarios.put(id, usuarioEditar);
     }
 
     public void eliminarUsuario(int id) throws RegistroNoEncontradoException {
-        usuarios.remove(buscarUsuario(id));
+        buscarUsuario(id);
+        usuarios.remove(id);
     }
 
     public void desactivarUsuario(int id) throws RegistroNoEncontradoException {
@@ -38,16 +41,15 @@ public class RegistroUsuarios {
     }
 
     public Usuario buscarUsuario(int id) throws RegistroNoEncontradoException {
-        for (Usuario u : usuarios) {
-            if (u.getId() == id) {
-                return u;
-            }
+        Usuario usuario = usuarios.get(id);
+        if (usuario == null) {
+            throw new RegistroNoEncontradoException("No existe el usuario con id " + id);
         }
-        throw new RegistroNoEncontradoException("No existe el usuario con id " + id);
+        return usuario;
     }
 
     public Usuario iniciarSesion(String nombreUsuario, String contrasena) throws CredencialesInvalidasException {
-        for (Usuario u : usuarios) {
+        for (Usuario u : usuarios.values()) {
             if (u.validarCredenciales(nombreUsuario, contrasena)) {
                 return u;
             }
@@ -56,7 +58,7 @@ public class RegistroUsuarios {
         throw new CredencialesInvalidasException("Usuario o contrasena incorrectos");
     }
 
-    public ArrayList<Usuario> getUsuarios() {
+    public Map<Integer, Usuario> getUsuarios() {
         return usuarios;
     }
 }

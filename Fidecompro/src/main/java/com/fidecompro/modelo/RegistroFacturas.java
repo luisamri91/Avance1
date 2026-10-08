@@ -4,16 +4,20 @@ import com.fidecompro.excepciones.RegistroNoEncontradoException;
 import com.fidecompro.excepciones.StockInsuficienteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.TreeMap;
 
 /**
  * Guarda las facturas emitidas. Al emitir descuenta existencias y al anular las devuelve.
  */
 public class RegistroFacturas {
 
-    private ArrayList<Factura> facturas;
+    // TreeMap: la clave es el número de factura y las mantiene ordenadas por número,
+    // así el historial sale en orden y firstKey()/lastKey() dan la primera y la última.
+    private TreeMap<Integer, Factura> facturas;
 
     public RegistroFacturas() {
-        this.facturas = new ArrayList<>();
+        this.facturas = new TreeMap<>();
     }
 
     // synchronized: en el servidor varias cajas podrán emitir a la vez sobre el mismo inventario
@@ -32,16 +36,15 @@ public class RegistroFacturas {
             d.getProducto().descontarExistencias(d.getCantidad());
         }
         factura.asignarNumero();
-        facturas.add(factura);
+        facturas.put(factura.getNumero(), factura);
     }
 
     public Factura buscarFactura(int numero) throws RegistroNoEncontradoException {
-        for (Factura f : facturas) {
-            if (f.getNumero() == numero) {
-                return f;
-            }
+        Factura factura = facturas.get(numero);
+        if (factura == null) {
+            throw new RegistroNoEncontradoException("No existe la factura numero " + numero);
         }
-        throw new RegistroNoEncontradoException("No existe la factura numero " + numero);
+        return factura;
     }
 
     public synchronized void anularFactura(int numero) throws RegistroNoEncontradoException {
@@ -55,9 +58,9 @@ public class RegistroFacturas {
         }
     }
 
-    public ArrayList<Factura> facturasPorFecha(LocalDate desde, LocalDate hasta) {
-        ArrayList<Factura> resultado = new ArrayList<>();
-        for (Factura f : facturas) {
+    public List<Factura> facturasPorFecha(LocalDate desde, LocalDate hasta) {
+        List<Factura> resultado = new ArrayList<>();
+        for (Factura f : facturas.values()) {
             LocalDate dia = f.getFecha().toLocalDate();
             if (!dia.isBefore(desde) && !dia.isAfter(hasta)) {
                 resultado.add(f);
@@ -78,7 +81,7 @@ public class RegistroFacturas {
 
     // Se consultan antes de eliminar: un cliente o usuario con facturas solo se desactiva.
     public boolean tieneFacturasCliente(int idCliente) {
-        for (Factura f : facturas) {
+        for (Factura f : facturas.values()) {
             if (f.getCliente().getId() == idCliente) {
                 return true;
             }
@@ -87,7 +90,7 @@ public class RegistroFacturas {
     }
 
     public boolean tieneFacturasUsuario(int idUsuario) {
-        for (Factura f : facturas) {
+        for (Factura f : facturas.values()) {
             if (f.getVendedor().getId() == idUsuario) {
                 return true;
             }
@@ -95,7 +98,7 @@ public class RegistroFacturas {
         return false;
     }
 
-    public ArrayList<Factura> getFacturas() {
+    public TreeMap<Integer, Factura> getFacturas() {
         return facturas;
     }
 }

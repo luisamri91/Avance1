@@ -1,6 +1,7 @@
 package com.fidecompro.modelo;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Productos de limpieza e higiene.
@@ -9,7 +10,8 @@ public class ArticuloHogar extends Producto {
 
     private String marca;
     private String presentacion;
-    private ArrayList<String> advertencias;
+    // Set: una advertencia no se repite aunque se agregue dos veces
+    private Set<String> advertencias;
 
     public ArticuloHogar(String codigo, String nombre, String descripcion,
             double valorCompra, double valorVenta, int existencias, int stockMinimo,
@@ -17,7 +19,7 @@ public class ArticuloHogar extends Producto {
         super(codigo, nombre, descripcion, valorCompra, valorVenta, existencias, stockMinimo);
         this.marca = marca;
         this.presentacion = presentacion;
-        this.advertencias = new ArrayList<>();
+        this.advertencias = new HashSet<>();
     }
 
     public void agregarAdvertencia(String texto) {
@@ -58,7 +60,7 @@ public class ArticuloHogar extends Producto {
         this.presentacion = presentacion;
     }
 
-    public ArrayList<String> getAdvertencias() {
+    public Set<String> getAdvertencias() {
         return advertencias;
     }
 }

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Documento de venta emitido a un cliente.
@@ -19,7 +20,8 @@ public class Factura implements Mostrable {
     private LocalDateTime fecha;
     private Cliente cliente;
     private Usuario vendedor;
-    private ArrayList<DetalleFactura> detalles;
+    // List: las líneas van en el orden en que se agregan y se pueden quitar por posición
+    private List<DetalleFactura> detalles;
     private double porcentajeDescuento;
     private MetodoPago metodoPago;
     private EstadoFactura estado;
@@ -193,7 +195,7 @@ public class Factura implements Mostrable {
         return vendedor;
     }
 
-    public ArrayList<DetalleFactura> getDetalles() {
+    public List<DetalleFactura> getDetalles() {
         return detalles;
     }
 

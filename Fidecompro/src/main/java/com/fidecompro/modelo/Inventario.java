@@ -2,6 +2,7 @@ package com.fidecompro.modelo;
 
 import com.fidecompro.excepciones.RegistroNoEncontradoException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Collections;
 
 /**
@@ -11,7 +12,7 @@ public class Inventario {
 
     private String nombre;
     private String sede;
-    private ArrayList<Categoria> categorias;
+    private List<Categoria> categorias;
 
     public Inventario(String nombre, String sede) {
         this.nombre = nombre;
@@ -75,8 +76,8 @@ public class Inventario {
     }
 
     // Todo el catálogo en su orden natural (Comparable: por nombre)
-    public ArrayList<Producto> listarProductos() {
-        ArrayList<Producto> todos = new ArrayList<>();
+    public List<Producto> listarProductos() {
+        List<Producto> todos = new ArrayList<>();
         for (Categoria c : categorias) {
             todos.addAll(c.getProductos());
         }
@@ -85,8 +86,8 @@ public class Inventario {
     }
 
     // Productos por reabastecer, con orden alterno (Comparator: por existencias)
-    public ArrayList<Producto> productosBajoMinimo() {
-        ArrayList<Producto> resultado = new ArrayList<>();
+    public List<Producto> productosBajoMinimo() {
+        List<Producto> resultado = new ArrayList<>();
         for (Producto p : listarProductos()) {
             if (p.necesitaReabastecer()) {
                 resultado.add(p);
@@ -104,7 +105,7 @@ public class Inventario {
         return sede;
     }
 
-    public ArrayList<Categoria> getCategorias() {
+    public List<Categoria> getCategorias() {
         return categorias;
     }
 }

@@ -92,7 +92,7 @@ def formatear_miembro(miembro):
     if ")*" in miembro:
         estilo |= 2
         miembro = miembro.replace(")*", ")")
-    miembro = re.sub(r"~(\w+(?:\[\])?)~", r"<\1>", miembro)
+    miembro = re.sub(r"~([^~]+)~", r"<\1>", miembro)
     visibilidad = miembro[0] if miembro[0] in "+-#~" else ""
     cuerpo = miembro[len(visibilidad):]
     if es_metodo(cuerpo):
@@ -189,6 +189,10 @@ SIMBOLOGIA = [
     ("flecha:startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;", "Composición: el todo contiene sus partes y estas no existen sin él (Factura y sus detalles)."),
     ("flecha:startArrow=diamondThin;startFill=0;startSize=14;endArrow=none;", "Agregación: el todo agrupa partes que pueden existir por separado (Categoría y sus productos)."),
     ("flecha:endArrow=open;endFill=0;endSize=10;", "Asociación: una clase conoce y usa a otra (la Factura conoce a su Cliente)."),
+    ("titulo", "Colecciones"),
+    ("List&lt;Tipo&gt;", "Lista: guarda los objetos en orden (las líneas de una factura, los productos de una categoría)."),
+    ("ejemplo", "En el diagrama completo también hay <b>Set</b> (no acepta repetidos) y <b>Map</b> / <b>TreeMap</b> "
+                "(guarda cada objeto con una clave, como el id del cliente o el número de factura)."),
 ]
 ANCHO_MUESTRA = 100
 

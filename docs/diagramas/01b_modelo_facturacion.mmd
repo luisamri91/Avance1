@@ -42,7 +42,7 @@ classDiagram
         -LocalDateTime fecha
         -Cliente cliente
         -Usuario vendedor
-        -ArrayList~DetalleFactura~ detalles
+        -List~DetalleFactura~ detalles
         -double porcentajeDescuento
         -MetodoPago metodoPago
         -EstadoFactura estado
@@ -68,14 +68,14 @@ classDiagram
         +mostrarInformacion() String
     }
     class RegistroUsuarios {
-        -ArrayList~Usuario~ usuarios
+        -Map~Integer, Usuario~ usuarios
         +agregarUsuario(Usuario u) void
         +editarUsuario(int id, Usuario usuarioEditar) void
         +desactivarUsuario(int id) void
         +iniciarSesion(String nombreUsuario, String contrasena) Usuario
     }
     class RegistroClientes {
-        -ArrayList~Cliente~ clientes
+        -Map~Integer, Cliente~ clientes
         +agregarCliente(Cliente c) void
         +editarCliente(int id, Cliente clienteEditar) void
         +desactivarCliente(int id) void
@@ -83,11 +83,11 @@ classDiagram
         +mostrarClientes() String
     }
     class RegistroFacturas {
-        -ArrayList~Factura~ facturas
+        -TreeMap~Integer, Factura~ facturas
         +agregarFactura(Factura f) void
         +buscarFactura(int numero) Factura
         +anularFactura(int numero) void
-        +facturasPorFecha(LocalDate desde, LocalDate hasta) ArrayList~Factura~
+        +facturasPorFecha(LocalDate desde, LocalDate hasta) List~Factura~
     }
     class Rol {
         <<enumeration>>

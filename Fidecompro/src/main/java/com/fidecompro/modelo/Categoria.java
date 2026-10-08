@@ -2,6 +2,7 @@ package com.fidecompro.modelo;
 
 import com.fidecompro.excepciones.RegistroNoEncontradoException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Agrupa productos para ordenar el catálogo (Abarrotes, Bebidas, Limpieza...).
@@ -12,7 +13,8 @@ public class Categoria {
     private int id;
     private String nombre;
     private String descripcion;
-    private ArrayList<Producto> productos;
+    // List: los productos se muestran en orden y se ordenan con Comparable/Comparator
+    private List<Producto> productos;
 
     public Categoria(String nombre, String descripcion) {
         this.id = idAutoIncremental++;
@@ -74,7 +76,7 @@ public class Categoria {
         this.descripcion = descripcion;
     }
 
-    public ArrayList<Producto> getProductos() {
+    public List<Producto> getProductos() {
         return productos;
     }
 }

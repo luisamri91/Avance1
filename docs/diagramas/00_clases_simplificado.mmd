@@ -54,20 +54,21 @@ classDiagram
     }
     class Categoria {
         -String nombre
-        -ArrayList~Producto~ productos
+        -List~Producto~ productos
         +agregarProducto(Producto) void
         +eliminarProducto(int) void
     }
     class Inventario {
-        -ArrayList~Categoria~ categorias
+        -List~Categoria~ categorias
         +buscarProducto(String) Producto
-        +productosBajoMinimo() ArrayList~Producto~
+        +productosBajoMinimo() List~Producto~
     }
     class Factura {
         -int numero
         -LocalDateTime fecha
         -MetodoPago metodoPago
         -EstadoFactura estado
+        -List~DetalleFactura~ detalles
         +agregarDetalle(Producto, int) void
         +calcularTotal() double
         +anular() void

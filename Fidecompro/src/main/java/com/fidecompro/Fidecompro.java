@@ -89,6 +89,7 @@ public class Fidecompro {
         ArticuloHogar detergente = new ArticuloHogar("LIM-0230", "Detergente en polvo 3 kg", "Ropa",
                 4100, 5400, 9, 12, "Limpiex", "Bolsa 3 kg");
         detergente.agregarAdvertencia("Mantener fuera del alcance de los ninos");
+        detergente.agregarAdvertencia("Mantener fuera del alcance de los ninos"); // el Set no la repite
 
         try {
             inventario.agregarProductoCategoria(abarrotes.getId(), arroz);
@@ -148,6 +149,9 @@ public class Fidecompro {
         LocalDate hoy = LocalDate.now();
         System.out.println("Facturas de hoy: " + facturas.facturasPorFecha(hoy, hoy).size()
                 + " | Total vendido: " + Factura.formatearMonto(facturas.totalVendido(hoy, hoy)));
+        // TreeMap: las facturas quedan ordenadas por número
+        System.out.println("Primera factura: " + facturas.getFacturas().firstKey()
+                + " | Ultima factura: " + facturas.getFacturas().lastKey());
         if (factura != null) {
             try {
                 facturas.anularFactura(factura.getNumero());
@@ -165,7 +169,7 @@ public class Fidecompro {
         titulo("HU-06 Eliminar clientes");
         clientes.agregarCliente(new Cliente("Minisuper El Ahorro Ltda.", "2560-7788", "admin@elahorro.cr",
                 TipoIdentificacion.JURIDICA, "3-102-778899", "Cartago centro"));
-        for (Cliente c : new ArrayList<>(clientes.getClientes())) {
+        for (Cliente c : new ArrayList<>(clientes.getClientes().values())) {
             try {
                 if (facturas.tieneFacturasCliente(c.getId())) {
                     clientes.desactivarCliente(c.getId());
