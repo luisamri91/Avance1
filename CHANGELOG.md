@@ -8,6 +8,9 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 
 ## Documento de diseño
 
+### Documento v15 · 2026-10-09 · commit `f16f28f`
+* La identificación (tipo y número de cédula) pasa de `Cliente` a `Persona`, porque también los usuarios (vendedores y administradores) tienen cédula. Cambian las tablas de atributos de Persona y Cliente, los diagramas de clases, el modelo de base de datos (la tabla USUARIOS agrega `tipo_identificacion` e `identificacion` única), la HU 2 (crear usuario pide la cédula y rechaza una repetida) y el boceto P8 de usuarios.
+
 ### Documento v14 · 2026-10-09 · commit `360c024`
 * La vista general del diagrama de clases (sección 4.1) usa el diagrama simplificado v5, más fácil de leer, y el texto explica cómo leerlo.
 
@@ -90,6 +93,9 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 
 ## Diagrama de clases (Word aparte)
 
+### Diagrama de clases v8 · 2026-10-09 · commit `f16f28f`
+* `Persona` tiene `tipoIdentificacion` e `identificacion`; `Cliente` ya no los repite y `Usuario` los recibe en su constructor. El `.drawio` completo pasa a v5 (`Avance1_Diagrama_de_Clases_v5.drawio`).
+
 ### Diagrama de clases v7 · 2026-10-09 · commit `360c024`
 * Misma vista general nueva del documento v14 (diagrama simplificado v5). El `.drawio` completo sigue en v4.
 
@@ -115,6 +121,9 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 * Se genera con `docs/construir_diagrama_clases.py` a partir de la sección "Entidades y clases" del documento de diseño v7, así que siempre coincide con él.
 * Versión editable en draw.io (`Avance1_Diagrama_de_Clases_v1.drawio`, commit `e137e8c`) con tres páginas: inventario y excepciones, personas y facturación, y cliente-servidor. Se genera con `docs/exportar_drawio.py` desde los diagramas de Mermaid.
 
+### Diagrama de clases simplificado v6 · 2026-10-09 · commit `f16f28f`
+* `Persona` muestra `tipoIdentificacion` e `identificacion`; `Cliente` queda solo con `direccion` y `activo`.
+
 ### Diagrama de clases simplificado v5 · 2026-10-09 · commit `360c024`
 * Cada tipo de relación tiene su color y una palabra sobre la línea que dice cómo se lee: **es un** (herencia, azul), **implementa** (morado, punteada), **contiene** (composición, rojo), **agrupa** (agregación, verde) y **usa** (asociación, naranja; en la factura dice *tiene cliente*, *tiene vendedor* y *producto vendido*).
 * La multiplicidad se escribe también en palabras: `* (muchos)`, `1..* (uno o más)`.
@@ -137,6 +146,9 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 
 ## Historias de usuario (Word aparte)
 
+### Historias de usuario v3 · 2026-10-09 · commit `f16f28f`
+* HU 2: al crear un usuario se pide el tipo y número de cédula, y se rechaza una cédula que ya tenga otro usuario.
+
 ### Historias de usuario v2 · 2026-10-08 · commit `bce4e1c`
 * Mismas 12 historias con los 40 escenarios consolidados del documento v13 (máximo 4 por historia).
 
@@ -144,6 +156,11 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 * `Avance1_Historias_de_Usuario_v1.docx`: solo la tabla de las 12 historias del documento v12 con sus 65 escenarios, en página horizontal con márgenes de 2,54 cm y Times New Roman, para copiarla a otro documento. Se genera con `docs/construir_historias.py`.
 
 ## Código
+
+### Código v5 · 2026-10-09 · commit `f16f28f`
+* `Persona` tiene `tipoIdentificacion` e `identificacion` (con sus get y set); `Cliente` los pasa a `super(...)` y `Usuario` los recibe en su constructor.
+* `RegistroUsuarios.agregarUsuario` rechaza una identificación repetida, igual que `RegistroClientes`.
+* `Fidecompro-codigo_v5.zip`.
 
 ### Código v4 · 2026-10-08 · commit `34bfcec`
 * Solo cambian los títulos y comentarios del `main` a la nueva numeración de historias (documento v12).
