@@ -46,6 +46,13 @@ FLECHAS = {
     "..>": ("endArrow=open;endFill=0;endSize=10;dashed=1;", False),
     "--": ("endArrow=none;", False),
 }
+# Con --simbologia cada tipo de relación lleva su color y una palabra sobre la línea que dice cómo se lee.
+COLORES = {"<|--": "#1F5FA8", "<|..": "#7B3FA0", "*--": "#C0392B", "o--": "#2E8B57", "-->": "#D35400",
+           "..>": "#D35400", "--": "#000000"}
+LECTURA = {"<|--": "es un", "<|..": "implementa", "*--": "contiene", "o--": "agrupa", "-->": "usa", "..>": "usa",
+           "--": ""}
+# La multiplicidad se escribe también en palabras para que no haya que recordar los símbolos.
+MULTIPLICIDAD = {"*": "* (muchos)", "1..*": "1..* (uno o más)", "0..1": "0..1 (cero o uno)"}
 RELACION = re.compile(
     r'^\s*(\w+)(?:\s+"([^"]*)")?\s+(<\|--|<\|\.\.|\*--|o--|-->|\.\.>|--)\s+(?:"([^"]*)"\s+)?(\w+)(?:\s*:\s*(.+))?\s*$'
 )
@@ -163,36 +170,40 @@ def anclaje(punto, nodo, prefijo):
     return f"{prefijo}X={x:.3f};{prefijo}Y={y:.3f};{prefijo}Dx=0;{prefijo}Dy=0;"
 
 
-# Filas de la simbología: (muestra, explicación). La muestra es texto HTML o el estilo de una flecha.
+# Filas de la simbología: (muestra, explicación). La muestra es texto HTML o "flecha:<tipo de Mermaid>".
 SIMBOLOGIA = [
+    ("titulo", "Cómo leer las líneas (cada tipo tiene su color)"),
+    ("flecha:<|--", "<b>es un</b> (herencia): el triángulo señala a la clase padre. <i>Usuario es una Persona; "
+                    "Bebida es un Producto.</i>"),
+    ("flecha:<|..", "<b>implementa</b> (línea punteada): la clase cumple lo que pide la interface. <i>Factura "
+                    "implementa Mostrable, así que tiene mostrarInformacion().</i>"),
+    ("flecha:*--", "<b>contiene</b> (rombo relleno, del lado del todo): las partes no existen sin el todo. "
+                   "<i>Si se borra la Factura, se borran sus detalles.</i>"),
+    ("flecha:o--", "<b>agrupa</b> (rombo vacío, del lado del grupo): las partes existen por separado. "
+                   "<i>Si se borra una Categoría, sus productos pueden seguir existiendo.</i>"),
+    ("flecha:-->", "<b>usa</b> (flecha abierta): la clase guarda una referencia a la otra. "
+                   "<i>La Factura sabe quién es su cliente y su vendedor.</i>"),
+    ("titulo", "Números en los extremos de las líneas"),
+    ("1", "Uno."),
+    ("* (muchos)", "Cero o muchos."),
+    ("1..* (uno o más)", "Al menos uno."),
+    ("ejemplo", "Se lee de una clase a la otra: Factura <b>* (muchos)</b> — <b>1</b> Cliente = \"cada factura es "
+                "de <b>un</b> cliente y un cliente tiene <b>muchas</b> facturas\"."),
     ("titulo", "Partes de cada clase"),
-    ("<b>Nombre</b>", "Arriba va el nombre de la clase; en el medio, sus atributos; abajo, sus métodos."),
+    ("<b>Nombre</b>", "Arriba el nombre; en el medio los atributos (datos); abajo los métodos (acciones)."),
     ("nombre : Tipo", "Atributo y su tipo de dato. Ejemplo: <i>existencias : int</i>."),
-    ("metodo(…) : Tipo", "Método, los datos que recibe y el tipo de dato que devuelve (<i>void</i> = no devuelve nada)."),
-    ("titulo", "Visibilidad"),
-    ("+", "Público: cualquier clase lo puede usar."),
+    ("metodo(…) : Tipo", "Método, lo que recibe y lo que devuelve (<i>void</i> = no devuelve nada)."),
+    ("titulo", "Símbolo antes de cada atributo o método"),
+    ("+", "Público: lo usa cualquier clase."),
     ("-", "Privado: solo lo usa la misma clase."),
-    ("#", "Protegido: lo usan la clase y sus subclases."),
-    ("titulo", "Otros símbolos"),
-    ("<u>subrayado</u>", "Static: pertenece a la clase y no a cada objeto (por ejemplo, el contador de ids)."),
-    ("<i>cursiva</i>", "Abstracto: la clase no se puede instanciar o el método no tiene código y lo escribe cada subclase."),
-    ("«abstract»", "Clase abstracta: sirve de base para otras clases (Persona, Producto)."),
-    ("«interface»", "Interface: lista de métodos que las clases que la implementan están obligadas a tener."),
-    ("titulo", "Multiplicidad (cuántos objetos se relacionan)"),
-    ("1", "Exactamente uno."),
-    ("*", "Cero o muchos."),
-    ("1..*", "Uno o muchos (al menos uno)."),
-    ("ejemplo", "Ejemplo: Factura <b>*</b> → <b>1</b> Cliente se lee \"cada factura es de un cliente y un cliente puede tener muchas facturas\"."),
-    ("titulo", "Relaciones"),
-    ("flecha:endArrow=block;endFill=0;endSize=12;", "Herencia: la subclase <i>es un</i> tipo de la superclase (Usuario es una Persona)."),
-    ("flecha:endArrow=block;endFill=0;endSize=12;dashed=1;", "Implementación: la clase cumple una interface (Producto implementa Mostrable)."),
-    ("flecha:startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;", "Composición: el todo contiene sus partes y estas no existen sin él (Factura y sus detalles)."),
-    ("flecha:startArrow=diamondThin;startFill=0;startSize=14;endArrow=none;", "Agregación: el todo agrupa partes que pueden existir por separado (Categoría y sus productos)."),
-    ("flecha:endArrow=open;endFill=0;endSize=10;", "Asociación: una clase conoce y usa a otra (la Factura conoce a su Cliente)."),
+    ("#", "Protegido: lo usan la clase y sus clases hijas."),
+    ("titulo", "Clases especiales"),
+    ("«abstract»", "Clase abstracta (nombre en cursiva): no se crean objetos de ella, solo de sus hijas "
+                   "(Persona, Producto)."),
+    ("«interface»", "Interface: lista de métodos que deben tener las clases que la implementan (Mostrable)."),
+    ("<i>cursiva</i>", "Método abstracto: cada clase hija escribe su propio código."),
     ("titulo", "Colecciones"),
-    ("List&lt;Tipo&gt;", "Lista: guarda los objetos en orden (las líneas de una factura, los productos de una categoría)."),
-    ("ejemplo", "En el diagrama completo también hay <b>Set</b> (no acepta repetidos) y <b>Map</b> / <b>TreeMap</b> "
-                "(guarda cada objeto con una clave, como el id del cliente o el número de factura)."),
+    ("List&lt;Tipo&gt;", "Lista de objetos en orden (los detalles de una factura, los productos de una categoría)."),
 ]
 ANCHO_MUESTRA = 100
 
@@ -218,7 +229,8 @@ def columna_leyenda(filas, x0, y, ancho, prefijo):
                                 x0, y, ancho, alto))
         else:
             if muestra.startswith("flecha:"):
-                estilo = "html=1;strokeColor=#000000;" + muestra[len("flecha:"):]
+                tipo = muestra[len("flecha:"):]
+                estilo = f"html=1;strokeWidth=2;strokeColor={COLORES[tipo]};" + FLECHAS[tipo][0]
                 celdas.append(f'<mxCell id="{id_}f" style="{estilo}" edge="1" parent="1">'
                               '<mxGeometry relative="1" as="geometry">'
                               f'<mxPoint x="{x0 + 4}" y="{y + alto / 2:.0f}" as="sourcePoint"/>'
@@ -237,7 +249,7 @@ def columna_leyenda(filas, x0, y, ancho, prefijo):
 
 def leyenda(x0, y0, numero, ancho):
     """Cuadro con la explicación de cada símbolo del diagrama, en dos columnas debajo del diagrama."""
-    corte = next(i for i, (m, t) in enumerate(SIMBOLOGIA) if m == "titulo" and t.startswith("Multiplicidad"))
+    corte = next(i for i, (m, t) in enumerate(SIMBOLOGIA) if m == "titulo" and t.startswith("Partes de cada clase"))
     ancho_columna = (ancho - 24 - 30) / 2
     izquierda, fin_izquierda = columna_leyenda(SIMBOLOGIA[:corte], x0 + 12, y0 + 34, ancho_columna, f"p{numero}la")
     derecha, fin_derecha = columna_leyenda(SIMBOLOGIA[corte:], x0 + 12 + ancho_columna + 30, y0 + 34,
@@ -296,8 +308,14 @@ def pagina(ruta_mmd, numero, con_leyenda=False):
         if invertir:
             ruta = ruta[::-1]
             origen, destino, mult_origen, mult_destino = b, a, mult_b, mult_a
-        estilo = ("edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;fontColor=#000000;"
-                  "strokeColor=#000000;" + anclaje(ruta[0], nodos[origen], "exit")
+        color = COLORES[flecha] if con_leyenda else "#000000"
+        if con_leyenda:
+            etiqueta = etiqueta or LECTURA[flecha]
+            mult_origen = MULTIPLICIDAD.get(mult_origen, mult_origen)
+            mult_destino = MULTIPLICIDAD.get(mult_destino, mult_destino)
+        grosor = "strokeWidth=2;fontStyle=1;labelBackgroundColor=#FFFFFF;" if con_leyenda else ""
+        estilo = ("edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;"
+                  f"fontColor={color};strokeColor={color};{grosor}" + anclaje(ruta[0], nodos[origen], "exit")
                   + anclaje(ruta[-1], nodos[destino], "entry") + estilo)
         puntos = "".join(f'<mxPoint x="{p["x"] + 20:.0f}" y="{p["y"] + 20:.0f}"/>' for p in ruta[1:-1])
         id_flecha = f"p{numero}r{indice}"
@@ -309,7 +327,7 @@ def pagina(ruta_mmd, numero, con_leyenda=False):
             if texto:
                 celdas.append(f'<mxCell id="{id_flecha}t{sub}" value="{escape(texto)}" '
                               'style="edgeLabel;html=1;align=left;verticalAlign=bottom;fontSize=11;'
-                              f'fontColor=#000000;" vertex="1" connectable="0" parent="{id_flecha}">'
+                              f'fontColor={color};labelBackgroundColor=#FFFFFF;" vertex="1" connectable="0" parent="{id_flecha}">'
                               f'<mxGeometry x="{posicion * 0.85}" relative="1" as="geometry">'
                               '<mxPoint x="6" as="offset"/></mxGeometry></mxCell>')
     if con_leyenda:

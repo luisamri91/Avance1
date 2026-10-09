@@ -16,7 +16,7 @@ from docx import Document
 from construir_documento import FUENTE, dar_formato_general
 from formato_apa import aplicar_apa
 
-VERSION = 6
+VERSION = 7
 SALIDA = Path(f"Avance1_Diagrama_de_Clases_v{VERSION}.docx")
 TEMPORAL = Path("_diagrama_clases.md")
 

@@ -1,6 +1,6 @@
 ---
 title: "Proyecto Final – Avance 1: Documento de Diseño"
-subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 13"
+subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 14"
 author:
   - "[Nombre completo] · Carné: [número]"
   - "Universidad Fidélitas"
@@ -26,6 +26,7 @@ lang: es
 | v11 | 08/10/2026 | Formato APA 7: márgenes de 2,54 cm (también en las páginas horizontales de las historias), Times New Roman 12, interlineado doble con sangría en el texto, número de página arriba a la derecha, portada de estudiante, títulos de nivel 1 a 3 al estilo APA y tablas y figuras numeradas con su título en cursiva arriba |
 | v12 | 08/10/2026 | Historias de usuario de 16 a 12, una por cada pantalla CRUD: se unen iniciar y cerrar sesión (HU 1), registrar, editar y eliminar clientes (HU 3) y consultar y anular facturas (HU 11), conservando todos los escenarios; se renumeran las referencias en requerimientos, bocetos, trazabilidad y plan de demostración |
 | v13 | 08/10/2026 | Escenarios de aceptación consolidados: como máximo 4 por historia (de 65 a 40), uniendo los casos parecidos (por ejemplo, todos los datos inválidos de un formulario en un solo escenario) sin perder ninguna regla |
+| v14 | 09/10/2026 | Vista general del diagrama de clases más fácil de leer: cada tipo de relación con su color y una palabra sobre la línea (es un, implementa, contiene, agrupa, usa), multiplicidad también en palabras y simbología reordenada empezando por cómo leer las líneas (diagrama simplificado v5) |
 
 : Control de versiones del documento
 
@@ -130,7 +131,7 @@ Las clases se organizan en paquetes de un proyecto Maven de NetBeans:
 
 ## 4.1 Diagramas de clases del modelo de dominio
 
-Primero se muestra una vista general en una sola página con las 12 clases principales, sus atributos y métodos más importantes, sus relaciones y una simbología que explica cada símbolo del diagrama (visibilidad, static, abstracto, multiplicidad, tipos de flecha y colecciones). Después, el detalle completo en dos diagramas para que se lea con claridad. Todos los diagramas de clases se entregan también en draw.io para editarlos (`Avance1_Diagrama_de_Clases_Simplificado_v4.drawio` y `Avance1_Diagrama_de_Clases_v4.drawio`).
+Primero se muestra una vista general en una sola página con las 12 clases principales, sus atributos y métodos más importantes, sus relaciones y una simbología que explica cómo leerlo: cada tipo de relación tiene su color y una palabra sobre la línea (*es un*, *implementa*, *contiene*, *agrupa*, *usa*), y la multiplicidad se escribe también en palabras (*muchos*, *uno o más*). Después, el detalle completo en dos diagramas para que se lea con claridad. Todos los diagramas de clases se entregan también en draw.io para editarlos (`Avance1_Diagrama_de_Clases_Simplificado_v5.drawio` y `Avance1_Diagrama_de_Clases_v4.drawio`).
 
 ### Vista general del modelo de dominio
 

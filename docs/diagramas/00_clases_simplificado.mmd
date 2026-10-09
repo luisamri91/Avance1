@@ -92,6 +92,6 @@ classDiagram
     Inventario "1" o-- "*" Categoria
     Categoria "1" o-- "*" Producto
     Factura "1" *-- "1..*" DetalleFactura
-    DetalleFactura "*" --> "1" Producto
-    Factura "*" --> "1" Cliente : cliente
-    Factura "*" --> "1" Usuario : vendedor
+    DetalleFactura "*" --> "1" Producto : producto vendido
+    Factura "*" --> "1" Cliente : tiene cliente
+    Factura "*" --> "1" Usuario : tiene vendedor

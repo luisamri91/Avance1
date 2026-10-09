@@ -5,15 +5,15 @@ Aplicación de escritorio en Java Swing con arquitectura cliente-servidor por so
 
 ## Versiones
 
-Versión actual: **documento v13** y **código v4**. El detalle de cada cambio está en [`CHANGELOG.md`](CHANGELOG.md), con el commit de cada versión.
+Versión actual: **documento v14** y **código v4**. El detalle de cada cambio está en [`CHANGELOG.md`](CHANGELOG.md), con el commit de cada versión.
 
 ## Avance 1 – Documento de diseño
 
 | Entregable | Archivo |
 |---|---|
-| Documento de diseño (para entregar) | [`docs/Avance1_Documento_Diseno_v13.pdf`](docs/Avance1_Documento_Diseno_v13.pdf) · [`.docx`](docs/Avance1_Documento_Diseno_v13.docx) |
-| Diagrama de clases (solo las clases) | [`docs/Avance1_Diagrama_de_Clases_v6.docx`](docs/Avance1_Diagrama_de_Clases_v6.docx) · editable en draw.io: [`.drawio`](docs/Avance1_Diagrama_de_Clases_v4.drawio) |
-| Diagrama de clases simplificado (una página) | [`docs/Avance1_Diagrama_de_Clases_Simplificado_v4.drawio`](docs/Avance1_Diagrama_de_Clases_Simplificado_v4.drawio) · [`.png`](docs/Avance1_Diagrama_de_Clases_Simplificado_v4.png) |
+| Documento de diseño (para entregar) | [`docs/Avance1_Documento_Diseno_v14.pdf`](docs/Avance1_Documento_Diseno_v14.pdf) · [`.docx`](docs/Avance1_Documento_Diseno_v14.docx) |
+| Diagrama de clases (solo las clases) | [`docs/Avance1_Diagrama_de_Clases_v7.docx`](docs/Avance1_Diagrama_de_Clases_v7.docx) · editable en draw.io: [`.drawio`](docs/Avance1_Diagrama_de_Clases_v4.drawio) |
+| Diagrama de clases simplificado (una página) | [`docs/Avance1_Diagrama_de_Clases_Simplificado_v5.drawio`](docs/Avance1_Diagrama_de_Clases_Simplificado_v5.drawio) · [`.png`](docs/Avance1_Diagrama_de_Clases_Simplificado_v5.png) |
 | Fuente editable del documento | [`docs/Avance1_Documento_Diseno.md`](docs/Avance1_Documento_Diseno.md) |
 | Diagramas (clases, arquitectura, secuencia, navegación) | [`docs/diagramas/`](docs/diagramas) (Mermaid) → [`docs/img/`](docs/img) |
 | Prototipos de interfaz | [`docs/prototipos/html/`](docs/prototipos/html) → [`docs/img/P*.png`](docs/img) |
