@@ -8,6 +8,9 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 
 ## Documento de diseño
 
+### Documento v14 · 2026-10-09 · commit `360c024`
+* La vista general del diagrama de clases (sección 4.1) usa el diagrama simplificado v5, más fácil de leer, y el texto explica cómo leerlo.
+
 ### Documento v13 · 2026-10-08 · commit `bce4e1c`
 * Escenarios de aceptación consolidados: como máximo 4 por historia, de 65 a 40. Se unen los casos parecidos sin perder ninguna regla: todos los datos inválidos de un formulario en un escenario, eliminar con o sin facturas en otro, búsqueda y edición de clientes juntas, y anulación no permitida (ya anulada o vendedor).
 * Escenarios por historia: HU 1 a HU 3, 4 cada una; HU 4, 3; HU 5, 4; HU 6, 3; HU 7, 2; HU 8, 4; HU 9 y HU 10, 2 cada una; HU 11 y HU 12, 4 cada una.
@@ -87,6 +90,9 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 
 ## Diagrama de clases (Word aparte)
 
+### Diagrama de clases v7 · 2026-10-09 · commit `360c024`
+* Misma vista general nueva del documento v14 (diagrama simplificado v5). El `.drawio` completo sigue en v4.
+
 ### Diagrama de clases v6 · 2026-10-08 · commit `156cbdf`
 * Mismo formato APA 7 que el documento v11.
 
@@ -108,6 +114,11 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 * Word aparte con solo la parte de clases del Avance 1: entidades o clases identificadas, sus atributos, métodos y relaciones (diagramas y descripción de cada clase, del dominio y cliente-servidor).
 * Se genera con `docs/construir_diagrama_clases.py` a partir de la sección "Entidades y clases" del documento de diseño v7, así que siempre coincide con él.
 * Versión editable en draw.io (`Avance1_Diagrama_de_Clases_v1.drawio`, commit `e137e8c`) con tres páginas: inventario y excepciones, personas y facturación, y cliente-servidor. Se genera con `docs/exportar_drawio.py` desde los diagramas de Mermaid.
+
+### Diagrama de clases simplificado v5 · 2026-10-09 · commit `360c024`
+* Cada tipo de relación tiene su color y una palabra sobre la línea que dice cómo se lee: **es un** (herencia, azul), **implementa** (morado, punteada), **contiene** (composición, rojo), **agrupa** (agregación, verde) y **usa** (asociación, naranja; en la factura dice *tiene cliente*, *tiene vendedor* y *producto vendido*).
+* La multiplicidad se escribe también en palabras: `* (muchos)`, `1..* (uno o más)`.
+* Simbología reordenada: empieza por cómo leer las líneas, con un ejemplo de cada una, y luego los números, las partes de la clase, la visibilidad, las clases especiales y las colecciones. Se quitan los símbolos que este diagrama no usa (subrayado de static, Set y Map).
 
 ### Diagrama de clases simplificado v4 · 2026-10-08 · commit `626c373`
 * Colecciones declaradas por su interface: `List<Producto>`, `List<Categoria>` y el atributo `detalles: List<DetalleFactura>` en `Factura`.
