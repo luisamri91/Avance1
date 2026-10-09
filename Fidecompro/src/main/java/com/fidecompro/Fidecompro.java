@@ -35,9 +35,9 @@ public class Fidecompro {
 
         // ---------- HU-02: usuarios ----------
         usuarios.agregarUsuario(new Usuario("Maria Rodriguez", "8888-0001", "maria@fidecompro.cr",
-                "mrodriguez", "admin123", Rol.ADMINISTRADOR));
+                TipoIdentificacion.FISICA, "1-0987-0654", "mrodriguez", "admin123", Rol.ADMINISTRADOR));
         usuarios.agregarUsuario(new Usuario("Carlos Jimenez", "8888-0002", "carlos@fidecompro.cr",
-                "cjimenez", "venta123", Rol.VENDEDOR));
+                TipoIdentificacion.FISICA, "2-0456-0789", "cjimenez", "venta123", Rol.VENDEDOR));
 
         // ---------- HU-01: inicio de sesión ----------
         titulo("HU-01 Inicio de sesion");

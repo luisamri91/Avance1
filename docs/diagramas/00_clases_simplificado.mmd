@@ -10,6 +10,8 @@ classDiagram
         #String nombre
         #String telefono
         #String correo
+        #TipoIdentificacion tipoIdentificacion
+        #String identificacion
         +mostrarInformacion() String
     }
     class Usuario {
@@ -21,8 +23,6 @@ classDiagram
         +esAdministrador() boolean
     }
     class Cliente {
-        -TipoIdentificacion tipoIdentificacion
-        -String identificacion
         -String direccion
         -boolean activo
     }

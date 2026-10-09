@@ -13,8 +13,9 @@ public class Usuario extends Persona {
     private boolean activo;
 
     public Usuario(String nombre, String telefono, String correo,
+            TipoIdentificacion tipoIdentificacion, String identificacion,
             String nombreUsuario, String contrasena, Rol rol) {
-        super(nombre, telefono, correo);
+        super(nombre, telefono, correo, tipoIdentificacion, identificacion);
         this.id = idAutoIncremental++;
         this.nombreUsuario = nombreUsuario;
         this.contrasena = contrasena;

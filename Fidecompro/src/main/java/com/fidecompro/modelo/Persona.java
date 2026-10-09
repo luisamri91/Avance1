@@ -8,11 +8,16 @@ public abstract class Persona implements Mostrable {
     protected String nombre;
     protected String telefono;
     protected String correo;
+    protected TipoIdentificacion tipoIdentificacion;
+    protected String identificacion;
 
-    public Persona(String nombre, String telefono, String correo) {
+    public Persona(String nombre, String telefono, String correo,
+            TipoIdentificacion tipoIdentificacion, String identificacion) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.correo = correo;
+        this.tipoIdentificacion = tipoIdentificacion;
+        this.identificacion = identificacion;
     }
 
     public String getNombre() {
@@ -39,8 +44,24 @@ public abstract class Persona implements Mostrable {
         this.correo = correo;
     }
 
+    public TipoIdentificacion getTipoIdentificacion() {
+        return tipoIdentificacion;
+    }
+
+    public void setTipoIdentificacion(TipoIdentificacion tipoIdentificacion) {
+        this.tipoIdentificacion = tipoIdentificacion;
+    }
+
+    public String getIdentificacion() {
+        return identificacion;
+    }
+
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
+    }
+
     @Override
     public String mostrarInformacion() {
-        return nombre + " | Tel: " + telefono + " | " + correo;
+        return nombre + " | " + tipoIdentificacion + " " + identificacion + " | Tel: " + telefono + " | " + correo;
     }
 }

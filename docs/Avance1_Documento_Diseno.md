@@ -1,6 +1,6 @@
 ---
 title: "Proyecto Final – Avance 1: Documento de Diseño"
-subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 14"
+subtitle: "Sistema de Facturación e Inventario Fidecompro (Proyecto 1) · Versión 15"
 author:
   - "[Nombre completo] · Carné: [número]"
   - "Universidad Fidélitas"
@@ -27,6 +27,7 @@ lang: es
 | v12 | 08/10/2026 | Historias de usuario de 16 a 12, una por cada pantalla CRUD: se unen iniciar y cerrar sesión (HU 1), registrar, editar y eliminar clientes (HU 3) y consultar y anular facturas (HU 11), conservando todos los escenarios; se renumeran las referencias en requerimientos, bocetos, trazabilidad y plan de demostración |
 | v13 | 08/10/2026 | Escenarios de aceptación consolidados: como máximo 4 por historia (de 65 a 40), uniendo los casos parecidos (por ejemplo, todos los datos inválidos de un formulario en un solo escenario) sin perder ninguna regla |
 | v14 | 09/10/2026 | Vista general del diagrama de clases más fácil de leer: cada tipo de relación con su color y una palabra sobre la línea (es un, implementa, contiene, agrupa, usa), multiplicidad también en palabras y simbología reordenada empezando por cómo leer las líneas (diagrama simplificado v5) |
+| v15 | 09/10/2026 | La identificación (tipo y número de cédula) pasa de `Cliente` a `Persona`, así que también la tienen los usuarios: diagramas de clases, tablas de atributos, modelo de base de datos (tabla USUARIOS), historia HU 2 y boceto P8 de usuarios |
 
 : Control de versiones del documento
 
@@ -131,7 +132,7 @@ Las clases se organizan en paquetes de un proyecto Maven de NetBeans:
 
 ## 4.1 Diagramas de clases del modelo de dominio
 
-Primero se muestra una vista general en una sola página con las 12 clases principales, sus atributos y métodos más importantes, sus relaciones y una simbología que explica cómo leerlo: cada tipo de relación tiene su color y una palabra sobre la línea (*es un*, *implementa*, *contiene*, *agrupa*, *usa*), y la multiplicidad se escribe también en palabras (*muchos*, *uno o más*). Después, el detalle completo en dos diagramas para que se lea con claridad. Todos los diagramas de clases se entregan también en draw.io para editarlos (`Avance1_Diagrama_de_Clases_Simplificado_v5.drawio` y `Avance1_Diagrama_de_Clases_v4.drawio`).
+Primero se muestra una vista general en una sola página con las 12 clases principales, sus atributos y métodos más importantes, sus relaciones y una simbología que explica cómo leerlo: cada tipo de relación tiene su color y una palabra sobre la línea (*es un*, *implementa*, *contiene*, *agrupa*, *usa*), y la multiplicidad se escribe también en palabras (*muchos*, *uno o más*). Después, el detalle completo en dos diagramas para que se lea con claridad. Todos los diagramas de clases se entregan también en draw.io para editarlos (`Avance1_Diagrama_de_Clases_Simplificado_v6.drawio` y `Avance1_Diagrama_de_Clases_v5.drawio`).
 
 ### Vista general del modelo de dominio
 
@@ -166,6 +167,8 @@ Datos comunes de quien usa el sistema y de a quien se le vende. No se instancia 
 | nombre | String | Nombre completo o razón social |
 | telefono | String | Teléfono de contacto |
 | correo | String | Correo electrónico |
+| tipoIdentificacion | TipoIdentificacion | Física, jurídica, DIMEX o pasaporte |
+| identificacion | String | Número de cédula o documento (único entre los usuarios y entre los clientes) |
 
 : Atributos de la clase Persona
 
@@ -202,8 +205,6 @@ Comercio o persona a quien Fidecompro le vende.
 |---|---|---|
 | idAutoIncremental | static int | Contador de la clase |
 | id | int | Identificador |
-| tipoIdentificacion | TipoIdentificacion | Física, jurídica, DIMEX o pasaporte |
-| identificacion | String | Número de cédula o documento (único) |
 | direccion | String | Dirección de entrega |
 | fechaRegistro | LocalDate | Fecha en que se creó el registro |
 | activo | boolean | Los clientes inactivos no aparecen al facturar |
@@ -212,7 +213,7 @@ Comercio o persona a quien Fidecompro le vende.
 
 | Método | Descripción |
 |---|---|
-| mostrarInformacion(): String | Sobrescribe el de `Persona` agregando identificación y dirección |
+| mostrarInformacion(): String | Sobrescribe el de `Persona` agregando id y dirección |
 
 : Métodos de la clase Cliente
 

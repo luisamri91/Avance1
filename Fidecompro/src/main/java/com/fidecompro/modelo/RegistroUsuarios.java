@@ -22,6 +22,10 @@ public class RegistroUsuarios {
             if (u.getNombreUsuario().equalsIgnoreCase(usuario.getNombreUsuario())) {
                 throw new IllegalArgumentException("Ya existe el usuario " + usuario.getNombreUsuario());
             }
+            if (u.getIdentificacion().equals(usuario.getIdentificacion())) {
+                throw new IllegalArgumentException("Ya existe un usuario con la identificacion "
+                        + usuario.getIdentificacion());
+            }
         }
         usuarios.put(usuario.getId(), usuario);
     }

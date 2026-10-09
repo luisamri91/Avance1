@@ -10,7 +10,9 @@ classDiagram
         #String nombre
         #String telefono
         #String correo
-        +Persona(String nombre, String telefono, String correo)
+        #TipoIdentificacion tipoIdentificacion
+        #String identificacion
+        +Persona(String nombre, String telefono, String correo, TipoIdentificacion tipo, String identificacion)
         +mostrarInformacion() String
     }
     class Usuario {
@@ -20,7 +22,7 @@ classDiagram
         -String contrasena
         -Rol rol
         -boolean activo
-        +Usuario(String nombre, String telefono, String correo, String nombreUsuario, String contrasena, Rol rol)
+        +Usuario(String nombre, String telefono, String correo, TipoIdentificacion tipo, String identificacion, String nombreUsuario, String contrasena, Rol rol)
         +validarCredenciales(String nombreUsuario, String contrasena) boolean
         +esAdministrador() boolean
         +mostrarInformacion() String
@@ -28,8 +30,6 @@ classDiagram
     class Cliente {
         -int idAutoIncremental$
         -int id
-        -TipoIdentificacion tipoIdentificacion
-        -String identificacion
         -String direccion
         -LocalDate fechaRegistro
         -boolean activo
@@ -130,6 +130,6 @@ classDiagram
     RegistroClientes "1" o-- "*" Cliente
     RegistroFacturas "1" o-- "*" Factura
     Usuario --> Rol
-    Cliente --> TipoIdentificacion
+    Persona --> TipoIdentificacion
     Factura --> MetodoPago
     Factura --> EstadoFactura

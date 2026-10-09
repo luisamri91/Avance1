@@ -39,15 +39,15 @@
     "escenarios": [
       [
         "Creación exitosa de un usuario.",
-        "Dado que el administrador completa nombre completo, teléfono, correo, nombre de usuario, contraseña, confirmación de la contraseña y rol. La contraseña tiene al menos 8 caracteres.",
+        "Dado que el administrador completa nombre completo, tipo y número de identificación (cédula), teléfono, correo, nombre de usuario, contraseña, confirmación de la contraseña y rol. La contraseña tiene al menos 8 caracteres.",
         "Cuando presiona el botón \"Guardar\".",
         "El sistema crea el usuario con un ID automático y estado Activo, muestra el mensaje \"Usuario creado correctamente.\" y lo agrega a la tabla de usuarios."
       ],
       [
         "Datos inválidos.",
-        "Dado que el nombre de usuario ya pertenece a otra cuenta, o la contraseña tiene menos de 8 caracteres o no coincide con el campo \"Confirmar\".",
+        "Dado que el nombre de usuario o la cédula ya pertenecen a otra cuenta, o la contraseña tiene menos de 8 caracteres o no coincide con el campo \"Confirmar\".",
         "Cuando presiona el botón \"Guardar\".",
-        "El sistema no guarda el usuario, resalta el campo con error, conserva los demás datos y muestra el mensaje correspondiente: \"El nombre de usuario ya existe.\" o \"La contraseña debe tener al menos 8 caracteres y coincidir con la confirmación.\"."
+        "El sistema no guarda el usuario, resalta el campo con error, conserva los demás datos y muestra el mensaje correspondiente: \"El nombre de usuario ya existe.\", \"Ya existe un usuario con esa identificación.\" o \"La contraseña debe tener al menos 8 caracteres y coincidir con la confirmación.\"."
       ],
       [
         "Eliminar un usuario.",
