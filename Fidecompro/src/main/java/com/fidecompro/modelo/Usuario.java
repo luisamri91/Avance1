@@ -37,12 +37,21 @@ public class Usuario extends Persona {
         return id;
     }
 
+    // La base de datos genera el id; el DAO lo coloca aquí
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getNombreUsuario() {
         return nombreUsuario;
     }
 
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
+    }
+
+    public String getContrasena() {
+        return contrasena;
     }
 
     public void setContrasena(String contrasena) {

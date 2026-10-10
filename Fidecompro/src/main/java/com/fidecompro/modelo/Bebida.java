@@ -24,6 +24,11 @@ public class Bebida extends Producto {
     }
 
     @Override
+    public String obtenerTipo() {
+        return "Bebida";
+    }
+
+    @Override
     public String mostrarInformacion() {
         return super.mostrarInformacion() + " | Bebida " + volumenMl + " ml x "
                 + unidadesPorPaquete + (retornable ? ", retornable" : "");

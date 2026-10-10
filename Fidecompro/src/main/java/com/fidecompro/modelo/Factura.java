@@ -4,6 +4,7 @@ import com.fidecompro.excepciones.StockInsuficienteException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * Documento de venta emitido a un cliente.
  */
-public class Factura implements Mostrable {
+public class Factura implements Mostrable, Serializable {
 
     private static int ultimoNumero = 0;
 
@@ -55,7 +56,7 @@ public class Factura implements Mostrable {
         }
         // Si el producto ya está en la factura se suma a la misma línea
         for (DetalleFactura d : detalles) {
-            if (d.getProducto() == producto) {
+            if (d.getProducto().getId() == producto.getId()) {
                 validarExistencias(producto, d.getCantidad() + cantidad);
                 d.setCantidad(d.getCantidad() + cantidad);
                 return;
@@ -68,8 +69,13 @@ public class Factura implements Mostrable {
     private void validarExistencias(Producto producto, int cantidad) throws StockInsuficienteException {
         if (cantidad > producto.getExistencias()) {
             throw new StockInsuficienteException("Stock insuficiente de " + producto.getNombre()
-                    + ": se pidieron " + cantidad + " y hay " + producto.getExistencias());
+                    + ": hay " + producto.getExistencias() + " unidades.");
         }
+    }
+
+    // Para reconstruir una factura guardada en la base de datos (sin volver a validar existencias)
+    public void cargarDetalle(DetalleFactura detalle) {
+        detalles.add(detalle);
     }
 
     public void eliminarDetalle(int indice) {
@@ -121,7 +127,8 @@ public class Factura implements Mostrable {
     }
 
     public static String formatearMonto(double monto) {
-        return String.format("%,.2f", monto);
+        // 1234567.8 -> "1 234 567,80" (formato de Costa Rica), igual en cualquier computadora
+        return String.format(java.util.Locale.US, "%,.2f", monto).replace(',', ' ').replace('.', ',');
     }
 
     @Override
@@ -162,7 +169,7 @@ public class Factura implements Mostrable {
         FileWriter escritor = null;
         try {
             archivo.getParentFile().mkdirs();
-            escritor = new FileWriter(archivo);
+            escritor = new FileWriter(archivo, java.nio.charset.StandardCharsets.UTF_8);
             escritor.write(mostrarInformacion());
             return archivo.getPath();
         } catch (IOException e) {
@@ -183,8 +190,17 @@ public class Factura implements Mostrable {
         return numero;
     }
 
+    // En el servidor el número consecutivo lo da la base de datos
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
     public LocalDateTime getFecha() {
         return fecha;
+    }
+
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
     }
 
     public Cliente getCliente() {
@@ -213,5 +229,9 @@ public class Factura implements Mostrable {
 
     public EstadoFactura getEstado() {
         return estado;
+    }
+
+    public void setEstado(EstadoFactura estado) {
+        this.estado = estado;
     }
 }

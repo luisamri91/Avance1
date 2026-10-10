@@ -1,2 +1,5 @@
 target/
 facturas/
+basedatos/
+capturas/
+derby.log

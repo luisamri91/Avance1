@@ -157,6 +157,15 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 
 ## Código
 
+### Código v6 · 2026-10-10 · commit `1b5331f`
+* **Sistema completo**, como el que pide el profesor para el proyecto final: servidor con `ServerSocket` y pool de 10 hilos (`ManejadorCliente` por caja), ventanas JFrame cliente para las 12 historias de usuario y base de datos Apache Derby (MySQL opcional desde la ventana del servidor).
+* Paquetes nuevos: `red` (`Solicitud`, `Respuesta`, `TipoOperacion`), `servidor` (servidor, servicios y `VentanaServidor` con clientes conectados, bitácora y pestaña Base de datos), `datos` (`ConexionBD` Singleton, DAO y creación de tablas con datos de ejemplo), `cliente` (login, menú, clientes, productos/categorías/bajo el mínimo, ajuste de stock, nueva factura, vista previa, historial con anulación y usuarios) y `util`.
+* Facturas, ajustes y anulaciones en bloque `synchronized` con transacción JDBC: probado con dos cajas que piden el último stock a la vez, solo una factura pasa y las existencias nunca quedan negativas (HU 9).
+* Cambios al modelo: clases `Serializable` para viajar por el socket, `setId` para los ids de la base, `Producto.activo` y `obtenerTipo()`, `DetalleFactura` guarda el IVA del momento de la venta, montos con formato de Costa Rica (1 950,00).
+* El `main` de consola anterior pasa a `PruebaModeloConsola`; `Fidecompro` ahora abre un lanzador para abrir el servidor y varias cajas desde un solo Run.
+* Capturas del sistema funcionando en `docs/capturas_sistema/` y en Word: `Fidecompro_Sistema_Funcionando_v1.docx`.
+* `Fidecompro-codigo_v6.zip` y `Fidecompro-6.jar` (ejecutable con todo adentro).
+
 ### Código v5 · 2026-10-09 · commit `f16f28f`
 * `Persona` tiene `tipoIdentificacion` e `identificacion` (con sus get y set); `Cliente` los pasa a `super(...)` y `Usuario` los recibe en su constructor.
 * `RegistroUsuarios.agregarUsuario` rechaza una identificación repetida, igual que `RegistroClientes`.

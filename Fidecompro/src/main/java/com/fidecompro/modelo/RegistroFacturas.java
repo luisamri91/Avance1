@@ -29,7 +29,7 @@ public class RegistroFacturas {
         for (DetalleFactura d : factura.getDetalles()) {
             if (d.getCantidad() > d.getProducto().getExistencias()) {
                 throw new StockInsuficienteException("Stock insuficiente de " + d.getProducto().getNombre()
-                        + ": se pidieron " + d.getCantidad() + " y hay " + d.getProducto().getExistencias());
+                        + ": hay " + d.getProducto().getExistencias() + " unidades.");
             }
         }
         for (DetalleFactura d : factura.getDetalles()) {

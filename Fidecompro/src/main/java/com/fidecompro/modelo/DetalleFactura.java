@@ -1,19 +1,31 @@
 package com.fidecompro.modelo;
 
+import java.io.Serializable;
+
 /**
  * Una línea de la factura. Solo existe dentro de su factura (composición).
  */
-public class DetalleFactura implements Mostrable {
+public class DetalleFactura implements Mostrable, Serializable {
 
     private Producto producto;
     private int cantidad;
     private double precioUnitario;
+    private double porcentajeIva;
 
     public DetalleFactura(Producto producto, int cantidad) {
         this.producto = producto;
         this.cantidad = cantidad;
-        // Se copia el precio para que la factura no cambie si luego cambia el precio del producto
+        // Se copian el precio y el IVA para que la factura no cambie si luego cambia el producto
         this.precioUnitario = producto.getValorVenta();
+        this.porcentajeIva = producto.obtenerPorcentajeImpuesto();
+    }
+
+    // Para reconstruir una línea guardada en la base de datos, con los valores del momento de la venta
+    public DetalleFactura(Producto producto, int cantidad, double precioUnitario, double porcentajeIva) {
+        this.producto = producto;
+        this.cantidad = cantidad;
+        this.precioUnitario = precioUnitario;
+        this.porcentajeIva = porcentajeIva;
     }
 
     public double calcularSubtotal() {
@@ -21,7 +33,7 @@ public class DetalleFactura implements Mostrable {
     }
 
     public double calcularImpuesto() {
-        return calcularSubtotal() * producto.obtenerPorcentajeImpuesto();
+        return calcularSubtotal() * porcentajeIva;
     }
 
     public double calcularTotal() {
@@ -52,5 +64,9 @@ public class DetalleFactura implements Mostrable {
 
     public double getPrecioUnitario() {
         return precioUnitario;
+    }
+
+    public double getPorcentajeIva() {
+        return porcentajeIva;
     }
 }
