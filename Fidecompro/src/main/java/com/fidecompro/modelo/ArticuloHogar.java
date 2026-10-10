@@ -36,6 +36,11 @@ public class ArticuloHogar extends Producto {
     }
 
     @Override
+    public String obtenerTipo() {
+        return "Art. hogar";
+    }
+
+    @Override
     public String mostrarInformacion() {
         String info = super.mostrarInformacion() + " | " + marca + ", " + presentacion;
         if (!advertencias.isEmpty()) {

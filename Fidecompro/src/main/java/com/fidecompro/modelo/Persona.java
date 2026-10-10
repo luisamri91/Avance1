@@ -1,9 +1,11 @@
 package com.fidecompro.modelo;
 
+import java.io.Serializable;
+
 /**
  * Datos comunes de los usuarios del sistema y de los clientes.
  */
-public abstract class Persona implements Mostrable {
+public abstract class Persona implements Mostrable, Serializable {
 
     protected String nombre;
     protected String telefono;

@@ -32,6 +32,11 @@ public class Abarrote extends Producto {
     }
 
     @Override
+    public String obtenerTipo() {
+        return "Abarrote";
+    }
+
+    @Override
     public String mostrarInformacion() {
         return super.mostrarInformacion() + " | Abarrote " + pesoKg + " kg, vence "
                 + fechaVencimiento + (canastaBasica ? ", canasta basica" : "");

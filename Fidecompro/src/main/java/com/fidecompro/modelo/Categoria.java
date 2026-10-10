@@ -1,13 +1,14 @@
 package com.fidecompro.modelo;
 
 import com.fidecompro.excepciones.RegistroNoEncontradoException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Agrupa productos para ordenar el catálogo (Abarrotes, Bebidas, Limpieza...).
  */
-public class Categoria {
+public class Categoria implements Serializable {
 
     private static int idAutoIncremental = 1;
     private int id;
@@ -60,6 +61,11 @@ public class Categoria {
         return id;
     }
 
+    // La base de datos genera el id; el DAO lo coloca aquí
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -74,6 +80,12 @@ public class Categoria {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    // En la lista y en los combos se muestra el nombre
+    @Override
+    public String toString() {
+        return nombre;
     }
 
     public List<Producto> getProductos() {

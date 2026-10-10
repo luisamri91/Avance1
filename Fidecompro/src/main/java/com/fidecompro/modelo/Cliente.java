@@ -26,6 +26,11 @@ public class Cliente extends Persona {
         return id;
     }
 
+    // La base de datos genera el id; el DAO lo coloca aquí
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getDireccion() {
         return direccion;
     }
@@ -36,6 +41,10 @@ public class Cliente extends Persona {
 
     public LocalDate getFechaRegistro() {
         return fechaRegistro;
+    }
+
+    public void setFechaRegistro(LocalDate fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
     }
 
     public boolean isActivo() {
