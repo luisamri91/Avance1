@@ -7,6 +7,10 @@ Aplicación de escritorio en Java Swing con arquitectura cliente-servidor por so
 
 Versión actual: **documento v15** y **código v6** (sistema completo: servidor, cajas cliente y base de datos). El detalle de cada cambio está en [`CHANGELOG.md`](CHANGELOG.md), con el commit de cada versión.
 
+## Avance 2 – Sistema funcionando
+
+Documento del segundo avance: [`docs/avance2/Avance2_Luis_Amador_Ríos_v1.docx`](docs/avance2/Avance2_Luis_Amador_Ríos_v1.docx). Tiene las 12 historias de usuario implementadas (100 %), dónde se usa cada tema del curso, las correcciones respecto al primer avance y capturas del sistema. El código es el de `Fidecompro/` (v6).
+
 ## Avance 1 – Documento de diseño
 
 | Entregable | Archivo |

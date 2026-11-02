@@ -6,6 +6,12 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 * **Nombre de archivo:** la versión va en el nombre, por ejemplo `Avance1_Documento_Diseno_v3.docx` o `Fidecompro-codigo_v1.zip`.
 * Las copias de cada versión del documento y del código quedan también en los archivos del proyecto, en `avance1/versiones/`.
 
+## Avance 2
+
+### Documento Avance 2 v1 · 2026-11-02
+* Documento del segundo avance con la portada del primero: historias de usuario implementadas (12 de 12), tabla de temas del curso y dónde se usan, correcciones respecto al primer avance, repositorio, cómo ejecutar y 19 capturas del sistema funcionando.
+* Falta completar la sección de correcciones con las observaciones del profesor.
+
 ## Documento de diseño
 
 ### Documento v15 · 2026-10-09 · commit `f16f28f`
