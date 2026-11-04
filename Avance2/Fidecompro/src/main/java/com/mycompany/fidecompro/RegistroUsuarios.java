@@ -1,9 +1,10 @@
 package com.mycompany.fidecompro;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RegistroUsuarios {
+public class RegistroUsuarios implements Serializable {
 
     // la llave es el nombre de usuario
     private Map<String, Usuario> usuarios;

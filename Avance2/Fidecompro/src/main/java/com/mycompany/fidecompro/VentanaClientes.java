@@ -242,6 +242,7 @@ public class VentanaClientes extends JFrame {
                 seleccionado.setActivo(chkActivo.isSelected());
                 JOptionPane.showMessageDialog(this, "Cliente actualizado correctamente.");
             }
+            Datos.guardarCambios();
             limpiar();
             cargarTabla(Datos.clientes.listar());
         } catch (IllegalArgumentException ex) {
@@ -270,6 +271,7 @@ public class VentanaClientes extends JFrame {
             Datos.clientes.eliminar(seleccionado);
             JOptionPane.showMessageDialog(this, "Cliente eliminado correctamente.");
         }
+        Datos.guardarCambios();
         limpiar();
         cargarTabla(Datos.clientes.listar());
     }

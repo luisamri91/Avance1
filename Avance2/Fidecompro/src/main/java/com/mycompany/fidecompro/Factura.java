@@ -3,13 +3,14 @@ package com.mycompany.fidecompro;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Factura implements Mostrable {
+public class Factura implements Mostrable, Serializable {
 
     private int numero;
     private LocalDateTime fecha;

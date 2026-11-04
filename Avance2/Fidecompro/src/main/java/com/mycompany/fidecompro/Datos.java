@@ -1,6 +1,8 @@
 package com.mycompany.fidecompro;
 
+import java.io.IOException;
 import java.time.LocalDate;
+import javax.swing.JOptionPane;
 
 // guarda en memoria todo lo del sistema mientras el programa esta abierto
 public class Datos {
@@ -9,6 +11,15 @@ public class Datos {
     public static RegistroClientes clientes = new RegistroClientes();
     public static RegistroFacturas facturas = new RegistroFacturas();
     public static Inventario inventario = new Inventario();
+
+    // se llama despues de cada cambio para que no se pierda nada al cerrar
+    public static void guardarCambios() {
+        try {
+            ArchivoDatos.guardar();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "No se pudieron guardar los datos en el archivo.");
+        }
+    }
 
     // datos de prueba para no empezar vacio
     public static void cargarDatosDePrueba() {

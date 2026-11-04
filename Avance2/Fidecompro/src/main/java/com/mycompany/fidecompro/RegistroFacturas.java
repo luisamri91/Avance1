@@ -1,9 +1,10 @@
 package com.mycompany.fidecompro;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.TreeMap;
 
-public class RegistroFacturas {
+public class RegistroFacturas implements Serializable {
 
     // TreeMap para que queden ordenadas por numero
     private TreeMap<Integer, Factura> facturas;

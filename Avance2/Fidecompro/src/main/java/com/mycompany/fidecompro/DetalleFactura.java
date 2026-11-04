@@ -1,7 +1,9 @@
 package com.mycompany.fidecompro;
 
+import java.io.Serializable;
+
 // una linea de la factura
-public class DetalleFactura implements Mostrable {
+public class DetalleFactura implements Mostrable, Serializable {
 
     private Producto producto;
     private int cantidad;

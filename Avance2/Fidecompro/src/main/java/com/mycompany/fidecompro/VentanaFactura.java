@@ -266,6 +266,7 @@ public class VentanaFactura extends JFrame {
             factura.setPorcentajeDescuento(Double.parseDouble(txtDescuento.getText().trim()));
             factura.setMetodoPago((MetodoPago) cmbPago.getSelectedItem());
             Datos.facturas.emitir(factura);
+            Datos.guardarCambios();
             Factura emitida = factura;
             nuevaFactura();
             new VentanaVistaFactura(this, emitida).setVisible(true);

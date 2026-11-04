@@ -391,6 +391,7 @@ public class VentanaProductos extends JFrame {
                 seleccionado.setStockMinimo(minimo);
                 JOptionPane.showMessageDialog(this, "Producto actualizado correctamente.");
             }
+            Datos.guardarCambios();
             limpiar();
             cargarTabla();
         } catch (NumberFormatException ex) {
@@ -419,6 +420,7 @@ public class VentanaProductos extends JFrame {
             Datos.inventario.eliminarProducto(seleccionado);
             JOptionPane.showMessageDialog(this, "Producto eliminado correctamente.");
         }
+        Datos.guardarCambios();
         limpiar();
         cargarTabla();
     }

@@ -1,7 +1,9 @@
 package com.mycompany.fidecompro;
 
+import java.io.Serializable;
+
 // clase padre de todos los productos, cada tipo calcula su propio IVA
-public abstract class Producto implements Mostrable, Comparable<Producto> {
+public abstract class Producto implements Mostrable, Comparable<Producto>, Serializable {
 
     protected String codigo;
     protected String nombre;

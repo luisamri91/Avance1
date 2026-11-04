@@ -1,11 +1,12 @@
 package com.mycompany.fidecompro;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 // agrupa las categorias y por medio de ellas todos los productos
-public class Inventario {
+public class Inventario implements Serializable {
 
     private List<Categoria> categorias;
 

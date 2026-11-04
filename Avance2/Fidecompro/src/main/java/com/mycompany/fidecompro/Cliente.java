@@ -19,6 +19,13 @@ public class Cliente extends Persona {
         this.fechaRegistro = LocalDate.now();
     }
 
+    // al leer el archivo el contador vuelve a 1, por eso se ajusta
+    public static void actualizarContador(int ultimoId) {
+        if (ultimoId >= contador) {
+            contador = ultimoId + 1;
+        }
+    }
+
     @Override
     public String mostrarInformacion() {
         return "Cliente: " + super.mostrarInformacion() + " Dirección: " + direccion;

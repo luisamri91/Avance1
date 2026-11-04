@@ -1,7 +1,9 @@
 package com.mycompany.fidecompro;
 
+import java.io.Serializable;
+
 // clase padre de Cliente y Usuario, tiene los datos que comparten
-public abstract class Persona implements Mostrable {
+public abstract class Persona implements Mostrable, Serializable {
 
     protected String nombre;
     protected String telefono;
