@@ -7,6 +7,12 @@ Aplicación de escritorio en Java Swing con arquitectura cliente-servidor por so
 
 Versión actual: **documento v15** y **código v5**. El detalle de cada cambio está en [`CHANGELOG.md`](CHANGELOG.md), con el commit de cada versión.
 
+## Avance 2 – Primera versión funcional
+
+Código en [`Avance2/Fidecompro/`](Avance2/Fidecompro) (código Avance 2 v1): aplicación de escritorio Swing con las clases del diagrama del Avance 1, datos en colecciones, sin sockets ni base de datos. Implementa 6 de las 12 historias (50 %): HU 1, 3, 5, 7, 8 y 10. Se abre en NetBeans y se corre con *Run*; usuarios `mrodriguez` / `Admin2026` y `cjimenez` / `Venta2026`.
+
+Documento: [`docs/avance2/Avance2_Luis_Amador_Ríos_v2.docx`](docs/avance2/Avance2_Luis_Amador_Ríos_v2.docx).
+
 ## Avance 1 – Documento de diseño
 
 | Entregable | Archivo |

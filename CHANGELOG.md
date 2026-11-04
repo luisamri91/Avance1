@@ -6,6 +6,21 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 * **Nombre de archivo:** la versión va en el nombre, por ejemplo `Avance1_Documento_Diseno_v3.docx` o `Fidecompro-codigo_v1.zip`.
 * Las copias de cada versión del documento y del código quedan también en los archivos del proyecto, en `avance1/versiones/`.
 
+## Avance 2
+
+### Código Avance 2 v1 · 2026-11-04
+* Proyecto nuevo en `Avance2/Fidecompro`, simple y siguiendo el documento del Avance 1: un solo paquete, clases del diagrama (Persona, Cliente, Usuario, Producto, Abarrote, Bebida, ArticuloHogar, Categoria, Inventario, Factura, DetalleFactura), registros con HashMap y TreeMap y tres excepciones propias.
+* Historias implementadas: HU 1 (login con bloqueo tras 3 intentos y cerrar sesión), HU 3 (clientes), HU 5 (productos de los tres tipos), HU 7 (alerta y pestaña bajo el mínimo), HU 8 (factura) y HU 10 (archivo .txt). Son 6 de 12 (50 %).
+* Sin sockets, hilos ni base de datos: quedan para la entrega final.
+* El código v6 (sistema completo) queda guardado en `Fidecompro/` de la rama `claude/sistema-completo-14g4ip` como referencia.
+
+### Documento Avance 2 v2 · 2026-11-04
+* Rehecho para el código Avance 2 v1: tabla de las 12 HU con su estado, temas del curso, ajustes respecto al primer avance y 15 capturas nuevas.
+* Falta completar la sección de correcciones con las observaciones del profesor.
+
+### Documento Avance 2 v1 · 2026-11-02
+* Primera versión, hecha sobre el código v6. Reemplazada por la v2.
+
 ## Documento de diseño
 
 ### Documento v15 · 2026-10-09 · commit `f16f28f`
