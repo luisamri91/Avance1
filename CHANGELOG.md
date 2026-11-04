@@ -8,6 +8,15 @@ Cada cambio al documento de diseño o al código queda registrado aquí, con su 
 
 ## Avance 2
 
+### Código Avance 2 v2 · 2026-11-04
+* Serialización: las clases del modelo y los registros implementan `Serializable` y la clase nueva `ArchivoDatos` guarda usuarios, clientes, inventario y facturas en `fidecompro.dat` (ObjectOutputStream / ObjectInputStream).
+* Se guarda después de registrar, editar o eliminar clientes y productos y al emitir una factura; al abrir el programa se lee el archivo, y si no existe se cargan los datos de prueba.
+* `Cliente.actualizarContador()` para que los ids no se repitan después de leer el archivo.
+* Lo demás queda igual que en la v1.
+
+### Documento Avance 2 v3 · 2026-11-04
+* Agrega la serialización en la introducción, en la tabla de temas y en cómo ejecutar.
+
 ### Código Avance 2 v1 · 2026-11-04
 * Proyecto nuevo en `Avance2/Fidecompro`, simple y siguiendo el documento del Avance 1: un solo paquete, clases del diagrama (Persona, Cliente, Usuario, Producto, Abarrote, Bebida, ArticuloHogar, Categoria, Inventario, Factura, DetalleFactura), registros con HashMap y TreeMap y tres excepciones propias.
 * Historias implementadas: HU 1 (login con bloqueo tras 3 intentos y cerrar sesión), HU 3 (clientes), HU 5 (productos de los tres tipos), HU 7 (alerta y pestaña bajo el mínimo), HU 8 (factura) y HU 10 (archivo .txt). Son 6 de 12 (50 %).
